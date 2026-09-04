@@ -1318,12 +1318,25 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         'write only': '只写',
     };
 
+    const dynamicRegexRules = [];
+
     // Hot-reload dynamic external rules (supports Ctrl + R and focus hot-reload)
     function loadDynamicRules() {
         try {
             const dynamicRules = electron_1.ipcRenderer.sendSync('i18n:get-dynamic-rules-sync');
             if (dynamicRules && typeof dynamicRules === 'object') {
-                Object.assign(translationMap, dynamicRules);
+                dynamicRegexRules.length = 0;
+                for (const [key, value] of Object.entries(dynamicRules)) {
+                    if (key.startsWith('^') || key.endsWith('$')) {
+                        try {
+                            dynamicRegexRules.push({ regex: new RegExp(key, 'i'), replacement: value });
+                        } catch (_) {
+                            translationMap[key] = value;
+                        }
+                    } else {
+                        translationMap[key] = value;
+                    }
+                }
             }
         } catch (_) {}
     }
@@ -1380,6 +1393,32 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         
         // --- Dynamic String Translation ---
         
+        // Check dynamic regex rules from dynamic_rules.json
+        for (let i = 0; i < dynamicRegexRules.length; i++) {
+            const rule = dynamicRegexRules[i];
+            if (rule.regex.test(trimmed)) {
+                return text.replace(trimmed, trimmed.replace(rule.regex, rule.replacement));
+            }
+        }
+
+        // "Updated <time/date>"
+        const updatedMatch = trimmed.match(/^Updated\s+(.+)$/i);
+        if (updatedMatch) {
+            return text.replace(trimmed, `更新于 ${updatedMatch[1]}`);
+        }
+
+        // "Created <time/date>"
+        const createdMatch = trimmed.match(/^Created\s+(.+)$/i);
+        if (createdMatch) {
+            return text.replace(trimmed, `创建于 ${createdMatch[1]}`);
+        }
+
+        // "Started <time/date>"
+        const startedMatch = trimmed.match(/^Started\s+(.+)$/i);
+        if (startedMatch) {
+            return text.replace(trimmed, `开始于 ${startedMatch[1]}`);
+        }
+
         // Handle tooltips and labels with keyboard shortcuts: "Action Name [Ctrl+Key]" or "Action Name Ctrl+Key"
         const shortcutMatch = trimmed.match(/^(.+?)\s+(\(?\b(?:Ctrl|Alt|Shift|Cmd|Meta)(?:\+[A-Za-z0-9]+)+\)?)$/i);
         if (shortcutMatch) {
