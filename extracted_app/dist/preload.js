@@ -376,6 +376,19 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         'Retry': '重试',
         'Continue': '继续',
         'Stop': '停止',
+        'stop': '停止',
+        'Cancel': '取消',
+        'cancel': '取消',
+        'Send': '发送',
+        'send': '发送',
+        'Send message': '发送消息',
+        'Send Message': '发送消息',
+        'Stop generation': '停止生成',
+        'Stop Generation': '停止生成',
+        'Stop responding': '停止回复',
+        'Stop Responding': '停止回复',
+        'New line': '换行',
+        'New Line': '换行',
         'Resume': '恢复',
         'Pause': '暂停',
         'View Diff': '查看差异',
@@ -1445,8 +1458,8 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
             return text.replace(trimmed, `开始于 ${startedMatch[1]}`);
         }
 
-        // Handle tooltips and labels with keyboard shortcuts: "Action Name [Ctrl+Key]" or "Action Name Ctrl+Key"
-        const shortcutMatch = trimmed.match(/^(.+?)\s+(\(?\b(?:Ctrl|Alt|Shift|Cmd|Meta)(?:\+[A-Za-z0-9]+)+\)?)$/i);
+        // Handle tooltips and labels with keyboard shortcuts: "Action Name [Ctrl+Key]", "Action Name Ctrl+Key", "Action Name Enter", "Action Name (Ctrl+D)"
+        const shortcutMatch = trimmed.match(/^(.+?)\s+(\(?\b(?:(?:Ctrl|Alt|Shift|Cmd|Meta)(?:\+[A-Za-z0-9]+)+|Enter|Return|Esc|Escape|Tab|Space|Backspace|Delete)\b\)?)$/i);
         if (shortcutMatch) {
             const action = shortcutMatch[1];
             const shortcut = shortcutMatch[2];
