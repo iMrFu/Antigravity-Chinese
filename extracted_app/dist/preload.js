@@ -1272,6 +1272,17 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         'write only': '只写',
     };
 
+    // Hot-reload dynamic external rules (supports Ctrl + R and focus hot-reload)
+    function loadDynamicRules() {
+        try {
+            const dynamicRules = electron_1.ipcRenderer.sendSync('i18n:get-dynamic-rules-sync');
+            if (dynamicRules && typeof dynamicRules === 'object') {
+                Object.assign(translationMap, dynamicRules);
+            }
+        } catch (_) {}
+    }
+    loadDynamicRules();
+
     function translateDuration(str) {
         return str
             .replace(/(\d+)\s+days?/gi, '$1 天')
@@ -1813,6 +1824,7 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
     });
 
     function startTranslation() {
+        loadDynamicRules();
         if (!document.body) {
             window.addEventListener('DOMContentLoaded', startTranslation, { once: true });
             return;
@@ -1826,6 +1838,15 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
             attributeFilter: ['title', 'aria-label', 'data-tooltip', 'placeholder']
         });
     }
+
+    try {
+        window.addEventListener('focus', () => {
+            loadDynamicRules();
+            if (document.body) {
+                translateNode(document.body);
+            }
+        });
+    } catch (_) {}
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', startTranslation, { once: true });

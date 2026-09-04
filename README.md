@@ -24,6 +24,9 @@
 3. **极简自动化工作流**：
    * 内置 `install.bat` 与 `apply_translation.ps1`，自动打包、备份、热替换并重启客户端。
    * 支持官方自动更新后的“一键重新适配”。
+4. **🔥 支持 Ctrl + R 极速热更新（Hot Reload）**：
+   * 支持外置增量字典 `dynamic_rules.json`。
+   * 日常发现未汉化的英文词条，**无需重新打包，无需重启软件**，只需在 `dynamic_rules.json` 添加对应词条，切回 Antigravity 按下 **Ctrl + R**（或窗口重新获得焦点）即可毫秒级即时生效！
 
 ---
 
@@ -95,6 +98,9 @@ This project provides a comprehensive, stable, and non-intrusive Chinese transla
 3. **Automated Deployment Workflow**:
    * One-click installation via `install.bat` or `apply_translation.ps1` with automatic backup, packing, and application reload.
    * Resilient to background application updates.
+4. **🔥 Ctrl + R Live Hot-Reloading Support**:
+   * Powered by external dynamic dictionary `dynamic_rules.json`.
+   * When encountering untranslated text, **no rebuild or restart is required**! Simply add the phrase to `dynamic_rules.json`, switch back to Antigravity, and hit **Ctrl + R** (or focus the window) for instant real-time translation!
 
 ---
 
