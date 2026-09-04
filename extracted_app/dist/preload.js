@@ -112,6 +112,52 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
 (() => {
     const translationMap = {
         // --- Common & Global Actions ---
+        'File': '文件',
+        'Edit': '编辑',
+        'View': '查看',
+        'Window': '窗口',
+        'Help': '帮助',
+        'Create Project': '创建项目',
+        'Command Palette': '命令面板',
+        'Toggle Auxiliary Pane': '切换辅助窗格',
+        'Toggle Auxiliary Pane Ctrl+Alt+B': '切换辅助窗格 Ctrl+Alt+B',
+        'Toggle Auxiliary Pane (Ctrl+Alt+B)': '切换辅助窗格 (Ctrl+Alt+B)',
+        'Auxiliary Pane': '辅助窗格',
+        'Toggle Primary Side Bar': '切换主侧边栏',
+        'Toggle Primary Side Bar Ctrl+B': '切换主侧边栏 Ctrl+B',
+        'Toggle Primary Side Bar (Ctrl+B)': '切换主侧边栏 (Ctrl+B)',
+        'Primary Side Bar': '主侧边栏',
+        'Toggle Secondary Side Bar': '切换辅助侧边栏',
+        'Secondary Side Bar': '辅助侧边栏',
+        'Toggle Panel': '切换面板',
+        'Toggle Panel Ctrl+J': '切换面板 Ctrl+J',
+        'Toggle Panel (Ctrl+J)': '切换面板 (Ctrl+J)',
+        'Panel': '面板',
+        'Toggle Full Screen': '切换全屏',
+        'Toggle Full Screen F11': '切换全屏 F11',
+        'Toggle Fullscreen': '切换全屏',
+        'Fullscreen': '全屏',
+        'Full Screen': '全屏',
+        'Implementation Plan': '实施计划',
+        'Walkthrough': '演练说明',
+        'Overview': '概览',
+        'File Changes': '文件更改',
+        'Maximize Pane': '最大化窗格',
+        'Restore Pane': '还原窗格',
+        'Minimize Pane': '最小化窗格',
+        'Close Pane': '关闭窗格',
+        'New Artifact': '新建生成物',
+        'Create Artifact': '创建生成物',
+        'New Tab': '新建标签页',
+        'Zoom In': '放大',
+        'Zoom Out': '缩小',
+        'Reset Zoom': '重置缩放',
+        'Actual Size': '实际大小',
+        'Minimize': '最小化',
+        'Maximize': '最大化',
+        'Create New Project': '创建新项目',
+        'Filter Projects': '筛选项目',
+        'Filter': '筛选',
         'Settings': '设置',
         'Model Selection': '模型选择',
         'Theme Mode': '主题模式',
@@ -1333,6 +1379,17 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         }
         
         // --- Dynamic String Translation ---
+        
+        // Handle tooltips and labels with keyboard shortcuts: "Action Name [Ctrl+Key]" or "Action Name Ctrl+Key"
+        const shortcutMatch = trimmed.match(/^(.+?)\s+(\(?\b(?:Ctrl|Alt|Shift|Cmd|Meta)(?:\+[A-Za-z0-9]+)+\)?)$/i);
+        if (shortcutMatch) {
+            const action = shortcutMatch[1];
+            const shortcut = shortcutMatch[2];
+            const translatedAction = translationMap[action];
+            if (translatedAction) {
+                return text.replace(trimmed, `${translatedAction} ${shortcut}`);
+            }
+        }
         
         // "Thought for Xs" / "Thought for Xms"
         const thoughtMatch = trimmed.match(/^Thought for (\d+(?:\.\d+)?)\s*(s|ms)$/i);
