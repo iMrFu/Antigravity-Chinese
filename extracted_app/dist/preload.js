@@ -329,6 +329,31 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         'Retry response': '重试回复',
         'Edit message': '编辑消息',
         'Delete message': '删除消息',
+        'Comments': '评论',
+        'comments': '评论',
+        'Comment': '评论',
+        'comment': '评论',
+        'Add Comment': '添加评论',
+        'Add comment': '添加评论',
+        'Resolve Comment': '解决评论',
+        'Resolve comment': '解决评论',
+        'Resolve Comments': '解决评论',
+        'Resolve comments': '解决评论',
+        'Resolve all comments': '解决所有评论',
+        'Resolve All Comments': '解决所有评论',
+        'Delete comment': '删除评论',
+        'Delete Comment': '删除评论',
+        'Edit comment': '编辑评论',
+        'Edit Comment': '编辑评论',
+        'Reply': '回复',
+        'reply': '回复',
+        'Leave a comment': '发表评论',
+        'Leave a comment...': '发表评论...',
+        'Write a comment...': '撰写评论...',
+        'Write a comment': '撰写评论',
+        'No comments': '无评论',
+        'No comments yet': '暂无评论',
+        'No comments yet.': '暂无评论。',
         'More options': '更多选项',
         'More Options': '更多选项',
         'Project actions': '项目操作',
@@ -1708,6 +1733,12 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         const convMatch = trimmed.match(/^(\d+)\s+conversations?$/i);
         if (convMatch) {
             return `${convMatch[1]} 个对话`;
+        }
+
+        // "X comments"
+        const commentsMatch = trimmed.match(/^(\d+)\s+comments?$/i);
+        if (commentsMatch) {
+            return `${commentsMatch[1]} 条评论`;
         }
 
         // "Last run: X"
