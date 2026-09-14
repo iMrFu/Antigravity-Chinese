@@ -96,14 +96,14 @@ function registerIpcHandlers(storageManager) {
         let body = options.body;
         if (typeof body === 'string') {
             body = body
-                .replace(/Requesting your permission in Terminal:/g, '正在终端中请求您的权限：')
-                .replace(/Requesting your permission to open URL:/g, '正在请求打开网址的权限：')
-                .replace(/Requesting your permission to execute JavaScript:/g, '正在请求执行 JavaScript 的权限：')
-                .replace(/Requesting your permission:/g, '正在请求您的权限：')
-                .replace(/^Command:/gm, '命令：')
-                .replace(/\bCommand:\s*/g, '命令：')
-                .replace(/^URL:/gm, '网址：')
-                .replace(/\bURL:\s*/g, '网址：');
+                .replace(/Requesting\s+(?:your\s+)?permission\s+in\s+(?:the\s+)?Terminal[:：]?\s*/gi, '正在终端中请求您的权限：\n')
+                .replace(/Requesting\s+(?:your\s+)?permission\s+to\s+open\s+URL[:：]?\s*/gi, '正在请求打开网址的权限：\n')
+                .replace(/Requesting\s+(?:your\s+)?permission\s+to\s+execute\s+JavaScript[:：]?\s*/gi, '正在请求执行 JavaScript 的权限：\n')
+                .replace(/Requesting\s+(?:your\s+)?permission[:：]?\s*/gi, '正在请求您的权限：\n')
+                .replace(/^Command[:：]?\s*/gim, '命令：')
+                .replace(/\bCommand[:：]?\s*/gi, '命令：')
+                .replace(/^URL[:：]?\s*/gim, '网址：')
+                .replace(/\bURL[:：]?\s*/gi, '网址：');
         }
         const notification = new electron_1.Notification({
             title: title,

@@ -27,7 +27,26 @@ const dialogAPI = {
     showOpenMultipleFolderDialog: () => electron_1.ipcRenderer.invoke('dialog:open-workspaces'),
 };
 const notificationAPI = {
-    send: (options) => electron_1.ipcRenderer.invoke('notification:send', options),
+    send: (options) => {
+        if (options) {
+            if (typeof options.title === 'string') {
+                const t = translateText(options.title);
+                if (t) options.title = t;
+            }
+            if (typeof options.body === 'string') {
+                options.body = options.body
+                    .replace(/Requesting\s+(?:your\s+)?permission\s+in\s+(?:the\s+)?Terminal[:：]?\s*/gi, '正在终端中请求您的权限：\n')
+                    .replace(/Requesting\s+(?:your\s+)?permission\s+to\s+open\s+URL[:：]?\s*/gi, '正在请求打开网址的权限：\n')
+                    .replace(/Requesting\s+(?:your\s+)?permission\s+to\s+execute\s+JavaScript[:：]?\s*/gi, '正在请求执行 JavaScript 的权限：\n')
+                    .replace(/Requesting\s+(?:your\s+)?permission[:：]?\s*/gi, '正在请求您的权限：\n')
+                    .replace(/^Command[:：]?\s*/gim, '命令：')
+                    .replace(/\bCommand[:：]?\s*/gi, '命令：')
+                    .replace(/^URL[:：]?\s*/gim, '网址：')
+                    .replace(/\bURL[:：]?\s*/gi, '网址：');
+            }
+        }
+        return electron_1.ipcRenderer.invoke('notification:send', options);
+    },
     openSystemPreferences: () => electron_1.ipcRenderer.invoke('notification:open-system-preferences'),
     onClicked: (callback) => {
         const handler = (_event, payload) => {
