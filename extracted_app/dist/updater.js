@@ -158,8 +158,8 @@ function initAutoUpdater(isHeadless, settingsService) {
     else {
         electron_updater_1.autoUpdater.channel = `latest-${process.arch}`;
     }
-    electron_updater_1.autoUpdater.autoDownload = true;
-    electron_updater_1.autoUpdater.autoInstallOnAppQuit = electron_1.app.isPackaged;
+    electron_updater_1.autoUpdater.autoDownload = false;
+    electron_updater_1.autoUpdater.autoInstallOnAppQuit = false;
     // Auto-updater event handlers → broadcast to renderer
     electron_updater_1.autoUpdater.on('checking-for-update', () => {
         console.log('[AutoUpdater] Checking for update…');
