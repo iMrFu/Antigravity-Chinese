@@ -241,25 +241,25 @@ function getWizardHtml(iconBase64) {
       <div class="loader">
         <div></div><div></div><div></div>
       </div>
-      <div class="text" style="font-size: 13px; opacity: 0.6; letter-spacing: 0.03em;">Setting up…</div>
+      <div class="text" style="font-size: 13px; opacity: 0.6; letter-spacing: 0.03em;">正在设置…</div>
     </div>
 
     <!-- Step 1: Welcome -->
     <div id="step-ask" class="step">
       <div class="icon-wrapper">
-        <img src="data:image/png;base64,${iconBase64}" alt="Antigravity Icon">
+        <img src="data:image/png;base64,${iconBase64}" alt="Antigravity 图标">
       </div>
-      <h1>Welcome to the new Antigravity!</h1>
-      <p>Antigravity has been redesigned to put agents first with new capabilities. If you'd still like a code editor, you can download it as a separate app named <b>Antigravity IDE</b>.</p>
+      <h1>欢迎使用全新 Antigravity！</h1>
+      <p>Antigravity 经过全新设计，以智能体优先并提供了强大的新能力。如果您仍需要代码编辑器，可以单独下载名为 <b>Antigravity IDE</b> 的独立应用。</p>
       
       <label class="checkbox-label">
         <input type="checkbox" id="chk-download" checked>
         <span class="custom-checkbox"></span>
-        <span>Download the Antigravity IDE</span>
+        <span>下载 Antigravity IDE</span>
       </label>
 
       <div class="button-group">
-        <button class="btn-primary" id="btn-skip">Explore the new Antigravity</button>
+        <button class="btn-primary" id="btn-skip">探索全新 Antigravity</button>
       </div>
     </div>
 

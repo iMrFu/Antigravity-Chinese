@@ -50,10 +50,10 @@ const child_process_1 = require("child_process");
 const settingsService_1 = require("./services/settingsService");
 var MenuUpdateStep;
 (function (MenuUpdateStep) {
-    MenuUpdateStep["CheckForUpdates"] = "Check for Updates";
-    MenuUpdateStep["CheckingForUpdates"] = "Checking for Updates...";
-    MenuUpdateStep["DownloadingUpdate"] = "Downloading Update...";
-    MenuUpdateStep["RestartToUpdate"] = "Restart to Update";
+    MenuUpdateStep["CheckForUpdates"] = "检查更新";
+    MenuUpdateStep["CheckingForUpdates"] = "正在检查更新...";
+    MenuUpdateStep["DownloadingUpdate"] = "正在下载更新...";
+    MenuUpdateStep["RestartToUpdate"] = "重启以应用更新";
 })(MenuUpdateStep || (exports.MenuUpdateStep = MenuUpdateStep = {}));
 exports.updateActions = {
     [MenuUpdateStep.CheckForUpdates]: () => checkForUpdates(true),
@@ -79,15 +79,10 @@ const UPDATE_PENDING_STATES = new Set([
 let updaterInitialized = false;
 let periodicCheckInterval;
 function startAutoUpdateChecks() {
-    if (periodicCheckInterval) {
-        return;
-    }
-    console.log('[AutoUpdater] Starting auto update checks');
-    checkForUpdates();
-    periodicCheckInterval = setInterval(checkForUpdates, CHECK_INTERVAL_MS);
+    // Disabled background silent auto-updates to prevent reverting localization files
+    console.log('[AutoUpdater] Auto update checks disabled for localization safety');
 }
 function stopAutoUpdateChecks() {
-    console.log('[AutoUpdater] Stopping auto update checks');
     if (periodicCheckInterval) {
         clearInterval(periodicCheckInterval);
         periodicCheckInterval = undefined;
@@ -183,9 +178,9 @@ function initAutoUpdater(isHeadless, settingsService) {
             const win = electron_1.BrowserWindow.getFocusedWindow();
             const options = {
                 type: 'info',
-                title: 'Check for Updates',
-                message: 'No updates available',
-                buttons: ['OK'],
+                title: '检查更新',
+                message: '当前已是最新版本',
+                buttons: ['确定'],
             };
             if (win) {
                 electron_1.dialog.showMessageBox(win, options);

@@ -63,7 +63,7 @@ function getLoadingHtml(foregroundColor, backgroundColor) {
   <div class="loader">
     <div></div><div></div><div></div>
   </div>
-  <div class="text">Loading Antigravity</div>
+  <div class="text">正在加载 Antigravity...</div>
 </body>
 </html>
   `;

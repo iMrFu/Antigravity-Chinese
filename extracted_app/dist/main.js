@@ -271,7 +271,7 @@ electron_1.app
         if (electron_1.app.dock) {
             const dockMenu = electron_1.Menu.buildFromTemplate([
                 {
-                    label: 'New Window',
+                    label: '新建窗口',
                     click: () => (0, utils_1.createWindow)(url, storageManager),
                 },
             ]);
@@ -280,16 +280,16 @@ electron_1.app
         (0, tray_1.createTray)([
             {
                 id: 'running-agents',
-                label: 'No agents running',
+                label: '没有运行中的智能体',
                 enabled: false,
             },
             { type: 'separator' },
             {
-                label: `Open ${electron_1.app.getName()}`,
+                label: `打开 ${electron_1.app.getName()}`,
                 click: () => (0, utils_1.showOrCreateWindow)((0, languageServer_1.getLsPort)()),
             },
             {
-                label: 'Quit',
+                label: '退出',
                 click: () => {
                     // Triggers 'before-quit' to run graceful cleanup without confirmation.
                     electron_1.app.quit();

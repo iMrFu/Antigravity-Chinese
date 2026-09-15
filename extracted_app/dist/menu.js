@@ -14,7 +14,7 @@ function setupApplicationMenu(url) {
     }
     // Adds a "New Window" item to the top of the existing File menu.
     addItemToSubmenu(menu, 'File', 0, new electron_1.MenuItem({
-        label: 'New Window',
+        label: '新建窗口',
         accelerator: 'CmdOrCtrl+Shift+N',
         click: () => {
             (0, utils_1.createWindow)(url);
@@ -36,7 +36,7 @@ function setupApplicationMenu(url) {
     }
     // Adds Docs and Toggle Developer Tools to the Help menu
     addItemToSubmenu(menu, 'Help', 0, new electron_1.MenuItem({
-        label: 'Docs',
+        label: '文档',
         click: async () => {
             await electron_1.shell.openExternal('https://antigravity.google/docs');
         },
