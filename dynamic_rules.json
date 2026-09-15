@@ -7699,5 +7699,11 @@
   "Type project name to confirm": "输入项目名称以确认",
   "Enter the project name to confirm deletion": "输入项目名称以确认删除",
   "Are you sure?": "您确定吗？",
-  "Confirm deletion": "确认删除"
+  "Confirm deletion": "确认删除",
+  "Open MCP Config": "打开 MCP 配置",
+  "Open MCP config": "打开 MCP 配置",
+  "Open MCP Configuration": "打开 MCP 配置",
+  "Open MCP configuration": "打开 MCP 配置",
+  "Browse and enable plugins from the Build With Google catalog.": "浏览并启用 Build With Google 目录中的插件。",
+  "Browse and enable plugins from the Build With Google catalog": "浏览并启用 Build With Google 目录中的插件"
 }

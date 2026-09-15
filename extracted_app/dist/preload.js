@@ -271,7 +271,12 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         'Permanently delete': '永久删除',
         'Permanently delete ': '永久删除 ',
         'including': '包括',
-        'including ': '包括 ',
+        'Open MCP Config': '打开 MCP 配置',
+        'Open MCP config': '打开 MCP 配置',
+        'Open MCP Configuration': '打开 MCP 配置',
+        'Open MCP configuration': '打开 MCP 配置',
+        'Browse and enable plugins from the Build With Google catalog.': '浏览并启用 Build With Google 目录中的插件。',
+        'Browse and enable plugins from the Build With Google catalog': '浏览并启用 Build With Google 目录中的插件',
         'Select Project': '选择项目',
         'Ask anything, @ to mention, / for actions': '输入任何问题，输入 @ 提及，输入 / 执行操作',
         'Message Antigravity...': '给 Antigravity 发送消息...',
@@ -1874,6 +1879,14 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         const commentsMatch = trimmed.match(/^(\d+)\s+comments?$/i);
         if (commentsMatch) {
             return `${commentsMatch[1]} 条评论`;
+        }
+
+        // "X tools enabled / disabled / available"
+        const toolsEnabledMatch = trimmed.match(/^(\d+)\s+tools?\s+(enabled|disabled|available)$/i);
+        if (toolsEnabledMatch) {
+            const statusMap = { 'enabled': '已启用', 'disabled': '已禁用', 'available': '可用' };
+            const status = statusMap[toolsEnabledMatch[2].toLowerCase()] || toolsEnabledMatch[2];
+            return `${status} ${toolsEnabledMatch[1]} 个工具`;
         }
 
         // "Last run: X"
