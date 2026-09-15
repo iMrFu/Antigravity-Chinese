@@ -1433,6 +1433,16 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         'Allow read/write access to this path?': '允许读写此路径？',
         'Allow read and write access to this path?': '允许读写此路径？',
         'Allow access to this path?': '允许访问此路径？',
+        'Allow using this MCP tool?': '允许使用此 MCP 工具？',
+        'Allow using this MCP tool': '允许使用此 MCP 工具',
+        'Allow using these MCP tools?': '允许使用这些 MCP 工具？',
+        'Allow using these MCP tools': '允许使用这些 MCP 工具',
+        'Allow this MCP tool?': '允许此 MCP 工具？',
+        'Allow this MCP tool': '允许此 MCP 工具',
+        'Allow using this tool?': '允许使用此工具？',
+        'Allow using this tool': '允许使用此工具',
+        'Allow using these tools?': '允许使用这些工具？',
+        'Allow using these tools': '允许使用这些工具',
         'Allow terminal command?': '允许执行终端命令？',
         'Allow running this command?': '允许运行此命令？',
         'Allow running these commands?': '允许运行这些命令？',
@@ -1443,6 +1453,32 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         'Yes, and always allow in this conversation': '是，且在此对话中始终允许',
         'Yes, and always allow in this project': '是，且在此项目中始终允许',
         'Yes, and always allow in this workspace': '是，且在此工作区中始终允许',
+        'Yes, and always allow when not in a project': '是，且未在项目中时始终允许',
+        'Yes, and always allow when not in a workspace': '是，且未在工作区中时始终允许',
+        'Yes, and always allow': '是，且始终允许',
+        'Yes, always allow in this conversation': '是，且在此对话中始终允许',
+        'Yes, always allow in this project': '是，且在此项目中始终允许',
+        'Yes, always allow in this workspace': '是，且在此工作区中始终允许',
+        'Yes, always allow when not in a project': '是，且未在项目中时始终允许',
+        'Yes, always allow when not in a workspace': '是，且未在工作区中时始终允许',
+        'Yes, always allow': '是，始终允许',
+        'No, deny this time': '否，本次拒绝',
+        'No, and always deny in this conversation': '否，且在此对话中始终拒绝',
+        'No, and always deny in this project': '否，且在此项目中始终拒绝',
+        'No, and always deny in this workspace': '否，且在此工作区中始终拒绝',
+        'No, and always deny when not in a project': '否，且未在项目中时始终拒绝',
+        'No, and always deny when not in a workspace': '否，且未在工作区中时始终拒绝',
+        'No, and always deny': '否，且始终拒绝',
+        'No, always deny in this conversation': '否，且在此对话中始终拒绝',
+        'No, always deny in this project': '否，且在此项目中始终拒绝',
+        'No, always deny when not in a project': '否，且未在项目中时始终拒绝',
+        'No, always deny': '否，始终拒绝',
+        'when not in a project': '未在项目中时',
+        'When not in a project': '未在项目中时',
+        'when not in a workspace': '未在工作区中时',
+        'When not in a workspace': '未在工作区中时',
+        'not in a project': '未在项目中',
+        'not in a workspace': '未在工作区中',
         'Yes, and always allow': '是，且始终允许',
         'Yes, always allow in this conversation': '是，且在此对话中始终允许',
         'Yes, always allow in this project': '是，且在此项目中始终允许',
@@ -1845,6 +1881,25 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
                 .replace(/\(High\)/gi, '(高)')
                 .replace(/\(Low\)/gi, '(低)')
                 .replace(/\(Fast\)/gi, '(快速)');
+        // Permission prompt & MCP translations
+        if (/\b(?:when not in a project|when not in a workspace|not in a project|not in a workspace)\b/i.test(trimmed)) {
+            return trimmed
+                .replace(/when not in a project/gi, '未在项目中时')
+                .replace(/when not in a workspace/gi, '未在工作区中时')
+                .replace(/not in a project/gi, '未在项目中')
+                .replace(/not in a workspace/gi, '未在工作区中');
+        }
+        if (/^Allow using this MCP tool\??$/i.test(trimmed)) {
+            return '允许使用此 MCP 工具？';
+        }
+        if (/^Allow using these MCP tools\??$/i.test(trimmed)) {
+            return '允许使用这些 MCP 工具？';
+        }
+        if (/^Allow using this tool\??$/i.test(trimmed)) {
+            return '允许使用此工具？';
+        }
+        if (/^Allow using these tools\??$/i.test(trimmed)) {
+            return '允许使用这些工具？';
         }
 
         // Model suffix "High" / "Low" / "Fast" (e.g. "Gemini 3.7 Flash High")
