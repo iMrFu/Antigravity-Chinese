@@ -264,8 +264,14 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         'Submit': '提交',
         'Submit (Enter)': '提交 (Enter)',
         'Skip': '跳过',
-        'Record Audio': '录制音频',
         'Delete Project': '删除项目',
+        'Delete project': '删除项目',
+        'Danger Zone': '危险区域',
+        'Danger zone': '危险区域',
+        'Permanently delete': '永久删除',
+        'Permanently delete ': '永久删除 ',
+        'including': '包括',
+        'including ': '包括 ',
         'Select Project': '选择项目',
         'Ask anything, @ to mention, / for actions': '输入任何问题，输入 @ 提及，输入 / 执行操作',
         'Message Antigravity...': '给 Antigravity 发送消息...',
@@ -1451,6 +1457,17 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         'Modify permissions for file, terminal, and MCP tools': '修改文件、终端和 MCP 工具的权限',
         'Modify permissions for file, terminal, and tool access.': '修改文件、终端和工具访问权限。',
         'Modify permissions for file, terminal, and tool access': '修改文件、终端和工具访问权限',
+        'Enable Sandbox Mode (Preview)': '启用沙箱模式（预览）',
+        'Enable Sandbox Mode': '启用沙箱模式',
+        'Enable sandbox mode (Preview)': '启用沙箱模式（预览）',
+        'Enable sandbox mode': '启用沙箱模式',
+        'Sandbox Mode (Preview)': '沙箱模式（预览）',
+        'Sandbox Mode': '沙箱模式',
+        'Sandbox mode': '沙箱模式',
+        'Restricts agent tools to a secure, isolated local sandbox.': '将智能体工具限制在安全隔离的本地沙箱中。',
+        'Restricts agent tools to a secure, isolated local sandbox': '将智能体工具限制在安全隔离的本地沙箱中',
+        'Restricts tools to a secure, isolated local sandbox.': '将工具限制在安全隔离的本地沙箱中。',
+        'Restricts tools to a secure, isolated local sandbox': '将工具限制在安全隔离的本地沙箱中',
         'Allow terminal command?': '允许执行终端命令？',
         'Allow running this command?': '允许运行此命令？',
         'Allow running these commands?': '允许运行这些命令？',
@@ -1905,6 +1922,13 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
                 .replace(/\(Fast\)/gi, '(快速)');
         }
 
+        // "(Preview)" tag handling
+        if (/\((?:Preview|preview)\)/i.test(trimmed)) {
+            const base = trimmed.replace(/\s*\((?:Preview|preview)\)/i, '').trim();
+            const transBase = translationMap[base] || base;
+            return `${transBase}（预览）`;
+        }
+
         // Permission prompt & MCP translations
         if (/\b(?:when not in a project|when not in a workspace|not in a project|not in a workspace)\b/i.test(trimmed)) {
             return trimmed
@@ -2079,6 +2103,20 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         const delProjMatch = trimmed.match(/^Are you sure you want to delete the project\s+([\s\S]+?)\??$/i);
         if (delProjMatch) {
             return `您确定要删除项目 ${delProjMatch[1]} 吗？`;
+        }
+
+        // "Permanently delete <name> including <count> active/archived conversations"
+        const permDelMatch = trimmed.match(/^Permanently delete\s+([\s\S]+?)\s+including\s+([\s\S]+?)\.?$/i);
+        if (permDelMatch) {
+            return `永久删除 ${permDelMatch[1]}，包括 ${permDelMatch[2]}。`;
+        }
+        if (/^Permanently delete\s+([\s\S]+?)\.?$/i.test(trimmed)) {
+            const m = trimmed.match(/^Permanently delete\s+([\s\S]+?)\.?$/i);
+            return `永久删除 ${m[1]}`;
+        }
+        if (/^including\s+([\s\S]+?)\.?$/i.test(trimmed)) {
+            const m = trimmed.match(/^including\s+([\s\S]+?)\.?$/i);
+            return `包括 ${m[1]}`;
         }
 
         // "This will permanently delete X active/archived conversations within it."
