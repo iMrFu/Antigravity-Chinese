@@ -1443,6 +1443,14 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         'Allow using this tool': '允许使用此工具',
         'Allow using these tools?': '允许使用这些工具？',
         'Allow using these tools': '允许使用这些工具',
+        'Tool Permissions': '工具权限',
+        'Tool permissions': '工具权限',
+        'tool permissions': '工具权限',
+        'Tool Permission': '工具权限',
+        'Modify permissions for file, terminal, and MCP tools.': '修改文件、终端和 MCP 工具的权限。',
+        'Modify permissions for file, terminal, and MCP tools': '修改文件、终端和 MCP 工具的权限',
+        'Modify permissions for file, terminal, and tool access.': '修改文件、终端和工具访问权限。',
+        'Modify permissions for file, terminal, and tool access': '修改文件、终端和工具访问权限',
         'Allow terminal command?': '允许执行终端命令？',
         'Allow running this command?': '允许运行此命令？',
         'Allow running these commands?': '允许运行这些命令？',
@@ -1823,6 +1831,20 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         const projMatch = trimmed.match(/^(\d+)\s+projects?$/i);
         if (projMatch) {
             return `${projMatch[1]} 个项目`;
+        }
+
+        // "Modified in X projects / Modified in X workspaces"
+        if (/Modified in\s+\d+\s+projects?/i.test(trimmed)) {
+            return trimmed.replace(/Modified in\s+(\d+)\s+projects?/gi, '已在 $1 个项目中修改');
+        }
+        if (/Modified in\s+\d+\s+workspaces?/i.test(trimmed)) {
+            return trimmed.replace(/Modified in\s+(\d+)\s+workspaces?/gi, '已在 $1 个工作区中修改');
+        }
+        if (/^Modified in this project$/i.test(trimmed)) {
+            return '已在此项目中修改';
+        }
+        if (/^Modified in this workspace$/i.test(trimmed)) {
+            return '已在此工作区中修改';
         }
 
         // "X conversations"

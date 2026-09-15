@@ -7663,5 +7663,15 @@
   "when not in a workspace": "未在工作区中时",
   "When not in a workspace": "未在工作区中时",
   "not in a project": "未在项目中",
-  "not in a workspace": "未在工作区中"
+  "not in a workspace": "未在工作区中",
+  "Tool Permissions": "工具权限",
+  "Tool permissions": "工具权限",
+  "tool permissions": "工具权限",
+  "Tool Permission": "工具权限",
+  "Modify permissions for file, terminal, and MCP tools.": "修改文件、终端和 MCP 工具的权限。",
+  "Modify permissions for file, terminal, and MCP tools": "修改文件、终端和 MCP 工具的权限",
+  "Modify permissions for file, terminal, and tool access.": "修改文件、终端和工具访问权限。",
+  "Modify permissions for file, terminal, and tool access": "修改文件、终端和工具访问权限",
+  "Modified in this project": "已在此项目中修改",
+  "Modified in this workspace": "已在此工作区中修改"
 }
