@@ -2085,6 +2085,37 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         return null;
     }
 
+    function shouldSkipElement(el) {
+        if (!el || el.nodeType !== Node.ELEMENT_NODE) return false;
+        const tagName = el.tagName ? el.tagName.toLowerCase() : '';
+        if (tagName === 'script' || tagName === 'style' || tagName === 'code' || tagName === 'pre') {
+            return true;
+        }
+        if (el.classList && (
+            el.classList.contains('monaco-editor') ||
+            el.classList.contains('monaco-editor-background') ||
+            el.classList.contains('monaco-diff-editor') ||
+            el.classList.contains('view-lines') ||
+            el.classList.contains('editor-container') ||
+            el.classList.contains('no-translate')
+        )) {
+            return true;
+        }
+        return false;
+    }
+
+    function shouldSkipTranslation(node) {
+        if (!node) return false;
+        let parent = node.parentElement;
+        while (parent) {
+            if (shouldSkipElement(parent)) {
+                return true;
+            }
+            parent = parent.parentElement;
+        }
+        return false;
+    }
+
     function translateAttributes(el) {
         if (!el || el.nodeType !== Node.ELEMENT_NODE) return;
         const attrs = ['title', 'aria-label', 'data-tooltip', 'placeholder'];

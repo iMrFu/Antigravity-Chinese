@@ -128,7 +128,7 @@ function createWindow(url, storageManager) {
             nodeIntegration: false,
             contextIsolation: true,
             preload: path_1.default.join(__dirname, 'preload.js'),
-            devTools: !electron_1.app.isPackaged,
+            devTools: true,
         },
     });
     // Prevent the menu dropdown from being very wide due to long page titles
