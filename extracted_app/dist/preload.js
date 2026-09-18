@@ -275,6 +275,25 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
         'Open MCP config': '打开 MCP 配置',
         'Open MCP Configuration': '打开 MCP 配置',
         'Open MCP configuration': '打开 MCP 配置',
+        'Update Available': '有可用更新',
+        'Update Available →': '有可用更新 →',
+        'Update Available ->': '有可用更新 →',
+        'Update available': '有可用更新',
+        'Update available →': '有可用更新 →',
+        'Update available ->': '有可用更新 →',
+        'Restart to Update': '重启以应用更新',
+        'Restart to Update →': '重启以应用更新 →',
+        'Restart to Update ->': '重启以应用更新 →',
+        'Restart to update': '重启以应用更新',
+        'Restart to update →': '重启以应用更新 →',
+        'Restart to update ->': '重启以应用更新 →',
+        'Downloading Update': '正在下载更新',
+        'Downloading Update...': '正在下载更新...',
+        'Downloading update': '正在下载更新',
+        'Downloading update...': '正在下载更新...',
+        'Downloading...': '正在下载...',
+        'Checking for Updates...': '正在检查更新...',
+        'Checking for updates...': '正在检查更新...',
         'Browse and enable plugins from the Build With Google catalog.': '浏览并启用 Build With Google 目录中的插件。',
         'Browse and enable plugins from the Build With Google catalog': '浏览并启用 Build With Google 目录中的插件',
         'Select Project': '选择项目',
@@ -1940,6 +1959,22 @@ electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
             const base = trimmed.replace(/\s*\((?:Preview|preview)\)/i, '').trim();
             const transBase = translationMap[base] || base;
             return `${transBase}（预览）`;
+        }
+
+        // Update button variants (with or without arrow/dots)
+        if (/^Update Available(?:\s*[-—→>]+)?$/i.test(trimmed)) {
+            const hasArrow = /[-—→>]/.test(trimmed);
+            return `有可用更新${hasArrow ? ' →' : ''}`;
+        }
+        if (/^Restart to Update(?:\s*[-—→>]+)?$/i.test(trimmed)) {
+            const hasArrow = /[-—→>]/.test(trimmed);
+            return `重启以应用更新${hasArrow ? ' →' : ''}`;
+        }
+        if (/^Downloading Update(?:\.{3}|…)?$/i.test(trimmed)) {
+            return '正在下载更新...';
+        }
+        if (/^Checking for Updates(?:\.{3}|…)?$/i.test(trimmed)) {
+            return '正在检查更新...';
         }
 
         // Permission prompt & MCP translations

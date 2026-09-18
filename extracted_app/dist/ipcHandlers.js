@@ -105,7 +105,7 @@ function registerIpcHandlers(storageManager) {
     });
     // Auto-updater
     electron_1.ipcMain.handle('updater:apply', async () => {
-        (0, updater_1.broadcastState)({ type: types_1.UpdateState.Ready });
+        return (0, updater_1.applyHostUpdate)();
     });
     electron_1.ipcMain.handle('updater:quit-and-install', () => {
         if (!electron_1.app.isPackaged) {

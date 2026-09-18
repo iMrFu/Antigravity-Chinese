@@ -290,6 +290,14 @@ function applyHostUpdate() {
             quitAndInstall();
             return true;
         case types_1.UpdateState.AvailableForDownload:
+            console.log('[AutoUpdater] Downloading update on user request.');
+            broadcastState({ type: types_1.UpdateState.Downloading });
+            updateMenuState(MenuUpdateStep.DownloadingUpdate);
+            electron_updater_1.autoUpdater.downloadUpdate().catch((err) => {
+                console.error('[AutoUpdater] Failed to download update:', err.message);
+                broadcastState({ type: types_1.UpdateState.AvailableForDownload });
+            });
+            return true;
         case types_1.UpdateState.Downloading:
             // Already downloading; it installs once the download completes.
             console.log('[AutoUpdater] Update already in progress.');
@@ -299,7 +307,7 @@ function applyHostUpdate() {
             return true;
         default:
             // Nothing known yet. Kick off a check so an update can proceed.
-            checkForUpdates();
+            checkForUpdates(true);
             return true;
     }
 }
