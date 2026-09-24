@@ -73,8 +73,29 @@ function serverInstallDir(version) {
 function serverBinaryPath(version) {
     return `${serverInstallDir(version)}/language_server`;
 }
+let _wslAvailableCache = null;
 function isWslAvailable() {
-    return process.platform === 'win32' && fs.existsSync(exports.WSL_EXE);
+    if (process.platform !== 'win32') {
+        return false;
+    }
+    if (_wslAvailableCache !== null) {
+        return _wslAvailableCache;
+    }
+    if (!fs.existsSync(exports.WSL_EXE)) {
+        _wslAvailableCache = false;
+        return false;
+    }
+    try {
+        const res = (0, child_process_1.execFileSync)(exports.WSL_EXE, ['--status'], {
+            encoding: 'buffer',
+            timeout: 2000,
+            stdio: ['ignore', 'pipe', 'pipe']
+        });
+        _wslAvailableCache = true;
+    } catch (_) {
+        _wslAvailableCache = false;
+    }
+    return _wslAvailableCache;
 }
 /**
  * Decodes wsl.exe output. wsl.exe's own messages (e.g. --list) are UTF-16LE

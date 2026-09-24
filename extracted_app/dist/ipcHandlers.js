@@ -49,6 +49,8 @@ const constants_1 = require("./ideInstall/constants");
 const url_1 = require("url");
 const wsl_1 = require("./wsl");
 const menu_1 = require("./menu");
+const node_fs = __importStar(require("fs"));
+const node_path = __importStar(require("path"));
 /**
  * Registers all IPC handlers for the main process.
  */
@@ -339,5 +341,30 @@ function registerIpcHandlers(storageManager) {
     // Relaunches into the given distro, or locally when `distro` is empty.
     electron_1.ipcMain.handle('wsl:connect', (_event, distro) => {
         (0, menu_1.relaunchWithWslDistro)(distro || '');
+    });
+    // Dynamic i18n rules (supports Ctrl + R live hot-reloading)
+    electron_1.ipcMain.on('i18n:get-dynamic-rules-sync', (event) => {
+        try {
+            const candidatePaths = [
+                'D:\\AI\\Antigravity\\Antigravity汉化\\dynamic_rules.json',
+                node_path.join(process.env.LOCALAPPDATA || '', 'Programs', 'antigravity', 'dynamic_rules.json'),
+                node_path.join(process.env.USERPROFILE || '', '.antigravity', 'dynamic_rules.json'),
+            ];
+            let merged = {};
+            for (const p of candidatePaths) {
+                if (node_fs.existsSync(p)) {
+                    try {
+                        const content = node_fs.readFileSync(p, 'utf-8');
+                        const parsed = JSON.parse(content);
+                        Object.assign(merged, parsed);
+                    } catch (e) {
+                        console.error('[i18n] Error reading dynamic rules from ' + p, e);
+                    }
+                }
+            }
+            event.returnValue = merged;
+        } catch (err) {
+            event.returnValue = {};
+        }
     });
 }
