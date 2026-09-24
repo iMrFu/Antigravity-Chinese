@@ -54,6 +54,9 @@ const menu_1 = require("./menu");
 const customScheme_1 = require("./customScheme");
 const settingsService_1 = require("./services/settingsService");
 const ideInstall_1 = require("./ideInstall");
+const provisionSplash_1 = require("./provisionSplash");
+const path = __importStar(require("path"));
+const wsl_1 = require("./wsl");
 const gotTheLock = electron_1.app.requestSingleInstanceLock();
 if (!gotTheLock) {
     electron_1.app.quit();
@@ -78,6 +81,20 @@ let hostBridgeServer;
 const HEADLESS = process.env.ELECTRON_OZONE_PLATFORM_HINT === 'headless';
 // When set, skip LS startup and load this URL directly (for dev iteration).
 const DEV_URL = process.env.DEV_URL;
+// WSL distro to provision and launch the LS in (Windows only, '' = local).
+// Precedence: --wsl-distro switch (empty value forces local) >
+// ANTIGRAVITY_WSL_DISTRO env var > distro persisted from the last session.
+function resolveStartupWslDistro() {
+    if (process.platform !== 'win32') {
+        return '';
+    }
+    if (electron_1.app.commandLine.hasSwitch('wsl-distro')) {
+        return electron_1.app.commandLine.getSwitchValue('wsl-distro');
+    }
+    return (process.env.ANTIGRAVITY_WSL_DISTRO ||
+        (0, wsl_1.readPersistedWslDistro)(path.join(electron_1.app.getPath('userData'), wsl_1.WSL_STATE_FILE)));
+}
+const WSL_DISTRO = resolveStartupWslDistro();
 if (HEADLESS) {
     electron_1.app.commandLine.appendSwitch('ozone-platform', 'headless');
     electron_1.app.commandLine.appendSwitch('headless');
@@ -115,14 +132,9 @@ const PROTOCOL = electron_1.app
 if (!electron_1.app.isDefaultProtocolClient(PROTOCOL)) {
     electron_1.app.setAsDefaultProtocolClient(PROTOCOL);
 }
-electron_1.app.on('second-instance', (event, commandLine) => {
-    const wins = electron_1.BrowserWindow.getAllWindows();
-    if (wins.length > 0) {
-        if (wins[0].isMinimized()) {
-            wins[0].restore();
-        }
-        wins[0].show();
-        wins[0].focus();
+electron_1.app.on('second-instance', (_event, commandLine) => {
+    if (!HEADLESS && hasStartedMainApplication) {
+        (0, utils_1.showOrCreateWindow)((0, languageServer_1.getLsPort)());
         electron_1.app.focus({ steal: true });
     }
     const url = commandLine.find((arg) => arg.startsWith(`${PROTOCOL}://`));
@@ -181,7 +193,7 @@ electron_1.app
         hasStartedMainApplication = true;
         return;
     }
-    if (!fs.existsSync(languageServer_1.LS_BINARY)) {
+    if (!WSL_DISTRO && !fs.existsSync(languageServer_1.LS_BINARY)) {
         const msg = `language_server binary not found at:\n${languageServer_1.LS_BINARY}\n\nPlease build set a valid location.`;
         if (HEADLESS) {
             console.error('ERROR:', msg);
@@ -191,6 +203,39 @@ electron_1.app
         }
         electron_1.app.quit();
         return;
+    }
+    // In WSL mode, make sure the matching server version is installed in the
+    // distro before launching.
+    let wslOptions;
+    if (WSL_DISTRO) {
+        (0, wsl_1.setActiveWslDistro)(WSL_DISTRO);
+        // Created lazily on the first status update, so it only appears when
+        // provisioning actually has work to do (first launch per version).
+        let splash;
+        try {
+            const binaryPath = await (0, wsl_1.ensureServerInstalled)(WSL_DISTRO, electron_1.app.getVersion(), electron_1.app.getName().toLowerCase().includes('insiders'), (status) => {
+                if (!HEADLESS) {
+                    splash ?? (splash = (0, provisionSplash_1.createProvisionSplash)(WSL_DISTRO));
+                    splash.setStatus(status);
+                }
+            });
+            wslOptions = { distro: WSL_DISTRO, binaryPath };
+        }
+        catch (err) {
+            const msg = `Failed to install the server into WSL distro "${WSL_DISTRO}":\n${err.message}`;
+            (0, wsl_1.persistWslDistro)(path.join(electron_1.app.getPath('userData'), wsl_1.WSL_STATE_FILE), '');
+            if (HEADLESS) {
+                console.error('ERROR:', msg);
+            }
+            else {
+                await electron_1.dialog.showErrorBox('WSL setup failed', msg);
+            }
+            electron_1.app.quit();
+            return;
+        }
+        finally {
+            splash?.close();
+        }
     }
     const csrf = crypto.randomUUID();
     console.log(`Starting app (v${electron_1.app.getVersion()}) with dynamic port…`);
@@ -214,6 +259,7 @@ electron_1.app
     try {
         handle = await (0, languageServer_1.startAndMonitorLanguageServer)(targetPort, csrf, {
             headless: HEADLESS,
+            wsl: wslOptions,
             hostBridgeUrl: hostBridgeServer?.url,
             hostBridgeToken: hostBridgeServer?.token,
             onPortChanged: (newPort) => {
@@ -296,6 +342,17 @@ electron_1.app
                 },
             },
         ]);
+        // The app menu bar isn't reachable on Windows (hidden title bar), so
+        // the tray menu also gets the "Connect to WSL" entry.
+        void (0, menu_1.wslConnectMenuTemplate)().then((wslItem) => {
+            if (wslItem) {
+                (0, tray_1.insertTrayMenuItem)(2, wslItem);
+                const reopen = (0, menu_1.wslReopenLocallyTemplate)();
+                if (reopen) {
+                    (0, tray_1.insertTrayMenuItem)(3, reopen);
+                }
+            }
+        });
     }
     // Start checking for app updates.
     (0, updater_1.initAutoUpdater)(HEADLESS, settingsService);

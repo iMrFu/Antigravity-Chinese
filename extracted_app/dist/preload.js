@@ -116,6 +116,10 @@ const electronNativeAPI = {
 const ideAPI = {
     isInstalled: () => electron_1.ipcRenderer.invoke('ide:is-installed'),
 };
+const wslAPI = {
+    getState: () => electron_1.ipcRenderer.invoke('wsl:get-state'),
+    connect: (distro) => electron_1.ipcRenderer.invoke('wsl:connect', distro),
+};
 electron_1.contextBridge.exposeInMainWorld('electronUpdater', updaterAPI);
 electron_1.contextBridge.exposeInMainWorld('dialog', dialogAPI);
 electron_1.contextBridge.exposeInMainWorld('nativeNotifications', notificationAPI);
@@ -126,6 +130,7 @@ electron_1.contextBridge.exposeInMainWorld('deepLink', deepLinkAPI);
 electron_1.contextBridge.exposeInMainWorld('agent', agentAPI);
 electron_1.contextBridge.exposeInMainWorld('electronNative', electronNativeAPI);
 electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
+electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
 
 // DOM Translation Injector to localize the embedded React frontend settings and labels to Chinese.
 (() => {

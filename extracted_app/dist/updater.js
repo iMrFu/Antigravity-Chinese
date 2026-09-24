@@ -153,6 +153,7 @@ function initAutoUpdater(isHeadless, settingsService) {
     else {
         electron_updater_1.autoUpdater.channel = `latest-${process.arch}`;
     }
+    electron_updater_1.autoUpdater.requestHeaders = { 'x-app-version': electron_1.app.getVersion() };
     electron_updater_1.autoUpdater.autoDownload = false;
     electron_updater_1.autoUpdater.autoInstallOnAppQuit = false;
     // Auto-updater event handlers → broadcast to renderer
