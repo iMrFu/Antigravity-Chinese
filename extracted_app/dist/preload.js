@@ -301,6 +301,29 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Checking for updates...': '正在检查更新...',
         'Browse and enable plugins from the Build With Google catalog.': '浏览并启用 Build With Google 目录中的插件。',
         'Browse and enable plugins from the Build With Google catalog': '浏览并启用 Build With Google 目录中的插件',
+        'Planning mode has moved to /plan': '规划模式已迁移至 /plan',
+        'Planning mode has moved to /plan.': '规划模式已迁移至 /plan。',
+        'Planning Mode': '规划模式',
+        'Planning mode': '规划模式',
+        'planning mode': '规划模式',
+        'Plan carefully before executing a task.': '在执行任务前仔细规划。',
+        'Plan carefully before executing a task': '在执行任务前仔细规划',
+        'Use /plan to explicitly ask your agent to generate a structured plan before implementation.': '在实施前使用 /plan 明确要求智能体生成结构化计划。',
+        'Use /plan to explicitly ask your agent to generate a structured plan before implementation': '在实施前使用 /plan 明确要求智能体生成结构化计划',
+        'Run a task autonomously until the goal is achieved.': '自主运行任务直至达成目标。',
+        'Run a task autonomously until the goal is achieved': '自主运行任务直至达成目标',
+        'Run an instruction on a recurring schedule or set a timer.': '按循环计划运行指令或设置定时器。',
+        'Run an instruction on a recurring schedule or set a timer': '按循环计划运行指令或设置定时器',
+        'Interact with web pages and browse the internet.': '与网页交互并浏览互联网。',
+        'Interact with web pages and browse the internet': '与网页交互并浏览互联网',
+        'Align on a plan through an interactive interview.': '通过交互式问答对齐计划。',
+        'Align on a plan through an interactive interview': '通过交互式问答对齐计划',
+        'Coordinate multiple agents to work together.': '协调多个智能体协同工作。',
+        'Coordinate multiple agents to work together': '协调多个智能体协同工作',
+        'Save lessons or instructions for future sessions.': '保存经验或指令以供后续对话使用。',
+        'Save lessons or instructions for future sessions': '保存经验或指令以供后续对话使用',
+        'Perform deep thinking, planning, and multi-perspective reasoning.': '执行深度思考、规划和多角度推理。',
+        'Perform deep thinking, planning, and multi-perspective reasoning': '执行深度思考、规划和多角度推理',
         'Select Project': '选择项目',
         'Ask anything, @ to mention, / for actions': '输入任何问题，输入 @ 提及，输入 / 执行操作',
         'Message Antigravity...': '给 Antigravity 发送消息...',
@@ -2011,6 +2034,19 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             if (lvl) {
                 return `${modelSuffixMatch[1]} ${lvl}`;
             }
+        }
+
+        // Slash commands & Planning mode banner
+        if (/^Planning mode has moved to\s*(\S+)\.?$/i.test(trimmed)) {
+            const m = trimmed.match(/^Planning mode has moved to\s*(\S+)\.?$/i);
+            return `规划模式已迁移至 ${m[1]}`;
+        }
+        if (/^Use\s+(\S+)\s+to explicitly ask your agent to generate a structured plan before implementation\.?$/i.test(trimmed)) {
+            const m = trimmed.match(/^Use\s+(\S+)\s+to explicitly ask your agent to generate a structured plan before implementation\.?$/i);
+            return `在实施前使用 ${m[1]} 明确要求智能体生成结构化计划。`;
+        }
+        if (/^Plan carefully before executing a task\.?$/i.test(trimmed)) {
+            return '在执行任务前仔细规划。';
         }
 
         // "You have used some of your weekly limit..." (with or without ellipsis/duration)
