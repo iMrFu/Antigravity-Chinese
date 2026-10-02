@@ -192,8 +192,11 @@ function initAutoUpdater(isHeadless, settingsService) {
         }
         isManualCheck = false;
     });
-    electron_updater_1.autoUpdater.on('download-progress', () => {
-        broadcastState({ type: types_1.UpdateState.Downloading });
+    electron_updater_1.autoUpdater.on('download-progress', (progressObj) => {
+        broadcastState({
+            type: types_1.UpdateState.Downloading,
+            progress: progressObj ? { percent: progressObj.percent } : undefined,
+        });
         updateMenuState(MenuUpdateStep.DownloadingUpdate);
     });
     electron_updater_1.autoUpdater.on('update-downloaded', (info) => {
@@ -219,6 +222,14 @@ function initAutoUpdater(isHeadless, settingsService) {
             update: { version: info.version },
         });
         updateMenuState(MenuUpdateStep.RestartToUpdate);
+        try {
+            const notif = new electron_1.Notification({
+                title: '更新已准备就绪',
+                body: `Antigravity ${info.version} 下载完成，点击按钮或重启应用即可生效。`,
+                silent: false,
+            });
+            notif.show();
+        } catch (e) {}
     });
     electron_updater_1.autoUpdater.on('error', (err) => {
         console.error('[AutoUpdater] Error:', err.message);
@@ -292,11 +303,27 @@ function applyHostUpdate() {
             return true;
         case types_1.UpdateState.AvailableForDownload:
             console.log('[AutoUpdater] Downloading update on user request.');
-            broadcastState({ type: types_1.UpdateState.Downloading });
+            broadcastState({ type: types_1.UpdateState.Downloading, update: state.update });
             updateMenuState(MenuUpdateStep.DownloadingUpdate);
+            try {
+                const notif = new electron_1.Notification({
+                    title: '正在下载更新',
+                    body: `正在下载 Antigravity ${state.update?.version || ''} 更新包，请稍候...`,
+                    silent: false,
+                });
+                notif.show();
+            } catch (e) {}
             electron_updater_1.autoUpdater.downloadUpdate().catch((err) => {
                 console.error('[AutoUpdater] Failed to download update:', err.message);
-                broadcastState({ type: types_1.UpdateState.AvailableForDownload });
+                broadcastState({ type: types_1.UpdateState.AvailableForDownload, update: state.update });
+                try {
+                    const notif = new electron_1.Notification({
+                        title: '下载更新失败',
+                        body: `更新包下载失败: ${err.message}`,
+                        silent: false,
+                    });
+                    notif.show();
+                } catch (e) {}
             });
             return true;
         case types_1.UpdateState.Downloading:

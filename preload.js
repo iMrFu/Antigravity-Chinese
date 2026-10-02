@@ -112,6 +112,8 @@ const electronNativeAPI = {
     },
     openExternal: (url) => electron_1.ipcRenderer.invoke('shell:open-external', url),
     revealInFilePicker: (path) => electron_1.ipcRenderer.invoke('shell:reveal-in-file-picker', path),
+    showContextMenu: (items) => electron_1.ipcRenderer.invoke('window:show-context-menu', items),
+    closeContextMenu: () => electron_1.ipcRenderer.invoke('window:close-context-menu'),
 };
 const ideAPI = {
     isInstalled: () => electron_1.ipcRenderer.invoke('ide:is-installed'),
@@ -324,6 +326,54 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Save lessons or instructions for future sessions': '保存经验或指令以供后续对话使用',
         'Perform deep thinking, planning, and multi-perspective reasoning.': '执行深度思考、规划和多角度推理。',
         'Perform deep thinking, planning, and multi-perspective reasoning': '执行深度思考、规划和多角度推理',
+        'Ask a quick question without interrupting the main conversation.': '在不中断主对话的情况下快速提问。',
+        'Ask a quick question without interrupting the main conversation': '在不中断主对话的情况下快速提问',
+        'Run until the specified goal is completely finished.': '持续运行直至指定目标完全达成。',
+        'Run until the specified goal is completely finished': '持续运行直至指定目标完全达成',
+        'Run an instruction on a recurring schedule or as a one-time timer.': '按循环计划运行指令或作为单次定时器。',
+        'Run an instruction on a recurring schedule or as a one-time timer': '按循环计划运行指令或作为单次定时器',
+        'Invoke a browser agent for web tasks.': '调用浏览器智能体执行网页任务。',
+        'Invoke a browser agent for web tasks': '调用浏览器智能体执行网页任务',
+        'Interview me to align on a plan.': '通过交互式问答对齐计划。',
+        'Interview me to align on a plan': '通过交互式问答对齐计划',
+        'Invoke a team of agents to autonomously tackle large projects.': '调用智能体团队自主处理大型项目。',
+        'Invoke a team of agents to autonomously tackle large projects': '调用智能体团队自主处理大型项目',
+        'Reflect on recent successes or corrections to capture reusable skills or rules.': '总结近期经验或修正，沉淀为可复用的技能或规则。',
+        'Reflect on recent successes or corrections to capture reusable skills or rules': '总结近期经验或修正，沉淀为可复用的技能或规则',
+        'Invoke the Boost multi-agent orchestrator for complex tasks.': '调用 Boost 多智能体编排器处理复杂任务。',
+        'Invoke the Boost multi-agent orchestrator for complex tasks': '调用 Boost 多智能体编排器处理复杂任务',
+        'Comprehensive guide and reference for the Antigravity Customization System. Use to explain how customizations work, their loading priority, discovery mechanisms, and to guide the creation of skills, rules, plugins, hooks, and MCP servers.': 'Antigravity 自定义系统的全面指南与参考。用于解释自定义工作机制、加载优先级、发现机制，并指导技能、规则、插件、钩子及 MCP 服务的创建。',
+        'Comprehensive guide and reference for the Antigravity Customization System. Use to explain how cu...': 'Antigravity 自定义系统的全面指南与参考。用于解释自定义工作机制、加载优先级、发现机制，并指导技能、规则、插件、钩子及 MCP 服务的创建。',
+        'Comprehensive guide and reference for the Antigravity Customization System. Use to explain how cu…': 'Antigravity 自定义系统的全面指南与参考。用于解释自定义工作机制、加载优先级、发现机制，并指导技能、规则、插件、钩子及 MCP 服务的创建。',
+        'Provides instructions for installing and using the `android` CLI. The `android` command-line tool is a critical tool for Android development and helps you create new Android projects, run Android apps on devices, manage and interact with Android virtual devices (including screenshots and UI inspection), manage Android SDK components, look up official Android documentation, and discover and install official Android skills.': '提供安装和使用 android CLI 的说明。该命令行工具是 Android 开发的关键工具，可帮助创建新项目、在设备上运行应用、管理与交互虚拟设备、管理 SDK 组件等。',
+        'Provides instructions for installing and using the `android` CLI. The `android` command-line tool is a critical to...': '提供安装和使用 android CLI 的说明。该命令行工具是 Android 开发的关键工具，可帮助创建新项目、在设备上运行应用、管理与交互虚拟设备等。',
+        'Provides instructions for installing and using the `android` CLI. The `android` command-line tool is a critical to…': '提供安装和使用 android CLI 的说明。该命令行工具是 Android 开发的关键工具，可帮助创建新项目、在设备上运行应用、管理与交互虚拟设备等。',
+        "Provides instructions for installing and using the 'android' CLI. The 'android' command-line tool is a critical to...": '提供安装和使用 android CLI 的说明。该命令行工具是 Android 开发的关键工具，可帮助创建新项目、在设备上运行应用、管理与交互虚拟设备等。',
+        "Provides instructions for installing and using the 'android' CLI. The 'android' command-line tool is a critical to…": '提供安装和使用 android CLI 的说明。该命令行工具是 Android 开发的关键工具，可帮助创建新项目、在设备上运行应用、管理与交互虚拟设备等。',
+        'Provides a comprehensive guide, quick reference, and sitemap for Google Antigravity (AGY), including the Antigravity CLI (agy), Antigravity 2.0, Antigravity IDE, Python SDK, slash commands, keybindings, and customizations (skills, rules, MCP, sidecars). Activate this skill when the user asks questions about how to use, configure, or customize Antigravity, AGY, the agy CLI, the Antigravity IDE, or Antigravity 2.0.': '提供 Google Antigravity (AGY) 的全面指南、快速参考与站点地图，包括 CLI (agy)、2.0、IDE、Python SDK、斜杠指令、快捷键及自定义配置。',
+        'Provides a comprehensive guide, quick reference, and sitemap for Google Antigravity (AGY), including t...': '提供 Google Antigravity (AGY) 的全面指南、快速参考与站点地图，包括 CLI (agy)、2.0、IDE、Python SDK、斜杠指令、快捷键及自定义配置。',
+        'Provides a comprehensive guide, quick reference, and sitemap for Google Antigravity (AGY), including t…': '提供 Google Antigravity (AGY) 的全面指南、快速参考与站点地图，包括 CLI (agy)、2.0、IDE、Python SDK、斜杠指令、快捷键及自定义配置。',
+        'How to render rich interactive HTML widgets inline in the chat or as standalone artifacts. Use this skill when you want to show the user diagrams, data visualizations, interactive controls, educational walkthroughs, or any rich visual content beyond plain text and markdown.': '如何在对话内嵌或独立工件中渲染丰富的交互式 HTML 小部件。用于向用户展示图表、数据可视化、交互控件等富视觉内容。',
+        'How to render rich interactive HTML widgets inline in the chat or as standalone artifacts. Use this skill when...': '如何在对话内嵌或独立工件中渲染丰富的交互式 HTML 小部件。用于向用户展示图表、数据可视化、交互控件等富视觉内容。',
+        'How to render rich interactive HTML widgets inline in the chat or as standalone artifacts. Use this skill when…': '如何在对话内嵌或独立工件中渲染丰富的交互式 HTML 小部件。用于向用户展示图表、数据可视化、交互控件等富视觉内容。',
+        'Automatically migrate legacy workflows to modern skills across global and workspace configurations. Scans for existing workflows, creates target SKILL.md files, and safely archives old workflow files.': '自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。',
+        'Automatically migrate legacy workflows to modern skills across global and workspace configurations. ...': '自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。',
+        'Automatically migrate legacy workflows to modern skills across global and workspace configurations. …': '自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。',
+        'Automatically migrate legacy workflows to modern skills across global and workspace configurations...': '自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。',
+        'Conversation': '对话',
+        'Conversations': '对话',
+        'Dismiss': '忽略',
+        'dismiss': '忽略',
+        'CLI Project': 'CLI 项目',
+        'CLI Projects': 'CLI 项目',
+        'CLI project': 'CLI 项目',
+        'CLI projects': 'CLI 项目',
+        'No conversations yet': '暂无对话',
+        'No conversations yet.': '暂无对话。',
+        'No conversations': '暂无对话',
+        'No projects yet': '暂无项目',
+        'No projects yet.': '暂无项目。',
+        'No projects': '暂无项目',
         'Select Project': '选择项目',
         'Ask anything, @ to mention, / for actions': '输入任何问题，输入 @ 提及，输入 / 执行操作',
         'Message Antigravity...': '给 Antigravity 发送消息...',
@@ -2043,10 +2093,77 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         }
         if (/^Use\s+(\S+)\s+to explicitly ask your agent to generate a structured plan before implementation\.?$/i.test(trimmed)) {
             const m = trimmed.match(/^Use\s+(\S+)\s+to explicitly ask your agent to generate a structured plan before implementation\.?$/i);
-            return `在实施前使用 ${m[1]} 明确要求智能体生成结构化计划。`;
+            return `使用 ${m[1]} 明确要求智能体在实现前生成结构化规划。`;
         }
         if (/^Plan carefully before executing a task\.?$/i.test(trimmed)) {
             return '在执行任务前仔细规划。';
+        }
+
+        // Slash commands popup dynamic match (e.g. "btw Ask a quick question..." or "goal Run until...")
+        if (/^(?:\/)?(?:btw|goal|schedule|browser|grill-me|teamwork-preview|learn|boost|plan)\b/i.test(trimmed)) {
+            let res = trimmed
+                .replace(/^(\/?btw\s+)Ask a quick question without interrupting the main conversation\.?/i, '$1在不中断主对话的情况下快速提问。')
+                .replace(/^(\/?goal\s+)Run until the specified goal is completely finished\.?/i, '$1持续运行直至指定目标完全达成。')
+                .replace(/^(\/?schedule\s+)Run an instruction on a recurring schedule or as a one-time timer\.?/i, '$1按循环计划运行指令或作为单次定时器。')
+                .replace(/^(\/?browser\s+)Invoke a browser agent for web tasks\.?/i, '$1调用浏览器智能体执行网页任务。')
+                .replace(/^(\/?grill-me\s+)Interview me to align on a plan\.?/i, '$1通过交互式问答对齐计划。')
+                .replace(/^(\/?teamwork-preview\s+)Invoke a team of agents to autonomously tackle large projects\.?/i, '$1调用智能体团队自主处理大型项目。')
+                .replace(/^(\/?learn\s+)Reflect on recent successes or corrections to capture reusable skills or rules\.?/i, '$1总结近期经验或修正，沉淀为可复用的技能或规则。')
+                .replace(/^(\/?boost\s+)Invoke the Boost multi-agent orchestrator for complex tasks\.?/i, '$1调用 Boost 多智能体编排器处理复杂任务。')
+                .replace(/^(\/?plan\s+)Plan carefully before executing a task\.?/i, '$1在执行任务前仔细规划。');
+            if (res !== trimmed) return res;
+        }
+
+        // Skills popup dynamic match (with full text or truncated with ... / …)
+        if (/^(?:\/)?(?:agy-customizations|android-cli|antigravity-guide|generative_ui|migrate-workflows)\b/i.test(trimmed) ||
+            /Comprehensive guide and reference for the Antigravity Customization System/i.test(trimmed) ||
+            /Provides instructions for installing and using the ['`]?android['`]? CLI/i.test(trimmed) ||
+            /Provides a comprehensive guide, quick reference, and sitemap for Google Antigravity/i.test(trimmed) ||
+            /How to render rich interactive HTML widgets inline in the chat/i.test(trimmed) ||
+            /Automatically migrate legacy workflows to modern skills/i.test(trimmed)) {
+            
+            let res = trimmed
+                .replace(/^(\/?agy-customizations\s+)?Comprehensive guide and reference for the Antigravity Customization System[\s\S]*$/i, 
+                    (m, p1) => (p1 || '') + 'Antigravity 自定义系统的全面指南与参考。用于解释自定义工作机制、加载优先级、发现机制，并指导技能、规则、插件、钩子及 MCP 服务的创建。')
+                .replace(/^(\/?android-cli\s+)?Provides instructions for installing and using the [`']?android[`']? CLI[\s\S]*$/i, 
+                    (m, p1) => (p1 || '') + '提供安装和使用 android CLI 的说明。该命令行工具是 Android 开发的关键工具，可帮助创建新项目、在设备上运行应用、管理与交互虚拟设备、管理 SDK 组件等。')
+                .replace(/^(\/?antigravity-guide\s+)?Provides a comprehensive guide, quick reference, and sitemap for Google Antigravity[\s\S]*$/i, 
+                    (m, p1) => (p1 || '') + '提供 Google Antigravity (AGY) 的全面指南、快速参考与站点地图，包括 CLI (agy)、2.0、IDE、Python SDK、斜杠指令、快捷键及自定义配置。')
+                .replace(/^(\/?generative_ui\s+)?How to render rich interactive HTML widgets inline in the chat[\s\S]*$/i, 
+                    (m, p1) => (p1 || '') + '如何在对话内嵌或独立工件中渲染丰富的交互式 HTML 小部件。用于向用户展示图表、数据可视化、交互控件等富视觉内容。')
+                .replace(/^(\/?migrate-workflows\s+)?Automatically migrate legacy workflows to modern skills[\s\S]*$/i, 
+                    (m, p1) => (p1 || '') + '自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。');
+            if (res !== trimmed) return res;
+        }
+
+        // "No X yet" or "No X"
+        if (/^No\s+([A-Za-z\s]+?)\s+yet\.?$/i.test(trimmed)) {
+            const m = trimmed.match(/^No\s+([A-Za-z\s]+?)\s+yet\.?$/i);
+            const nounMap = {
+                'conversations': '对话',
+                'conversation': '对话',
+                'projects': '项目',
+                'project': '项目',
+                'tasks': '任务',
+                'task': '任务',
+                'skills': '技能',
+                'skill': '技能',
+                'rules': '规则',
+                'rule': '规则',
+                'comments': '评论',
+                'comment': '评论',
+                'tools': '工具',
+                'tool': '工具',
+            };
+            const noun = nounMap[m[1].toLowerCase()];
+            if (noun) {
+                return `暂无${noun}`;
+            }
+        }
+
+        // "CLI Project(s)"
+        if (/^CLI\s+Projects?$/i.test(trimmed)) {
+            return 'CLI 项目';
         }
 
         // "You have used some of your weekly limit..." (with or without ellipsis/duration)

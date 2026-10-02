@@ -94,7 +94,17 @@ function resolveStartupWslDistro() {
     return (process.env.ANTIGRAVITY_WSL_DISTRO ||
         (0, wsl_1.readPersistedWslDistro)(path.join(electron_1.app.getPath('userData'), wsl_1.WSL_STATE_FILE)));
 }
-const WSL_DISTRO = resolveStartupWslDistro();
+let WSL_DISTRO = resolveStartupWslDistro();
+/** True if `distro` is currently registered in WSL (false on wsl.exe errors). */
+async function wslDistroExists(distro) {
+    try {
+        return (await (0, wsl_1.listWslDistros)()).some((d) => d.name === distro);
+    }
+    catch (err) {
+        console.error('[WSL] Failed to list distros:', err);
+        return false;
+    }
+}
 if (HEADLESS) {
     electron_1.app.commandLine.appendSwitch('ozone-platform', 'headless');
     electron_1.app.commandLine.appendSwitch('headless');
@@ -104,6 +114,7 @@ if (HEADLESS) {
 if (!electron_1.app.commandLine.hasSwitch('remote-debugging-port')) {
     electron_1.app.commandLine.appendSwitch('remote-debugging-port', '0');
 }
+electron_1.app.commandLine.appendSwitch('disable-blink-features', 'AutomationControlled');
 // ---------------------------------------------------------------------------
 // Application Lifecycle
 // ---------------------------------------------------------------------------
@@ -207,6 +218,21 @@ electron_1.app
     // In WSL mode, make sure the matching server version is installed in the
     // distro before launching.
     let wslOptions;
+    if (WSL_DISTRO && !(await wslDistroExists(WSL_DISTRO))) {
+        // The distro was removed since the last session (e.g. `wsl
+        // --unregister`). Open locally instead of failing provisioning.
+        console.warn(`[WSL] Distro "${WSL_DISTRO}" is not installed; opening locally instead.`);
+        (0, wsl_1.persistWslDistro)(path.join(electron_1.app.getPath('userData'), wsl_1.WSL_STATE_FILE), '');
+        if (!HEADLESS) {
+            void electron_1.dialog.showMessageBox({
+                type: 'warning',
+                title: 'WSL distro not found',
+                message: `The WSL distro "${WSL_DISTRO}" is no longer installed.`,
+                detail: 'Antigravity opened on Windows instead.',
+            });
+        }
+        WSL_DISTRO = '';
+    }
     if (WSL_DISTRO) {
         (0, wsl_1.setActiveWslDistro)(WSL_DISTRO);
         // Created lazily on the first status update, so it only appears when
@@ -341,7 +367,10 @@ electron_1.app
                     electron_1.app.quit();
                 },
             },
-        ]);
+        ], () => {
+            (0, utils_1.showOrCreateWindow)((0, languageServer_1.getLsPort)());
+            electron_1.app.focus({ steal: true });
+        });
         // The app menu bar isn't reachable on Windows (hidden title bar), so
         // the tray menu also gets the "Connect to WSL" entry.
         void (0, menu_1.wslConnectMenuTemplate)().then((wslItem) => {
