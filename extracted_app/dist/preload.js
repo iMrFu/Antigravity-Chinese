@@ -469,6 +469,59 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Opus 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026': 'Opus 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限',
         'Claude Sonnet 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026.': 'Claude Sonnet 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限。',
         'Claude Opus 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026.': 'Claude Opus 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限。',
+        'Automations': '自动化',
+        'Automation': '自动化',
+        'automations': '自动化',
+        'automation': '自动化',
+        'Automations Ctrl+U': '自动化 Ctrl+U',
+        'Automations (Ctrl+U)': '自动化 (Ctrl+U)',
+        'Create with Prompt': '使用提示词创建',
+        'Create with prompt': '使用提示词创建',
+        'Create automation': '创建自动化',
+        'Create Automation': '创建自动化',
+        'New Automation': '新建自动化',
+        'New automation': '新建自动化',
+        'Search automations...': '搜索自动化...',
+        'Search automations': '搜索自动化',
+        'Search Automations...': '搜索自动化...',
+        'Search Automations': '搜索自动化',
+        'No automations configured.': '未配置任何自动化。',
+        'No automations configured': '未配置任何自动化',
+        'No automations configured yet.': '尚未配置任何自动化。',
+        'No automations configured yet': '尚未配置任何自动化',
+        'No automations found.': '未找到任何自动化。',
+        'No automations found': '未找到任何自动化',
+        'No automations': '暂无自动化',
+        'No automations yet': '暂无自动化',
+        'No automations yet.': '暂无自动化。',
+        'Configure automation': '配置自动化',
+        'Configure Automation': '配置自动化',
+        'Run automation': '运行自动化',
+        'Run Automation': '运行自动化',
+        'Delete automation': '删除自动化',
+        'Delete Automation': '删除自动化',
+        'Edit automation': '编辑自动化',
+        'Edit Automation': '编辑自动化',
+        'Trigger automation': '触发自动化',
+        'Trigger Automation': '触发自动化',
+        'No Project': '未选择项目',
+        'No project': '未选择项目',
+        'No Projects': '无项目',
+        'No projects': '无项目',
+        'Guide me through creating an automated task': '引导我创建自动化任务',
+        'Guide me through creating an automated task.': '引导我创建自动化任务。',
+        'Guide me through creating an automation': '引导我创建自动化任务',
+        'Guide me through creating an automation.': '引导我创建自动化任务。',
+        'Main Agent': '主智能体',
+        'Main agent': '主智能体',
+        'main agent': '主智能体',
+        'Subagent': '子智能体',
+        'SubAgent': '子智能体',
+        'Sub agent': '子智能体',
+        'Sub-agent': '子智能体',
+        'Sub-agents': '子智能体',
+        'Subagents': '子智能体',
+        'Sub agents': '子智能体',
         'Select Project': '选择项目',
         'Ask anything, @ to mention, / for actions': '输入任何问题，输入 @ 提及，输入 / 执行操作',
         'Message Antigravity...': '给 Antigravity 发送消息...',
@@ -2303,6 +2356,19 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
                 .replace(/([（《])\s+/g, '$1');
         }
 
+        // Automation enabled/disabled notifications & modals
+        const autoEnableMatch = trimmed.match(/^Enabled\s+"([^"]+)"\.?$/i);
+        if (autoEnableMatch) {
+            return `已启用“${autoEnableMatch[1]}”。`;
+        }
+        const autoDisableMatch = trimmed.match(/^Disabled\s+"([^"]+)"\.?$/i);
+        if (autoDisableMatch) {
+            return `已停用“${autoDisableMatch[1]}”。`;
+        }
+        if (/^Agents created by this automation run in a dedicated project with its own permissions/i.test(trimmed)) {
+            return '此自动化任务创建的智能体将在具有独立权限的专用项目中运行。您可以在项目设置页面中修改权限。';
+        }
+
         // "No X yet" or "No X"
         if (/^No\s+([A-Za-z\s]+?)\s+yet\.?$/i.test(trimmed)) {
             const m = trimmed.match(/^No\s+([A-Za-z\s]+?)\s+yet\.?$/i);
@@ -2321,6 +2387,8 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
                 'comment': '评论',
                 'tools': '工具',
                 'tool': '工具',
+                'automations': '自动化',
+                'automation': '自动化',
             };
             const noun = nounMap[m[1].toLowerCase()];
             if (noun) {
@@ -2328,9 +2396,35 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             }
         }
 
+        // "No automations configured"
+        if (/^No automations configured(?:\s+yet)?\.?$/i.test(trimmed)) {
+            return '未配置任何自动化。';
+        }
+
+        // "Automations [shortcut]"
+        if (/^Automations(?:\s+(?:Ctrl\+U|\(Ctrl\+U\)))?$/i.test(trimmed)) {
+            const hasShortcut = /Ctrl\+U/i.test(trimmed);
+            return hasShortcut ? '自动化 Ctrl+U' : '自动化';
+        }
+
         // "CLI Project(s)"
         if (/^CLI\s+Projects?$/i.test(trimmed)) {
             return 'CLI 项目';
+        }
+
+        // "No Project(s)"
+        if (/^No\s+Projects?$/i.test(trimmed)) {
+            return '未选择项目';
+        }
+
+        // "Main Agent"
+        if (/^Main\s+Agent$/i.test(trimmed)) {
+            return '主智能体';
+        }
+
+        // "Guide me through creating an automated task / automation"
+        if (/^Guide me through creating an (?:automated task|automation)\.?$/i.test(trimmed)) {
+            return '引导我创建自动化任务';
         }
 
         // "You have used some of your weekly limit..." (with or without ellipsis/duration)
