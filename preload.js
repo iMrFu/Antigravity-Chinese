@@ -374,6 +374,101 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'No projects yet': '暂无项目',
         'No projects yet.': '暂无项目。',
         'No projects': '暂无项目',
+        'Marketplace': '插件市场',
+        'Installed': '已安装',
+        'Search customizations...': '搜索自定义项...',
+        'Search customizations': '搜索自定义项',
+        'Google Workspace': 'Google Workspace',
+        'Connect to Google Workspace, including Docs, Sheets, Slides, Drive, and Calendar.': '连接到 Google Workspace，包括 Docs、Sheets、Slides、Drive 和 Calendar。',
+        'Connect to Google Workspace, including Docs, Sheets, Slides, Drive, and Calendar': '连接到 Google Workspace，包括 Docs、Sheets、Slides、Drive 和 Calendar',
+        'Google Docs': 'Google Docs',
+        'Read, draft, and edit docs.': '阅读、起草和编辑文档。',
+        'Read, draft, and edit docs': '阅读、起草和编辑文档',
+        'Google Sheets': 'Google Sheets',
+        'Read, write, and format spreadsheets.': '读取、编写和格式化电子表格。',
+        'Read, write, and format spreadsheets': '读取、编写和格式化电子表格',
+        'Google Slides': 'Google Slides',
+        'Read, edit, and export presentations.': '阅读、编辑和导出演示文稿。',
+        'Read, edit, and export presentations': '阅读、编辑和导出演示文稿',
+        'Google Drive': 'Google Drive',
+        'Search, upload, download, and share files.': '搜索、上传、下载和共享文件。',
+        'Search, upload, download, and share files': '搜索、上传、下载和共享文件',
+        'Google Calendar': 'Google Calendar',
+        'Check availability, schedule events, and RSVP.': '查看空闲时间、安排活动并回复邀请。',
+        'Check availability, schedule events, and RSVP': '查看空闲时间、安排活动并回复邀请',
+        'Build with Google': 'Build with Google',
+        'Build on Google\'s developer platforms, including Android, Chrome, Gemini, and Google Cloud.': '在 Google 开发者平台上构建应用，包括 Android、Chrome、Gemini 和 Google Cloud。',
+        'Build on Google\'s developer platforms, including Android, Chrome, Gemini, and Google Cloud': '在 Google 开发者平台上构建应用，包括 Android、Chrome、Gemini 和 Google Cloud',
+        'Gemini API': 'Gemini API',
+        'Build applications with the Gemini Interaction API.': '使用 Gemini 交互 API 构建应用程序。',
+        'Build applications with the Gemini Interaction API': '使用 Gemini 交互 API 构建应用程序',
+        'Build applications with the Gemini Interaction...': '使用 Gemini 交互 API 构建应用程序...',
+        'Build applications with the Gemini Interaction…': '使用 Gemini 交互 API 构建应用程序...',
+        'Chrome DevTools': 'Chrome DevTools',
+        'Reliable automation, in-depth debugging, and performance analysis in Chrome using Chrome DevTools and Puppeteer.': '使用 Chrome DevTools 和 Puppeteer 在 Chrome 中实现可靠的自动化、深度调试和性能分析。',
+        'Reliable automation, in-depth debugging, and performance analysis in Chrome using Chrome DevTools and Puppeteer': '使用 Chrome DevTools 和 Puppeteer 在 Chrome 中实现可靠的自动化、深度调试和性能分析',
+        'Reliable automation, in-depth debugging, and...': '针对网页提供可靠的自动化、深度调试和全面检查...',
+        'Reliable automation, in-depth debugging, and…': '针对网页提供可靠的自动化、深度调试和全面检查...',
+        'Android CLI': 'Android CLI',
+        'Core tools and knowledge required to develop for Android': '开发 Android 所需的核心工具和知识',
+        'Core tools and knowledge required to develop for Android.': '开发 Android 所需的核心工具和知识。',
+        'Core tools and knowledge required to develo...': '开发 Android 所需的核心工具和知识...',
+        'Core tools and knowledge required to develo…': '开发 Android 所需的核心工具和知识...',
+        'Firebase': 'Firebase',
+        'Prototype, build & run modern apps that users love with Firebase.': '使用 Firebase 进行原型设计、构建并运行深受用户喜爱的现代应用。',
+        'Prototype, build & run modern apps that users love with Firebase': '使用 Firebase 进行原型设计、构建并运行深受用户喜爱的现代应用',
+        'Prototype, build & run modern apps that user...': '使用 Firebase 进行原型设计、构建并运行深受用户喜爱的现代应用...',
+        'Prototype, build & run modern apps that user…': '使用 Firebase 进行原型设计、构建并运行深受用户喜爱的现代应用...',
+        'Science': 'Science',
+        'Curated collection of agent skills for science tasks.': '精选的适用于科学任务的智能体技能合集。',
+        'Curated collection of agent skills for science tasks': '精选的适用于科学任务的智能体技能合集',
+        'Curated collection of agent skills for science t...': '精选的适用于科学任务的智能体技能合集...',
+        'Curated collection of agent skills for science t…': '精选的适用于科学任务的智能体技能合集...',
+        'Google Antigravity SDK': 'Google Antigravity SDK',
+        'Using the Google Antigravity Python SDK to build AI agents': '使用 Google Antigravity Python SDK 构建 AI 智能体',
+        'Using the Google Antigravity Python SDK to build AI agents.': '使用 Google Antigravity Python SDK 构建 AI 智能体。',
+        'Using the Google Antigravity Python SDK to build customizations.': '使用 Google Antigravity Python SDK 构建自定义扩展。',
+        'Using the Google Antigravity Python SDK to b...': '使用 Google Antigravity Python SDK 构建自定义扩展...',
+        'Using the Google Antigravity Python SDK to b…': '使用 Google Antigravity Python SDK 构建自定义扩展...',
+        'Modern Web Guidance': 'Modern Web Guidance',
+        'Curated collection of agent skills for modern web development.': '精选的适用于现代 Web 开发的智能体技能合集。',
+        'Curated collection of agent skills for modern web development': '精选的适用于现代 Web 开发的智能体技能合集',
+        'Keep your coding agent up to date with the latest web standards.': '让您的编码智能体紧跟最新的现代 Web 标准。',
+        'Keep your coding agent up to date with the latest web standards': '让您的编码智能体紧跟最新的现代 Web 标准',
+        'Keep your coding agent up to date with the la...': '让您的编码智能体紧跟最新的现代 Web 标准...',
+        'Keep your coding agent up to date with the la…': '让您的编码智能体紧跟最新的现代 Web 标准...',
+        'Google Maps Platform': 'Google Maps Platform',
+        'Integration skill and tools for Google Maps Platform.': 'Google Maps 平台的集成技能与工具。',
+        'Integration skill and tools for Google Maps Platform': 'Google Maps 平台的集成技能与工具',
+        'Integration skill and tools for Google Maps Pl...': 'Google Maps 平台的集成技能与工具...',
+        'Integration skill and tools for Google Maps Pl…': 'Google Maps 平台的集成技能与工具...',
+        'Dart and Flutter': 'Dart and Flutter',
+        'Official plugin for Dart and Flutter that installs SDKs and tooling.': 'Dart 和 Flutter 官方插件，用于安装 SDK 及开发工具。',
+        'Official plugin for Dart and Flutter that installs SDKs and tooling': 'Dart 和 Flutter 官方插件，用于安装 SDK 及开发工具',
+        'Official plugin for Dart and Flutter that installs...': 'Dart 和 Flutter 官方插件，用于安装 SDK 及开发工具...',
+        'Official plugin for Dart and Flutter that installs…': 'Dart 和 Flutter 官方插件，用于安装 SDK 及开发工具...',
+        'Data Agent Kit': 'Data Agent Kit',
+        'This plugin provides a specialized suite of skills for data analytics and exploration.': '此插件提供用于数据分析与探索的专用技能套件。',
+        'This plugin provides a specialized suite of skills for data analytics and exploration': '此插件提供用于数据分析与探索的专用技能套件',
+        'This plugin provides a specialized suite of skill...': '此插件提供用于数据分析与探索的专用技能套件...',
+        'This plugin provides a specialized suite of skill…': '此插件提供用于数据分析与探索的专用技能套件...',
+        'Third-Party Model Access Changes': '第三方模型访问变更',
+        'Third-party model access changes': '第三方模型访问变更',
+        'Third-Party Model Access Change': '第三方模型访问变更',
+        'Third-party model access change': '第三方模型访问变更',
+        'Opus 5.5 and Sonnet 5.5 are now available in paid Pro and Ultra plans. Starting November 2, 2026, your current plan will no longer provide third-party model access.': 'Opus 5.5 和 Sonnet 5.5 现在可在付费的 Pro 和 Ultra 计划中使用。自 2026 年 11 月 2 日起，您当前计划将不再提供第三方模型访问权限。',
+        'Opus 5.5 and Sonnet 5.5 are now available on paid Pro and Ultra plans. Starting November 2, 2026, your current plan will no longer provide access to third-party models.': 'Opus 5.5 和 Sonnet 5.5 现在可在付费的 Pro 和 Ultra 计划中使用。自 2026 年 11 月 2 日起，您当前计划将不再提供第三方模型访问权限。',
+        'Notice': '通知',
+        'notice': '通知',
+        'Limited time': '限时',
+        'Limited Time': '限时',
+        'limited time': '限时',
+        'Sonnet 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026.': 'Sonnet 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限。',
+        'Sonnet 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026': 'Sonnet 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限',
+        'Opus 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026.': 'Opus 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限。',
+        'Opus 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026': 'Opus 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限',
+        'Claude Sonnet 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026.': 'Claude Sonnet 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限。',
+        'Claude Opus 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026.': 'Claude Opus 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限。',
         'Select Project': '选择项目',
         'Ask anything, @ to mention, / for actions': '输入任何问题，输入 @ 提及，输入 / 执行操作',
         'Message Antigravity...': '给 Antigravity 发送消息...',
@@ -1684,6 +1779,23 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             .trim();
     }
 
+    function translateDate(dateStr) {
+        const months = {
+            'january': '1', 'february': '2', 'march': '3', 'april': '4',
+            'may': '5', 'june': '6', 'july': '7', 'august': '8',
+            'september': '9', 'october': '10', 'november': '11', 'december': '12',
+            'jan': '1', 'feb': '2', 'mar': '3', 'apr': '4',
+            'jun': '6', 'jul': '7', 'aug': '8',
+            'sep': '9', 'oct': '10', 'nov': '11', 'dec': '12'
+        };
+        const m = dateStr.match(/([A-Za-z]+)\s+(\d+),\s*(\d{4})/);
+        if (m) {
+            const mon = months[m[1].toLowerCase()] || m[1];
+            return `${m[3]} 年 ${mon} 月 ${m[2]} 日`;
+        }
+        return dateStr;
+    }
+
     function shouldSkipElement(el) {
         if (!el || el.nodeType !== 1) return false;
         const tag = el.tagName ? el.tagName.toLowerCase() : '';
@@ -2134,6 +2246,61 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
                 .replace(/^(\/?migrate-workflows\s+)?Automatically migrate legacy workflows to modern skills[\s\S]*$/i, 
                     (m, p1) => (p1 || '') + '自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。');
             if (res !== trimmed) return res;
+        }
+
+        // Plugin catalog descriptions dynamic matching (full or truncated with ... / …)
+        if (/Build applications with the Gemini Interaction/i.test(trimmed)) {
+            return '使用 Gemini 交互 API 构建应用程序。';
+        }
+        if (/Reliable automation, in-depth debugging/i.test(trimmed)) {
+            return '针对网页提供可靠的自动化、深度调试和全面检查。';
+        }
+        if (/Core tools and knowledge required to develo/i.test(trimmed)) {
+            return '开发 Android 所需的核心工具和知识。';
+        }
+        if (/Prototype, build & run modern apps that user/i.test(trimmed)) {
+            return '使用 Firebase 进行原型设计、构建并运行深受用户喜爱的现代应用。';
+        }
+        if (/Curated collection of agent skills for science/i.test(trimmed)) {
+            return '精选的适用于科学任务的智能体技能合集。';
+        }
+        if (/Using the Google Antigravity Python SDK/i.test(trimmed)) {
+            return '使用 Google Antigravity Python SDK 构建自定义扩展。';
+        }
+        if (/Keep your coding agent up to date with the la/i.test(trimmed)) {
+            return '让您的编码智能体紧跟最新的现代 Web 标准。';
+        }
+        if (/Integration skill and tools for Google Maps/i.test(trimmed)) {
+            return 'Google Maps 平台的集成技能与工具。';
+        }
+        if (/Official plugin for Dart and Flutter that installs/i.test(trimmed)) {
+            return 'Dart 和 Flutter 官方插件，用于安装 SDK 及开发工具。';
+        }
+        if (/This plugin provides a specialized suite of skill/i.test(trimmed)) {
+            return '此插件提供用于数据分析与探索的专用技能套件。';
+        }
+        if (/Connect to Google Workspace, including Docs, Sheets, Slides, Drive/i.test(trimmed)) {
+            return '连接到 Google Workspace，包括 Docs、Sheets、Slides、Drive 和 Calendar。';
+        }
+        if (/Build on Google's developer platforms, including Android, Chrome, Gemini/i.test(trimmed)) {
+            return '在 Google 开发者平台上构建应用，包括 Android、Chrome、Gemini 和 Google Cloud。';
+        }
+
+        // Third-party model notices & tooltips
+        const tpModelMatch = trimmed.match(/^([\s\S]+?)\s+is now available on paid Pro and Ultra plans\.\s*Third-party model access will no longer be available on your current plan starting on\s+([A-Za-z]+\s+\d+,\s+\d{4})\.?$/i);
+        if (tpModelMatch) {
+            return `${tpModelMatch[1]} 现已面向付费的 Pro 和 Ultra 计划推出。自 ${translateDate(tpModelMatch[2])} 起，您当前的计划将不再提供第三方模型访问权限。`;
+        }
+
+        const tpModelMatch2 = trimmed.match(/^([\s\S]+?)\s+(?:is|are) now available (?:on|in) paid Pro and Ultra plans\.?\s*Starting (?:on\s+)?([A-Za-z]+\s+\d+,\s+\d{4}),\s*your current plan will no longer (?:provide|include) (?:access to )?third-party models?\.?$/i);
+        if (tpModelMatch2) {
+            return `${tpModelMatch2[1]} 现在可在付费的 Pro 和 Ultra 计划中使用。从 ${translateDate(tpModelMatch2[2])} 起，您当前计划将不再提供第三方模型访问权限。`;
+        }
+
+        if (/Opus.*Sonnet.*(?:Pro|Ultra)/i.test(trimmed) || /第三方模型访问变更/i.test(trimmed)) {
+            return trimmed
+                .replace(/\s+([，。！？；：])/g, '$1')
+                .replace(/([（《])\s+/g, '$1');
         }
 
         // "No X yet" or "No X"
