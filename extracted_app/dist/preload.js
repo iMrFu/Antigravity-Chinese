@@ -255,6 +255,75 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Off': '关闭',
         'Enabled': '已启用',
         'Disabled': '已禁用',
+        'Enable': '启用',
+        'enable': '启用',
+        'Disable': '停用',
+        'disable': '停用',
+        'Access grants': '授予的访问权限',
+        'Access Grants': '授予的访问权限',
+        'Commands and files these agents can use.': '这些智能体可以使用的命令和文件。',
+        'Commands and files these agents can use': '这些智能体可以使用的命令和文件',
+        'Review permissions': '审查权限',
+        'Review Permissions': '审查权限',
+        'Manage Permissions': '管理权限',
+        'Manage permissions': '管理权限',
+        'Restart': '重启',
+        'restart': '重启',
+        'Restart automation': '重启自动化',
+        'Restart Automation': '重启自动化',
+        'Type': '类型',
+        'type': '类型',
+        'Uptime': '运行时间',
+        'uptime': '运行时间',
+        'Events': '事件',
+        'events': '事件',
+        'Event': '事件',
+        'event': '事件',
+        'No events recorded.': '未记录任何事件。',
+        'No events recorded': '未记录任何事件',
+        'No events found.': '未找到任何事件。',
+        'No events found': '未找到任何事件',
+        'No events': '暂无事件',
+        'No events yet': '暂无事件',
+        'No events yet.': '暂无事件。',
+        'No folders added yet.': '尚未添加任何文件夹。',
+        'No folders added yet': '尚未添加任何文件夹',
+        'No folders added.': '未添加任何文件夹。',
+        'No folders added': '未添加任何文件夹',
+        'Inherit Global': '继承全局',
+        'inherit global': '继承全局',
+        'Inherits your Global Permissions when working in this project.': '在此项目中工作时继承您的全局权限。',
+        'Inherits your Global Permissions when working in this project': '在此项目中工作时继承您的全局权限',
+        'Plan Review Policy': '规划审查策略',
+        'Plan review policy': '规划审查策略',
+        'Type / and select plan to have the agent propose a structured plan before executing.': '输入 / 并选择 plan，让智能体在执行前提出结构化计划。',
+        'Type / and select plan to have the agent propose a structured plan before executing': '输入 / 并选择 plan，让智能体在执行前提出结构化计划',
+        'The breakdown below shows token usage from customizations like rules, skills, and MCP. If a budget is exceeded, large rules are demoted to path pointers and large customizations are excluded automatically.': '下方明细显示了来自规则、技能和 MCP 等自定义项的 Token 使用情况。如果超出预算，大型规则将降级为路径指针，且大型自定义项将自动排除。',
+        'Other Customizations': '其他自定义',
+        'other customizations': '其他自定义',
+        'Mcp Tools': 'MCP 工具',
+        'mcp tools': 'MCP 工具',
+        'MCP Tools': 'MCP 工具',
+        'MCP tools': 'MCP 工具',
+        'Global': '全局',
+        'global': '全局',
+        'Leaving Soon': '即将下线',
+        'Leaving soon': '即将下线',
+        'leaving soon': '即将下线',
+        'Project already exists': '项目已存在',
+        'Project already exists.': '项目已存在。',
+        'Create New': '新建',
+        'Create new': '新建',
+        'create new': '新建',
+        'Use Existing': '使用现有项目',
+        'Use existing': '使用现有项目',
+        'use existing': '使用现有项目',
+        'already exists for this folder. Would you like to continue using it or make a new one?': '已存在于此文件夹。您想继续使用它还是新建一个？',
+        'already exists for this folder. Would you like to continue using it or create a new one?': '已存在于此文件夹。您想继续使用它还是新建一个？',
+        'already exists for this folder.': '已存在于此文件夹。',
+        'already exists for this folder': '已存在于此文件夹',
+        'Would you like to continue using it or make a new one?': '您想继续使用它还是新建一个？',
+        'Would you like to continue using it or create a new one?': '您想继续使用它还是新建一个？',
         'Yes': '是',
         'No': '否',
         'Close': '关闭',
@@ -522,8 +591,18 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Sub-agents': '子智能体',
         'Subagents': '子智能体',
         'Sub agents': '子智能体',
-        'Select Project': '选择项目',
         'Ask anything, @ to mention, / for actions': '输入任何问题，输入 @ 提及，输入 / 执行操作',
+        'Ask anything, @ to mention, / for actions.': '输入任何问题，输入 @ 提及，输入 / 执行操作。',
+        'Ask anything': '输入任何问题',
+        'Ask anything,': '输入任何问题，',
+        '@ to mention': '输入 @ 提及',
+        '@ to mention,': '输入 @ 提及，',
+        'to mention': '提及',
+        'to mention,': '提及，',
+        '/ for actions': '输入 / 执行操作',
+        '/ for actions.': '输入 / 执行操作。',
+        'for actions': '执行操作',
+        'for actions.': '执行操作。',
         'Message Antigravity...': '给 Antigravity 发送消息...',
         'Type a message...': '输入消息...',
         'Send': '发送',
@@ -1470,9 +1549,22 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Advanced Settings': '高级设置',
         'Advanced Settings >': '高级设置 >',
         'Advanced Settings ›': '高级设置 ›',
+        'Advanced Settings ˇ': '高级设置 ˇ',
+        'Advanced Settings ˅': '高级设置 ˅',
+        'Advanced Settings v': '高级设置 v',
+        'Advanced Settings ▼': '高级设置 ▼',
         'Advanced settings': '高级设置',
         'Advanced settings >': '高级设置 >',
         'Advanced settings ›': '高级设置 ›',
+        'Advanced settings ˇ': '高级设置 ˇ',
+        'Advanced settings ˅': '高级设置 ˅',
+        'Advanced settings v': '高级设置 v',
+        'Advanced settings ▼': '高级设置 ▼',
+        'Version': '版本',
+        'version': '版本',
+        'App version': '应用版本',
+        'App Version': '应用版本',
+        'app version': '应用版本',
         'Automatic Check for Updates': '自动检查更新',
         'Automatic check for updates': '自动检查更新',
         'Automatically Check for Updates': '自动检查更新',
@@ -1721,8 +1813,23 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Allow terminal command?': '允许执行终端命令？',
         'Allow running this command?': '允许运行此命令？',
         'Allow running these commands?': '允许运行这些命令？',
+        'Allow reading this URL?': '允许读取此 URL？',
+        'Allow reading this URL': '允许读取此 URL',
+        'Allow reading these URLs?': '允许读取这些 URL？',
+        'Allow reading these URLs': '允许读取这些 URL',
+        'Allow access to this URL?': '允许访问此 URL？',
+        'Allow access to this URL': '允许访问此 URL',
+        'Allow accessing this URL?': '允许访问此 URL？',
+        'Allow accessing this URL': '允许访问此 URL',
+        'Allow opening this URL?': '允许打开此 URL？',
+        'Allow opening this URL': '允许打开此 URL',
+        'Allow fetching this URL?': '允许获取此 URL？',
+        'Allow fetching this URL': '允许获取此 URL',
         'Allow network access to this URL?': '允许网络访问此 URL？',
         'Allow browser actuation access to this URL?': '允许对该 URL 进行浏览器操作？',
+        'Submit ↵': '提交 ↵',
+        'Submit \u21b5': '提交 ↵',
+        'Submit\u21b5': '提交 ↵',
         'Yes, allow this time': '是，仅本次允许',
         'Yes, allow once': '是，仅允许一次',
         'Yes, and always allow in this conversation': '是，且在此对话中始终允许',
@@ -1824,11 +1931,18 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
 
     function translateDuration(str) {
         return str
-            .replace(/(\d+)\s+days?/gi, '$1 天')
-            .replace(/(\d+)\s+hours?/gi, '$1 小时')
-            .replace(/(\d+)\s+minutes?/gi, '$1 分钟')
-            .replace(/(\d+)\s+seconds?/gi, '$1 秒')
+            .replace(/(\d+)\s*days?/gi, '$1 天')
+            .replace(/(\d+)\s*d\b/gi, '$1 天')
+            .replace(/(\d+)\s*hours?/gi, '$1 小时')
+            .replace(/(\d+)\s*h\b/gi, '$1 小时')
+            .replace(/(\d+)\s*minutes?/gi, '$1 分钟')
+            .replace(/(\d+)\s*mins?\b/gi, '$1 分钟')
+            .replace(/(\d+)\s*m\b/gi, '$1 分钟')
+            .replace(/(\d+)\s*seconds?/gi, '$1 秒')
+            .replace(/(\d+)\s*secs?\b/gi, '$1 秒')
+            .replace(/(\d+)\s*s\b/gi, '$1 秒')
             .replace(/,\s*/g, ' ')
+            .replace(/\s+/g, ' ')
             .trim();
     }
 
@@ -1849,31 +1963,39 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         return dateStr;
     }
 
+    function isPlaceholderNode(node) {
+        if (!node) return false;
+        const text = (node.nodeValue || node.textContent || '').trim();
+        if (/Ask anything|Message Antigravity|Type a message/i.test(text)) {
+            return true;
+        }
+        const el = node.nodeType === 1 ? node : node.parentElement;
+        try {
+            if (el && el.closest && el.closest('.placeholder, .editor-placeholder, .monaco-placeholder, [data-placeholder], [aria-placeholder], .empty-editor, [data-ph], [data-empty-text]')) {
+                return true;
+            }
+        } catch (_) {}
+        return false;
+    }
+
     function shouldSkipElement(el) {
         if (!el || el.nodeType !== 1) return false;
         const tag = el.tagName ? el.tagName.toLowerCase() : '';
-        if (tag === 'code' || tag === 'pre' || tag === 'input' || tag === 'textarea' || tag === 'script' || tag === 'style') {
+        if (tag === 'script' || tag === 'style' || tag === 'noscript') {
             return true;
         }
-        const cls = el.className;
-        if (typeof cls === 'string' && (
-            cls.includes('monaco-editor') ||
-            cls.includes('editor-container') ||
-            cls.includes('code-block') ||
-            cls.includes('mtk') ||
-            cls.includes('view-lines')
-        )) {
+        if (tag === 'input' || tag === 'textarea') {
             return true;
         }
         return false;
     }
 
     function shouldSkipTranslation(node) {
+        if (isPlaceholderNode(node)) return false;
         const parent = node.parentElement;
         if (!parent) return false;
-        if (shouldSkipElement(parent)) return true;
         try {
-            if (parent.closest('code, pre, input, textarea, script, style, .monaco-editor, .mtk, .view-lines, .editor-container, .code-block')) {
+            if (parent.closest('pre:not(.placeholder):not(.editor-placeholder), code:not(.placeholder):not(.editor-placeholder), script, style')) {
                 return true;
             }
         } catch (_) {}
@@ -1881,11 +2003,57 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
     }
 
     function translateText(text) {
-        const normalized = text.replace(/\u00a0/g, ' ');
+        if (!text || typeof text !== 'string') return null;
+        const normalized = text
+            .replace(/[\u00a0\u200b\u2009\u3000]/g, ' ')
+            .replace(/[\u2018\u2019]/g, "'")
+            .replace(/[\u201C\u201D]/g, '"');
         const trimmed = normalized.trim();
         if (!trimmed) return null;
+
+        const leadingSpace = text.match(/^\s*/)[0];
+        const trailingSpace = text.match(/\s*$/)[0];
+
         if (translationMap[trimmed]) {
-            return text.replace(trimmed, translationMap[trimmed]);
+            return leadingSpace + translationMap[trimmed] + trailingSpace;
+        }
+        if (translationMap[trimmed.toLowerCase()]) {
+            return leadingSpace + translationMap[trimmed.toLowerCase()] + trailingSpace;
+        }
+
+        // Numbered list items / prompt options (e.g. "1 Yes, allow this time", "5 No (tell the agent what to do instead)")
+        const nm = trimmed.match(/^(?:(?:\(|\[)?(\d+)(?:\)|\]|[.、])?)\s+([\s\S]+)$/);
+        if (nm) {
+            const tr = translateText(nm[2]);
+            if (tr && tr !== nm[2]) {
+                const prefix = trimmed.startsWith('(') ? `(${nm[1]}) ` : (trimmed.startsWith('[') ? `[${nm[1]}] ` : `${nm[1]} `);
+                return leadingSpace + prefix + tr.trim() + trailingSpace;
+            }
+        }
+
+        // Enter / Return symbol handler (e.g. "Submit ↵", "Submit ⏎")
+        const em = trimmed.match(/^(.+?)\s*([↵⏎\u21b5\u23ce\u21a9])$/);
+        if (em) {
+            const tb = translateText(em[1]);
+            if (tb && tb !== em[1]) {
+                return leadingSpace + tb.trim() + ' ' + em[2] + trailingSpace;
+            }
+        }
+
+        // URL Permission prompt: "Allow reading/accessing/opening/fetching this/these URL(s)?"
+        const urlMatch = trimmed.match(/^Allow\s+(reading|accessing|access\s+to|opening|fetching)\s+(this|these)\s+URLs?\??$/i);
+        if (urlMatch) {
+            const act = urlMatch[1].toLowerCase().replace(/\s+/g, ' ');
+            const plural = urlMatch[2].toLowerCase() === 'these';
+            const actMap = {
+                'reading': '读取',
+                'accessing': '访问',
+                'access to': '访问',
+                'opening': '打开',
+                'fetching': '获取'
+            };
+            const actionText = actMap[act] || '读取';
+            return leadingSpace + `允许${actionText}${plural ? '这些' : '此'} URL？` + trailingSpace;
         }
         
         // --- Dynamic String Translation ---
@@ -1894,7 +2062,7 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         for (let i = 0; i < dynamicRegexRules.length; i++) {
             const rule = dynamicRegexRules[i];
             if (rule.regex.test(trimmed)) {
-                return text.replace(trimmed, trimmed.replace(rule.regex, rule.replacement));
+                return leadingSpace + trimmed.replace(rule.regex, rule.replacement) + trailingSpace;
             }
         }
 
@@ -2241,14 +2409,13 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             return '允许使用这些工具？';
         }
 
-        // Model suffix "High" / "Low" / "Fast" (e.g. "Gemini 3.7 Flash High")
-        const modelSuffixMatch = trimmed.match(/^(.+?)\s+(High|Low|Medium|Fast)$/i);
+        // Model suffix "High" / "Low" / "Medium" / "Fast" (e.g. "Gemini 3.7 Flash High" or "Gemini 3.7 Flash Medium ^")
+        const modelSuffixMatch = trimmed.match(/^(.+?)\s+(High|Low|Medium|Fast)(?:\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd]))?$/i);
         if (modelSuffixMatch && !trimmed.startsWith('Learn more')) {
-            const levelMap = { 'High': '高', 'Low': '低', 'Medium': '中', 'Fast': '快速' };
-            const lvl = levelMap[modelSuffixMatch[2]];
-            if (lvl) {
-                return `${modelSuffixMatch[1]} ${lvl}`;
-            }
+            const levelMap = { 'high': '高', 'low': '低', 'medium': '中', 'fast': '快速' };
+            const lvl = levelMap[modelSuffixMatch[2].toLowerCase()] || modelSuffixMatch[2];
+            const chevron = modelSuffixMatch[3] ? ' ' + modelSuffixMatch[3] : '';
+            return `${modelSuffixMatch[1]} ${lvl}${chevron}`;
         }
 
         // Slash commands & Planning mode banner
@@ -2369,6 +2536,50 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             return '此自动化任务创建的智能体将在具有独立权限的专用项目中运行。您可以在项目设置页面中修改权限。';
         }
 
+        // "Review permissions for <name>"
+        const revPermMatch = trimmed.match(/^Review permissions for\s+([\s\S]+?)$/i);
+        if (revPermMatch) {
+            return `审查 ${revPermMatch[1]} 的权限`;
+        }
+
+        // "Agents created by <name> run in a dedicated project with its own permissions, which you can change anytime in the project settings page. On top of those defaults, <name> requests the access below."
+        const autoPermDescMatch = trimmed.match(/^Agents created by\s+([\s\S]+?)\s+run in a dedicated project with its own permissions,\s*which you can change (?:anytime )?in the project settings page\.\s*On top of those defaults,\s*[\s\S]+?\s+requests the access below\.?$/i);
+        if (autoPermDescMatch) {
+            return `由 ${autoPermDescMatch[1]} 创建的智能体将在具有独立权限的专用项目中运行，您可以随时在项目设置页面中进行修改。在这些默认权限的基础上，该任务还需要申请以下访问权限。`;
+        }
+
+        // "This project was created for the <name> automation and its agents have permissions specific to this automation"
+        const projAutoPermMatch = trimmed.match(/^This project was created for the\s+([\s\S]+?)\s+automation and its agents have permissions specific to this automation(?:\s*\(在此项目中工作时\))?\.?\s*(?:了解更多。?)?$/i);
+        if (projAutoPermMatch) {
+            return `此项目是为 ${projAutoPermMatch[1]} 自动化创建的，其智能体拥有专门针对此自动化的权限（在此项目中工作时）。了解更多。`;
+        }
+
+        // "Project already exists" modal and body
+        const projAlreadyExistsFullMatch = trimmed.match(/^Project\s+([\s\S]+?)\s+already exists for this folder\.\s*Would you like to continue using it or (?:make|create) a new one\??$/i);
+        if (projAlreadyExistsFullMatch) {
+            return `项目 ${projAlreadyExistsFullMatch[1]} 已存在于此文件夹。您想继续使用它还是新建一个？`;
+        }
+        if (/^already exists for this folder\.\s*Would you like to continue using it or (?:make|create) a new one\??$/i.test(trimmed)) {
+            return '已存在于此文件夹。您想继续使用它还是新建一个？';
+        }
+        if (/^already exists for this folder\.?$/i.test(trimmed)) {
+            return '已存在于此文件夹。';
+        }
+        if (/^Would you like to continue using it or (?:make|create) a new one\??$/i.test(trimmed)) {
+            return '您想继续使用它还是新建一个？';
+        }
+
+        // "Ask anything, @ to mention, / for actions"
+        if (/^Ask anything,\s*@\s*to mention,\s*\/\s*for actions\.?$/i.test(trimmed)) {
+            return '输入任何问题，输入 @ 提及，输入 / 执行操作';
+        }
+        if (/^Ask anything,?\s*@\s*to mention/i.test(trimmed)) {
+            return trimmed
+                .replace(/Ask anything,?/gi, '输入任何问题，')
+                .replace(/@\s*to mention,?/gi, '输入 @ 提及，')
+                .replace(/\/\s*for actions\.?/gi, '输入 / 执行操作');
+        }
+
         // "No X yet" or "No X"
         if (/^No\s+([A-Za-z\s]+?)\s+yet\.?$/i.test(trimmed)) {
             const m = trimmed.match(/^No\s+([A-Za-z\s]+?)\s+yet\.?$/i);
@@ -2457,11 +2668,51 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             return `技能 (${skillsMatch[1]})`;
         }
 
+        // "Resets in X"
+        const resetsInMatch = trimmed.match(/^Resets\s+in\s+([\s\S]+?)$/i);
+        if (resetsInMatch) {
+            return `将在 ${translateDuration(resetsInMatch[1])} 后重置`;
+        }
+
+        // "Worked for X [>]"
+        const workedForMatch = trimmed.match(/^Worked\s+for\s+([\s\S]+?)(?:\s*([>›»]))?$/i);
+        if (workedForMatch) {
+            const dur = translateDuration(workedForMatch[1]);
+            const arrow = workedForMatch[2] ? ' ' + workedForMatch[2] : '';
+            return `耗时 ${dur}${arrow}`;
+        }
+
+        // "X finished [>]"
+        const finishedMatch = trimmed.match(/^([\s\S]+?)\s+finished(?:\s*([>›»]))?$/i);
+        if (finishedMatch && !trimmed.startsWith('Not finished')) {
+            const base = finishedMatch[1].trim();
+            const transBase = translationMap[base] || base;
+            const arrow = finishedMatch[2] ? ' ' + finishedMatch[2] : '';
+            return `${transBase} 已完成${arrow}`;
+        }
+
+        // Relative timestamps e.g. "3m ago", "10s ago", "just now"
+        if (/^just\s+now$/i.test(trimmed)) {
+            return '刚刚';
+        }
+        const timeAgoMatch = trimmed.match(/^(\d+)\s*([smhdwy]|seconds?|minutes?|mins?|hours?|days?|weeks?|years?)\s+ago$/i);
+        if (timeAgoMatch) {
+            const dur = translateDuration(`${timeAgoMatch[1]}${timeAgoMatch[2]}`);
+            return `${dur}前`;
+        }
+
         // "Category (X tokens) Y%" / "(X tokens)"
         const tokenBreakdownMatch = trimmed.match(/^(.+?)\s*\(([\d,]+)\s+tokens?\)\s*([\d.]+%?)$/i);
         if (tokenBreakdownMatch) {
-            const catMap = { 'Skills': '技能', 'Rules': '规则', 'Plugins': '插件', 'MCP': 'MCP', '技能': '技能', '规则': '规则', '插件': '插件' };
-            const cat = catMap[tokenBreakdownMatch[1]] || tokenBreakdownMatch[1];
+            const catMap = {
+                'Skills': '技能', 'skills': '技能',
+                'Rules': '规则', 'rules': '规则',
+                'Plugins': '插件', 'plugins': '插件',
+                'Subagents': '子智能体', 'subagents': '子智能体',
+                'Mcp Tools': 'MCP 工具', 'mcp tools': 'MCP 工具', 'MCP Tools': 'MCP 工具', 'MCP tools': 'MCP 工具',
+                'MCP': 'MCP', 'mcp': 'MCP'
+            };
+            const cat = catMap[tokenBreakdownMatch[1]] || translationMap[tokenBreakdownMatch[1]] || tokenBreakdownMatch[1];
             return `${cat} (${tokenBreakdownMatch[2]} 个 Token) ${tokenBreakdownMatch[3]}`;
         }
         const tokensOnlyMatch = trimmed.match(/^\(([\d,]+)\s+tokens?\)$/i);
@@ -2469,30 +2720,48 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             return `(${tokensOnlyMatch[1]} 个 Token)`;
         }
 
-        // "Local [^∧>›v∨˅]"
-        const localMatch = trimmed.match(/^Local\s*([\^∧>›v∨˅]?)$/i);
+        // "Local [chevrons]"
+        const localMatch = trimmed.match(/^Local(?:\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd]))?$/i);
         if (localMatch) {
             return `本地${localMatch[1] ? ' ' + localMatch[1] : ''}`;
         }
 
-        // "New Worktree [^∧>›v∨˅]"
-        const newWorktreeMatch = trimmed.match(/^New\s+Worktree\s*([\^∧>›v∨˅]?)$/i);
+        // "Main Agent [chevrons]"
+        const mainAgentMatch = trimmed.match(/^Main\s+Agent(?:\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd]))?$/i);
+        if (mainAgentMatch) {
+            return `主智能体${mainAgentMatch[1] ? ' ' + mainAgentMatch[1] : ''}`;
+        }
+
+        // "New Worktree [chevrons]"
+        const newWorktreeMatch = trimmed.match(/^New\s+Worktree(?:\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd]))?$/i);
         if (newWorktreeMatch) {
             return `新建工作树${newWorktreeMatch[1] ? ' ' + newWorktreeMatch[1] : ''}`;
         }
 
-        // "Select branch [^∧>›v∨˅]"
-        const selectBranchMatch = trimmed.match(/^Select\s+branch\s*([\^∧>›v∨˅]?)$/i);
+        // "Select branch [chevrons]"
+        const selectBranchMatch = trimmed.match(/^Select\s+branch(?:\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd]))?$/i);
         if (selectBranchMatch) {
             return `选择分支${selectBranchMatch[1] ? ' ' + selectBranchMatch[1] : ''}`;
         }
 
-        // "Commit/Push/Pull/Sync [^∧>›v∨˅]"
-        const gitBtnMatch = trimmed.match(/^(Commit|Push|Pull|Sync)\s*([\^∧>›v∨˅]?)$/i);
+        // "Commit/Push/Pull/Sync [chevrons]"
+        const gitBtnMatch = trimmed.match(/^(Commit|Push|Pull|Sync)(?:\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd]))?$/i);
         if (gitBtnMatch) {
             const actMap = { 'Commit': '提交', 'Push': '推送', 'Pull': '拉取', 'Sync': '同步' };
             const act = actMap[gitBtnMatch[1]] || gitBtnMatch[1];
             return act + (gitBtnMatch[2] ? ' ' + gitBtnMatch[2] : '');
+        }
+
+        // General chevron suffix handler
+        const chevronMatch = trimmed.match(/^(.+?)\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd])$/);
+        if (chevronMatch) {
+            const base = chevronMatch[1].trim();
+            if (!/[▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd]$/.test(base)) {
+                const transBase = translateText(base);
+                if (transBase && transBase !== base) {
+                    return `${transBase} ${chevronMatch[2]}`;
+                }
+            }
         }
 
         // "Show X breakdowns"
@@ -2607,6 +2876,80 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             }
             return '。';
         }
+        // "X question(s)"
+        const questionMatch = trimmed.match(/^(\d+)\s+questions?$/i);
+        if (questionMatch) {
+            return `${questionMatch[1]} 个问题`;
+        }
+
+        // Arrow suffix handler e.g. "Action Name >" or "Action Name ›"
+        const arrowMatch = trimmed.match(/^(.+?)\s*([>›»])$/);
+        if (arrowMatch) {
+            const innerText = arrowMatch[1].trim();
+            if (!/[>›»]$/.test(innerText)) {
+                const innerTrans = translateText(innerText);
+                if (innerTrans && innerTrans !== innerText) {
+                    return `${innerTrans} ${arrowMatch[2]}`;
+                }
+            }
+        }
+
+        // Compound step actions like "Ran commands, edited file", "Running commands, editing file"
+        if (trimmed.includes(',')) {
+            const parts = trimmed.split(/\s*,\s*/);
+            if (parts.length >= 2) {
+                const stepActionMap = {
+                    'running command': '正在运行命令',
+                    'running commands': '正在运行命令',
+                    'ran command': '已运行命令',
+                    'ran commands': '已运行命令',
+                    'executed command': '已执行命令',
+                    'executed commands': '已执行命令',
+                    'editing file': '正在编辑文件',
+                    'editing files': '正在编辑文件',
+                    'edited file': '已编辑文件',
+                    'edited files': '已编辑文件',
+                    'creating file': '正在创建文件',
+                    'creating files': '正在创建文件',
+                    'created file': '已创建文件',
+                    'created files': '已创建文件',
+                    'viewing file': '正在查看文件',
+                    'viewing files': '正在查看文件',
+                    'viewed file': '已查看文件',
+                    'viewed files': '已查看文件',
+                    'reading file': '正在读取文件',
+                    'reading files': '正在读取文件',
+                    'read file': '已读取文件',
+                    'read files': '已读取文件',
+                    'searching code': '正在搜索代码',
+                    'searched code': '已搜索代码',
+                    'searching web': '正在搜索网页',
+                    'searched web': '已搜索网页',
+                    'listing directory': '正在列出目录',
+                    'listed directory': '已列出目录'
+                };
+                let allMatched = true;
+                const transParts = [];
+                for (const p of parts) {
+                    const low = p.toLowerCase();
+                    if (stepActionMap[low]) {
+                        transParts.push(stepActionMap[low]);
+                    } else {
+                        const direct = translationMap[p] || translationMap[low];
+                        if (direct) {
+                            transParts.push(direct);
+                        } else {
+                            allMatched = false;
+                            break;
+                        }
+                    }
+                }
+                if (allMatched) {
+                    return transParts.join('，');
+                }
+            }
+        }
+
         if (/^The browser subagent can be invoked by typing\s*\/browser\s*in the conversation input box\.?$/i.test(trimmed)) {
             return '可以通过在对话输入框中输入 /browser 来调用浏览器子智能体。';
         }
@@ -2616,7 +2959,7 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
 
     function translateAttributes(el) {
         if (!el || el.nodeType !== Node.ELEMENT_NODE) return;
-        const attrs = ['title', 'aria-label', 'data-tooltip', 'placeholder'];
+        const attrs = ['title', 'aria-label', 'data-tooltip', 'placeholder', 'data-placeholder', 'aria-placeholder', 'data-ph', 'data-empty-text', 'data-text'];
         for (let i = 0; i < attrs.length; i++) {
             const attr = attrs[i];
             if (el.hasAttribute(attr)) {
@@ -2630,6 +2973,55 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             }
         }
     }
+
+    function observeShadow(root) {
+        if (!root || root.__i18n_observed) return;
+        root.__i18n_observed = true;
+        try {
+            translateNode(root);
+            const shadowObs = new MutationObserver((mutations) => {
+                for (let i = 0; i < mutations.length; i++) {
+                    const mutation = mutations[i];
+                    if (mutation.type === 'childList') {
+                        for (let j = 0; j < mutation.addedNodes.length; j++) {
+                            translateNode(mutation.addedNodes[j]);
+                        }
+                    } else if (mutation.type === 'characterData') {
+                        const target = mutation.target;
+                        if (!target || shouldSkipTranslation(target)) continue;
+                        const currentVal = target.nodeValue;
+                        if (!currentVal) continue;
+                        const translated = translateText(currentVal);
+                        if (translated !== null && currentVal !== translated) {
+                            target.nodeValue = translated;
+                        }
+                    } else if (mutation.type === 'attributes') {
+                        const target = mutation.target;
+                        if (!target) continue;
+                        translateAttributes(target);
+                    }
+                }
+            });
+            shadowObs.observe(root, {
+                childList: true,
+                subtree: true,
+                characterData: true,
+                attributes: true,
+                attributeFilter: ['title', 'aria-label', 'data-tooltip', 'placeholder', 'data-placeholder', 'aria-placeholder', 'data-ph', 'data-empty-text', 'data-text']
+            });
+        } catch (_) {}
+    }
+
+    try {
+        if (typeof Element !== 'undefined' && Element.prototype && Element.prototype.attachShadow) {
+            const origAttachShadow = Element.prototype.attachShadow;
+            Element.prototype.attachShadow = function(init) {
+                const shadow = origAttachShadow.call(this, init);
+                observeShadow(shadow);
+                return shadow;
+            };
+        }
+    } catch (_) {}
 
     function translateNode(node) {
         if (!node) return;
@@ -2645,6 +3037,28 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             }
         } else if (node.nodeType === Node.ELEMENT_NODE) {
             translateAttributes(node);
+            const tag = node.tagName ? node.tagName.toLowerCase() : '';
+            if (tag === 'iframe' || tag === 'webview') {
+                try {
+                    const doc = node.contentDocument || (node.contentWindow && node.contentWindow.document);
+                    if (doc && doc.body) {
+                        translateNode(doc.body);
+                    }
+                    node.addEventListener('load', () => {
+                        try {
+                            const d = node.contentDocument || (node.contentWindow && node.contentWindow.document);
+                            if (d && d.body) {
+                                translateNode(d.body);
+                            }
+                        } catch (_) {}
+                    }, { once: true });
+                } catch (_) {}
+            }
+            if (node.shadowRoot) {
+                try {
+                    observeShadow(node.shadowRoot);
+                } catch (_) {}
+            }
             if (shouldSkipElement(node)) {
                 return;
             }
@@ -2690,7 +3104,7 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             subtree: true,
             characterData: true,
             attributes: true,
-            attributeFilter: ['title', 'aria-label', 'data-tooltip', 'placeholder']
+            attributeFilter: ['title', 'aria-label', 'data-tooltip', 'placeholder', 'data-placeholder', 'aria-placeholder', 'data-ph', 'data-empty-text', 'data-text']
         });
     }
 

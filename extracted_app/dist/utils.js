@@ -132,7 +132,7 @@ function createWindow(url, storageManager) {
             nodeIntegration: false,
             contextIsolation: true,
             preload: path_1.default.join(__dirname, 'preload.js'),
-            devTools: !electron_1.app.isPackaged,
+            devTools: true,
             // Required for the built-in browser aux pane, which renders web pages
             // in an Electron <webview> guest inside the embedded Agent UI Toolkit.
             webviewTag: true,

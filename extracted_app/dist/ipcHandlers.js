@@ -412,9 +412,11 @@ function registerIpcHandlers(storageManager) {
     electron_1.ipcMain.on('i18n:get-dynamic-rules-sync', (event) => {
         try {
             const candidatePaths = [
-                'D:\\AI\\Antigravity\\Antigravity汉化\\dynamic_rules.json',
+                node_path.join(process.resourcesPath || '', 'dynamic_rules.json'),
                 node_path.join(process.env.LOCALAPPDATA || '', 'Programs', 'antigravity', 'dynamic_rules.json'),
+                node_path.join(process.env.LOCALAPPDATA || '', 'Programs', 'antigravity', 'resources', 'dynamic_rules.json'),
                 node_path.join(process.env.USERPROFILE || '', '.antigravity', 'dynamic_rules.json'),
+                'D:\\AI\\Antigravity\\Antigravity汉化\\dynamic_rules.json',
             ];
             let merged = {};
             for (const p of candidatePaths) {
