@@ -79,10 +79,15 @@ const UPDATE_PENDING_STATES = new Set([
 let updaterInitialized = false;
 let periodicCheckInterval;
 function startAutoUpdateChecks() {
-    // Disabled background silent auto-updates to prevent reverting localization files
-    console.log('[AutoUpdater] Auto update checks disabled for localization safety');
+    if (periodicCheckInterval) {
+        return;
+    }
+    console.log('[AutoUpdater] Starting auto update checks');
+    checkForUpdates();
+    periodicCheckInterval = setInterval(checkForUpdates, CHECK_INTERVAL_MS);
 }
 function stopAutoUpdateChecks() {
+    console.log('[AutoUpdater] Stopping auto update checks');
     if (periodicCheckInterval) {
         clearInterval(periodicCheckInterval);
         periodicCheckInterval = undefined;
@@ -154,8 +159,8 @@ function initAutoUpdater(isHeadless, settingsService) {
         electron_updater_1.autoUpdater.channel = `latest-${process.arch}`;
     }
     electron_updater_1.autoUpdater.requestHeaders = { 'x-app-version': electron_1.app.getVersion() };
-    electron_updater_1.autoUpdater.autoDownload = false;
-    electron_updater_1.autoUpdater.autoInstallOnAppQuit = false;
+    electron_updater_1.autoUpdater.autoDownload = true;
+    electron_updater_1.autoUpdater.autoInstallOnAppQuit = electron_1.app.isPackaged;
     // Auto-updater event handlers → broadcast to renderer
     electron_updater_1.autoUpdater.on('checking-for-update', () => {
         console.log('[AutoUpdater] Checking for update…');

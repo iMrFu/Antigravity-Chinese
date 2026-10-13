@@ -8183,5 +8183,20 @@
   "^(\\d+)[.\\s、)]\\s*Yes, and always allow in this conversation$": "$1 是，且在此对话中始终允许",
   "^(\\d+)[.\\s、)]\\s*Yes, and always allow when not in a project$": "$1 是，且未在项目中时始终允许",
   "^(\\d+)[.\\s、)]\\s*Yes, and always allow$": "$1 是，且始终允许",
-  "^(\\d+)[.\\s、)]\\s*No\\s*\\(tell the agent what to do instead\\)$": "$1 否（告诉智能体替代操作）"
+  "^(\\d+)[.\\s、)]\\s*No\\s*\\(tell the agent what to do instead\\)$": "$1 否（告诉智能体替代操作）",
+  "Global Permissions": "全局权限",
+  "Global permissions": "全局权限",
+  "global permissions": "全局权限",
+  "Global Permission": "全局权限",
+  "Type / and select plan to have the agent generate a plan.": "输入 / 并选择 plan 让智能体生成计划。",
+  "Type / and select plan to have the agent generate a plan": "输入 / 并选择 plan 让智能体生成计划",
+  "and select plan to have the agent generate a plan.": "并选择 plan 让智能体生成计划。",
+  "and select plan to have the agent generate a plan": "并选择 plan 让智能体生成计划",
+  "to have the agent generate a plan.": "让智能体生成计划。",
+  "to have the agent generate a plan": "让智能体生成计划",
+  "and select": "并选择",
+  "^Modified in\\s+(\\d+)\\s+projects?(.*)$": "已在 $1 个项目中修改$2",
+  "^Modified in\\s+(\\d+)\\s+workspaces?(.*)$": "已在 $1 个工作区中修改$2",
+  "^Modified in\\s+(\\d+)\\s+conversations?(.*)$": "已在 $1 个对话中修改$2",
+  "^(?:Type|类型)\\s*\\/?\\s*and select\\s+plan\\s+to have the agent (?:generate a plan|propose a structured plan before executing)\\.?$": "输入 / 并选择 plan 让智能体生成计划。"
 }

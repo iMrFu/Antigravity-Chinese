@@ -290,14 +290,26 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'No folders added yet': '尚未添加任何文件夹',
         'No folders added.': '未添加任何文件夹。',
         'No folders added': '未添加任何文件夹',
+        'Global Permissions': '全局权限',
+        'Global permissions': '全局权限',
+        'global permissions': '全局权限',
+        'Global Permission': '全局权限',
         'Inherit Global': '继承全局',
         'inherit global': '继承全局',
         'Inherits your Global Permissions when working in this project.': '在此项目中工作时继承您的全局权限。',
         'Inherits your Global Permissions when working in this project': '在此项目中工作时继承您的全局权限',
         'Plan Review Policy': '规划审查策略',
         'Plan review policy': '规划审查策略',
+        'Type / and select plan to have the agent generate a plan.': '输入 / 并选择 plan 让智能体生成计划。',
+        'Type / and select plan to have the agent generate a plan': '输入 / 并选择 plan 让智能体生成计划',
         'Type / and select plan to have the agent propose a structured plan before executing.': '输入 / 并选择 plan，让智能体在执行前提出结构化计划。',
         'Type / and select plan to have the agent propose a structured plan before executing': '输入 / 并选择 plan，让智能体在执行前提出结构化计划',
+        'and select plan to have the agent generate a plan.': '并选择 plan 让智能体生成计划。',
+        'and select plan to have the agent generate a plan': '并选择 plan 让智能体生成计划',
+        'to have the agent generate a plan.': '让智能体生成计划。',
+        'to have the agent generate a plan': '让智能体生成计划',
+        'and select': '并选择',
+        'and select ': '并选择 ',
         'The breakdown below shows token usage from customizations like rules, skills, and MCP. If a budget is exceeded, large rules are demoted to path pointers and large customizations are excluded automatically.': '下方明细显示了来自规则、技能和 MCP 等自定义项的 Token 使用情况。如果超出预算，大型规则将降级为路径指针，且大型自定义项将自动排除。',
         'Other Customizations': '其他自定义',
         'other customizations': '其他自定义',
@@ -2054,6 +2066,31 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             };
             const actionText = actMap[act] || '读取';
             return leadingSpace + `允许${actionText}${plural ? '这些' : '此'} URL？` + trailingSpace;
+        }
+
+        // "Type / and select plan to have the agent generate a plan" (or partial node)
+        if (/^(?:Type|类型)\s*\/?\s*and select\s+plan\s+to have the agent (?:generate a plan|propose a structured plan before executing)\.?$/i.test(trimmed)) {
+            return leadingSpace + '输入 / 并选择 plan 让智能体生成计划。' + trailingSpace;
+        }
+        if (/^and select\s+plan\s+to have the agent (?:generate a plan|propose a structured plan before executing)\.?$/i.test(trimmed)) {
+            return leadingSpace + '并选择 plan 让智能体生成计划。' + trailingSpace;
+        }
+        if (/^to have the agent (?:generate a plan|propose a structured plan before executing)\.?$/i.test(trimmed)) {
+            return leadingSpace + '让智能体生成计划。' + trailingSpace;
+        }
+
+        // "Modified in X projects/workspaces/conversations [chevron]"
+        if (/^Modified in\s+(\d+)\s+projects?(.*)$/i.test(trimmed)) {
+            const m = trimmed.match(/^Modified in\s+(\d+)\s+projects?(.*)$/i);
+            return leadingSpace + '已在 ' + m[1] + ' 个项目中修改' + m[2] + trailingSpace;
+        }
+        if (/^Modified in\s+(\d+)\s+workspaces?(.*)$/i.test(trimmed)) {
+            const m = trimmed.match(/^Modified in\s+(\d+)\s+workspaces?(.*)$/i);
+            return leadingSpace + '已在 ' + m[1] + ' 个工作区中修改' + m[2] + trailingSpace;
+        }
+        if (/^Modified in\s+(\d+)\s+conversations?(.*)$/i.test(trimmed)) {
+            const m = trimmed.match(/^Modified in\s+(\d+)\s+conversations?(.*)$/i);
+            return leadingSpace + '已在 ' + m[1] + ' 个对话中修改' + m[2] + trailingSpace;
         }
         
         // --- Dynamic String Translation ---
