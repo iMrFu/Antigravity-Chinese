@@ -1717,14 +1717,29 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Agent Settings': '智能体设置',
         'Security Preset': '安全预设',
         'Security Presets': '安全预设',
+        'Execution Preset': '执行预设',
+        'Execution preset': '执行预设',
+        'Execution Presets': '执行预设',
+        'Execution presets': '执行预设',
+        'Request Review': '请求审查',
+        'Request review': '请求审查',
+        'request review': '请求审查',
+        'Every command requires approval.': '所有命令均需批准。',
+        'Every command requires approval': '所有命令均需批准',
+        'Ask before sensitive operations.': '执行敏感操作前进行提示。',
+        'Ask before sensitive operations': '执行敏感操作前进行提示',
+        'Run all commands without restrictions.': '无限制运行所有命令。',
+        'Run all commands without restrictions': '无限制运行所有命令',
         'Controls the actions the agent can take.': '控制智能体可以执行的操作。',
         'Controls the actions the agent can take': '控制智能体可以执行的操作',
         'Controls terminal execution and file access.': '控制终端执行和文件访问。',
         'Controls terminal execution and file access': '控制终端执行和文件访问',
         'Choose a predefined security preset for the agent. This controls terminal auto-execution policy, and file access policy.': '为智能体选择预定义的安全预设。这控制了终端自动执行策略和文件访问策略。',
         'Choose a predefined security preset for the agent. This controls terminal auto-execution policy, and file access policy': '为智能体选择预定义的安全预设。这控制了终端自动执行策略和文件访问策略',
-        'Learn more about Turbo mode': '了解有关 Turbo 模式的更多信息',
-        'Turbo Mode': 'Turbo 模式',
+        'Learn more about Turbo mode': '了解有关极速模式的更多信息',
+        'Turbo Mode': '极速模式',
+        'Turbo mode': '极速模式',
+        'Turbo': '极速',
         'Agent Behavior': '智能体行为',
         'Artifact Review Policy': '生成物审查策略',
         'Whether the agent asks you to review its documents.': '智能体是否请求您审查其文档。',
@@ -1771,7 +1786,7 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Default': '默认',
         'Full machine': '整机',
         'Full Machine': '整机',
-        'Turbo mode': 'Turbo 模式',
+        'Turbo mode': '极速模式',
         'Custom': '自定义',
         'Requires manual review for all terminal commands and file accesses outside of the working folders.': '对工作文件夹之外的所有终端命令和文件访问进行人工审查。',
         'All terminal commands require review. The agent can read or write to any file in the machine.': '所有终端命令都需要审核。智能体可以读写机器上的任何文件。',
@@ -2790,10 +2805,10 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         }
 
         // General chevron suffix handler
-        const chevronMatch = trimmed.match(/^(.+?)\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd])$/);
+        const chevronMatch = trimmed.match(/^(.+?)\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c4\u02c5\u02c6\u2303\u2304\u25b2\u25b4\u25b5\u25bc\u25be\ufe40\u2228\u23f7\u25bd])$/);
         if (chevronMatch) {
             const base = chevronMatch[1].trim();
-            if (!/[▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd]$/.test(base)) {
+            if (!/[▼▾⌄⌵ˇv∨˅\^∧>›\u02c4\u02c5\u02c6\u2303\u2304\u25b2\u25b4\u25b5\u25bc\u25be\ufe40\u2228\u23f7\u25bd]$/.test(base)) {
                 const transBase = translateText(base);
                 if (transBase && transBase !== base) {
                     return `${transBase} ${chevronMatch[2]}`;
