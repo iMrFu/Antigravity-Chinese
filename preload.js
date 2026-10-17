@@ -2428,14 +2428,15 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             if (u) return `${relTimeMatch[1]} ${u}`;
         }
         
-        // "(Thinking)" / "(Medium)" / "(High)" / "(Low)" inside model names
-        if (/\((?:Thinking|Medium|High|Low|Fast)\)/i.test(trimmed)) {
+        // "(Thinking)" / "(Medium)" / "(High)" / "(Low)" / "(Max)" inside model names
+        if (/\((?:Thinking|Medium|High|Low|Fast|Max)\)/i.test(trimmed)) {
             return trimmed
                 .replace(/\(Thinking\)/gi, '(思考)')
                 .replace(/\(Medium\)/gi, '(中)')
                 .replace(/\(High\)/gi, '(高)')
                 .replace(/\(Low\)/gi, '(低)')
-                .replace(/\(Fast\)/gi, '(快速)');
+                .replace(/\(Fast\)/gi, '(快速)')
+                .replace(/\(Max\)/gi, '(最大)');
         }
 
         // "(Preview)" tag handling
@@ -2482,10 +2483,10 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             return '允许使用这些工具？';
         }
 
-        // Model suffix "High" / "Low" / "Medium" / "Fast" (e.g. "Gemini 3.7 Flash High" or "Gemini 3.7 Flash Medium ^")
-        const modelSuffixMatch = trimmed.match(/^(.+?)\s+(High|Low|Medium|Fast)(?:\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd]))?$/i);
+        // Model suffix "High" / "Low" / "Medium" / "Fast" / "Max" (e.g. "Gemini 3.7 Flash High" or "Claude 5.5 Sonnet Max")
+        const modelSuffixMatch = trimmed.match(/^(.+?)\s+(High|Low|Medium|Fast|Max)(?:\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd]))?$/i);
         if (modelSuffixMatch && !trimmed.startsWith('Learn more')) {
-            const levelMap = { 'high': '高', 'low': '低', 'medium': '中', 'fast': '快速' };
+            const levelMap = { 'high': '高', 'low': '低', 'medium': '中', 'fast': '快速', 'max': '最大' };
             const lvl = levelMap[modelSuffixMatch[2].toLowerCase()] || modelSuffixMatch[2];
             const chevron = modelSuffixMatch[3] ? ' ' + modelSuffixMatch[3] : '';
             return `${modelSuffixMatch[1]} ${lvl}${chevron}`;

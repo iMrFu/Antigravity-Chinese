@@ -8236,5 +8236,7 @@
   "Global settings": "全局设置",
   "Local Settings": "本地设置",
   "Local settings": "本地设置",
-  "^Use\\\\s+(Global|Local|Project|Workspace|Default|Custom)\\\\s+Settings?$": "使用  设置"
+  "^Use\\s+(Global|Local|Project|Workspace|Default|Custom)\\s+Settings?$": "使用$1设置",
+  "Max": "最大",
+  "max": "最大"
 }
