@@ -612,6 +612,22 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Sub-agents': '子智能体',
         'Subagents': '子智能体',
         'Sub agents': '子智能体',
+        'Custom Agents': '自定义智能体',
+        'Custom agents': '自定义智能体',
+        'custom agents': '自定义智能体',
+        'Custom Agent': '自定义智能体',
+        'Custom agent': '自定义智能体',
+        'custom agent': '自定义智能体',
+        'Built-in Agents': '内置智能体',
+        'Built-in agents': '内置智能体',
+        'Builtin Agents': '内置智能体',
+        'Built-in Agent': '内置智能体',
+        'Builtin Agent': '内置智能体',
+        'Built-in agent': '内置智能体',
+        'All Agents': '所有智能体',
+        'Manage Agents': '管理智能体',
+        'MANDATORY specialist subagent for Cloud Firestore Security Rules (firestore.rules). Whenever your task requires creating, authoring, or modifying Firestore Security Rules (firestore.rules), you MUST delegate rules authoring to this subagent rather than writing firestore.rules directly in the main agent.': 'Cloud Firestore 安全规则（firestore.rules）的强制专家级子智能体。每当您的任务需要创建、编写或修改 Firestore 安全规则（firestore.rules）时，您必须将规则编写委托给该子智能体，而不是在主智能体中直接编写 firestore.rules。',
+        'Expert at reviewing Flutter code for accessibility (a11y) issues. Invoke this agent to perform an a11y review of a codebase, pending changes, or PR.': '审查 Flutter 代码无障碍功能（a11y）问题的专家。调用此智能体对代码库、待定更改或 PR 执行无障碍审查。',
         'Ask anything, @ to mention, / for actions': '输入任何问题，输入 @ 提及，输入 / 执行操作',
         'Ask anything, @ to mention, / for actions.': '输入任何问题，输入 @ 提及，输入 / 执行操作。',
         'Ask anything': '输入任何问题',
@@ -2185,8 +2201,20 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         }
 
         // --- Inspector Panel & Sidebar Items ---
-        // "Subagents [X] [>›v∨]"
-        const subagentsMatch = trimmed.match(/^Subagents\s*(\d*)\s*([>›v∨˅]?)$/i);
+        // "Custom Agents [X] [chevrons]"
+        const customAgentsMatch = trimmed.match(/^Custom\s+Agents?\s*(\d*)\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c4\u02c5\u02c6\u2303\u2304\u25b2\u25b4\u25b5\u25bc\u25be\ufe40\u2228\u23f7\u25bd]?)$/i);
+        if (customAgentsMatch) {
+            return `自定义智能体${customAgentsMatch[1] ? ' ' + customAgentsMatch[1] : ''}${customAgentsMatch[2] ? ' ' + customAgentsMatch[2] : ''}`;
+        }
+
+        // "Built-in Agents [X] [chevrons]"
+        const builtInAgentsMatch = trimmed.match(/^Built-?in\s+Agents?\s*(\d*)\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c4\u02c5\u02c6\u2303\u2304\u25b2\u25b4\u25b5\u25bc\u25be\ufe40\u2228\u23f7\u25bd]?)$/i);
+        if (builtInAgentsMatch) {
+            return `内置智能体${builtInAgentsMatch[1] ? ' ' + builtInAgentsMatch[1] : ''}${builtInAgentsMatch[2] ? ' ' + builtInAgentsMatch[2] : ''}`;
+        }
+
+        // "Subagents [X] [chevrons]"
+        const subagentsMatch = trimmed.match(/^Subagents?\s*(\d*)\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c4\u02c5\u02c6\u2303\u2304\u25b2\u25b4\u25b5\u25bc\u25be\ufe40\u2228\u23f7\u25bd]?)$/i);
         if (subagentsMatch) {
             return `子智能体${subagentsMatch[1] ? ' ' + subagentsMatch[1] : ''}${subagentsMatch[2] ? ' ' + subagentsMatch[2] : ''}`;
         }
@@ -2549,6 +2577,14 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
                 .replace(/^(\/?migrate-workflows\s+)?Automatically migrate legacy workflows to modern skills[\s\S]*$/i, 
                     (m, p1) => (p1 || '') + '自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。');
             if (res !== trimmed) return res;
+        }
+
+        // Custom Agents descriptions dynamic matching (full or truncated with ... / …)
+        if (/MANDATORY specialist subagent for Cloud Firestore Security Rules/i.test(trimmed)) {
+            return 'Cloud Firestore 安全规则（firestore.rules）的强制专家级子智能体。每当您的任务需要创建、编写或修改 Firestore 安全规则（firestore.rules）时，您必须将规则编写委托给该子智能体，而不是在主智能体中直接编写 firestore.rules。';
+        }
+        if (/Expert at reviewing Flutter code for accessibility/i.test(trimmed)) {
+            return '审查 Flutter 代码无障碍功能（a11y）问题的专家。调用此智能体对代码库、待定更改或 PR 执行无障碍审查。';
         }
 
         // Plugin catalog descriptions dynamic matching (full or truncated with ... / …)
