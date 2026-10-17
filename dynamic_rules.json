@@ -8238,5 +8238,13 @@
   "Local settings": "本地设置",
   "^Use\\s+(Global|Local|Project|Workspace|Default|Custom)\\s+Settings?$": "使用$1设置",
   "Max": "最大",
-  "max": "最大"
+  "max": "最大",
+  "Gemini 4 Argon is currently available to Ultra and paid Pro plan subscribers.": "Gemini 4 Argon 目前面向 Ultra 和付费 Pro 计划订阅用户开放。",
+  "Gemini 4 Argon is currently available to Ultra and paid Pro plan subscribers": "Gemini 4 Argon 目前面向 Ultra 和付费 Pro 计划订阅用户开放",
+  "is currently available to Ultra and paid Pro plan subscribers.": "目前面向 Ultra 和付费 Pro 计划订阅用户开放。",
+  "is currently available to Ultra and paid Pro plan subscribers": "目前面向 Ultra 和付费 Pro 计划订阅用户开放",
+  "^([\\s\\S]+?)\\s+is (?:currently\\s+|only\\s+)?available to\\s+Ultra and paid Pro\\s+(?:plan\\s+)?subscribers\\.?$": " 目前面向 Ultra 和付费 Pro 计划订阅用户开放。",
+  "^([\\s\\S]+?)\\s+is (?:currently\\s+|only\\s+)?available to\\s+paid Pro and Ultra\\s+(?:plan\\s+)?subscribers\\.?$": " 目前面向付费 Pro 和 Ultra 计划订阅用户开放。",
+  "^([\\s\\S]+?)\\s+is (?:currently\\s+|only\\s+)?available to\\s+Ultra\\s+(?:plan\\s+)?subscribers\\.?$": " 目前面向 Ultra 计划订阅用户开放。",
+  "^([\\s\\S]+?)\\s+is (?:currently\\s+|only\\s+)?available to\\s+paid Pro\\s+(?:plan\\s+)?subscribers\\.?$": " 目前面向付费 Pro 计划订阅用户开放。"
 }

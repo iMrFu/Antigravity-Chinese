@@ -550,6 +550,15 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Opus 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026': 'Opus 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限',
         'Claude Sonnet 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026.': 'Claude Sonnet 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限。',
         'Claude Opus 5.5 is now available on paid Pro and Ultra plans. Third-party model access will no longer be available on your current plan starting on November 2, 2026.': 'Claude Opus 5.5 现已面向付费的 Pro 和 Ultra 计划推出。自 2026 年 11 月 2 日起，您当前的计划将不再提供第三方模型访问权限。',
+        'Gemini 4 Argon is currently available to Ultra and paid Pro plan subscribers.': 'Gemini 4 Argon 目前面向 Ultra 和付费 Pro 计划订阅用户开放。',
+        'Gemini 4 Argon is currently available to Ultra and paid Pro plan subscribers': 'Gemini 4 Argon 目前面向 Ultra 和付费 Pro 计划订阅用户开放',
+        'is currently available to Ultra and paid Pro plan subscribers.': '目前面向 Ultra 和付费 Pro 计划订阅用户开放。',
+        'is currently available to Ultra and paid Pro plan subscribers': '目前面向 Ultra 和付费 Pro 计划订阅用户开放',
+        'available to Ultra and paid Pro plan subscribers': '面向 Ultra 和付费 Pro 计划订阅用户开放',
+        'Ultra and paid Pro plan subscribers': 'Ultra 和付费 Pro 计划订阅用户',
+        'paid Pro plan subscribers': '付费 Pro 计划订阅用户',
+        'Ultra plan subscribers': 'Ultra 计划订阅用户',
+        'Pro plan subscribers': 'Pro 计划订阅用户',
         'Automations': '自动化',
         'Automation': '自动化',
         'automations': '自动化',
@@ -2595,6 +2604,19 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             return trimmed
                 .replace(/\s+([，。！？；：])/g, '$1')
                 .replace(/([（《])\s+/g, '$1');
+        }
+
+        // Model plan subscriber availability tooltips
+        const modelAvailMatch = trimmed.match(/^([\s\S]+?)\s+is (?:currently\s+|only\s+)?available to\s+([\s\S]+?)\s+(?:plan\s+)?subscribers\.?$/i);
+        if (modelAvailMatch) {
+            let plan = modelAvailMatch[2].trim();
+            plan = plan.replace(/Ultra and paid Pro/i, 'Ultra 和付费 Pro')
+                       .replace(/paid Pro and Ultra/i, '付费 Pro 和 Ultra')
+                       .replace(/paid Pro/i, '付费 Pro')
+                       .replace(/Ultra/i, 'Ultra')
+                       .replace(/Pro/i, 'Pro');
+            const period = trimmed.endsWith('.') ? '。' : '';
+            return `${modelAvailMatch[1]} 目前面向 ${plan} 计划订阅用户开放${period}`;
         }
 
         // Automation enabled/disabled notifications & modals
