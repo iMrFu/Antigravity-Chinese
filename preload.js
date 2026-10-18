@@ -2557,111 +2557,230 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             if (res !== trimmed) return res;
         }
 
-                        // Skills popup dynamic match (with full text or truncated with ... / …)
-        if (/Comprehensive guide and reference for the Antigravity Customization System/i.test(trimmed) ||
-            /Provides instructions for installing and using the [`']?android[`']? CLI/i.test(trimmed) ||
-            /Provides a comprehensive guide, quick reference, and sitemap for Google Antigravity/i.test(trimmed) ||
-            /How to render rich interactive HTML widgets inline in the chat/i.test(trimmed) ||
-            /Automatically migrate legacy workflows to modern skills/i.test(trimmed) ||
-            /Uses Chrome DevTools MCP for accessibility/i.test(trimmed) ||
-            /Interactive guide to design and create a scheduled background automation/i.test(trimmed) ||
-            /Uses Chrome DevTools via MCP for efficient debugging/i.test(trimmed) ||
-            /Build and publish Chrome Extensions using Manifest V3 best practices/i.test(trimmed) ||
-            /Guides debugging and optimizing Largest Contentful Paint/i.test(trimmed) ||
-            /Skill for converting an installed Firebase Extension/i.test(trimmed) ||
-            /Official skill for integrating Firebase AI Logic/i.test(trimmed) ||
-            /Deploys and manages full-stack web applications/i.test(trimmed) ||
-            /Guide for setting up and using Firebase Authentication/i.test(trimmed) ||
-            /Provides foundational Firebase CLI setup/i.test(trimmed) ||
-            /Comprehensive guide for Firebase Crashlytics/i.test(trimmed) ||
-            /Builds and deploys Firebase SQL Connect/i.test(trimmed) ||
-            /Sets up, manages, queries, and configures Cloud Firestore databases/i.test(trimmed) ||
-            /Deploys and configures classic Firebase Hosting for static websites/i.test(trimmed) ||
-            /Manages Firebase Remote Config templates/i.test(trimmed) ||
-            /Audits Firebase \\(Firestore, Cloud Storage\\) security rules/i.test(trimmed) ||
-            /Designs, authors, refactors, and hardens production-grade Cloud Firestore Security Rules/i.test(trimmed) ||
-            /Read, create, and manage Google Calendar events/i.test(trimmed) ||
-            /Read, create, edit, and manage Google Docs/i.test(trimmed) ||
-            /Browse, search, and manage Google Drive files and folders/i.test(trimmed) ||
-            /Use this skill when writing code that calls the Gemini API/i.test(trimmed) ||
-            /Use this skill when building real-time, bidirectional streaming applications with the Gemini Live API/i.test(trimmed) ||
-            /Use this skill for generative video editing, text-to-video/i.test(trimmed) ||
-            /Design, implement, and debug autonomous AI agents and multi-agent systems using the Google Antigravity/i.test(trimmed) ||
-            /Read, write, format, and manage Google Sheets/i.test(trimmed) ||
-            /Read, create, and edit Google Slides presentations/i.test(trimmed) ||
-            /Diagnoses and resolves memory leaks in JavaScript/i.test(trimmed) ||
-            /Search tool for modern web development best practices/i.test(trimmed) ||
-            /Guidelines for interacting with GitHub and request permissions/i.test(trimmed) ||
-            /How to manage and create plugins/i.test(trimmed) ||
-            /Uses Chrome DevTools MCP and documentation to troubleshoot connection/i.test(trimmed) ||
-            /Discover UI plugin panels relevant to the current task/i.test(trimmed) ||
-            /Safely modifies Xcode projects/i.test(trimmed) ||
-            /Guide agents to use [`']?package:ffigen[`']?/i.test(trimmed) ||
-            /Use switch expressions and pattern matching where appropriate/i.test(trimmed) ||
-            /Rules and formatting guidelines for writing Dart/i.test(trimmed) ||
-            /Configures Flutter Driver for app interaction/i.test(trimmed) ||
-            /Adds interactive widget previews to the project/i.test(trimmed) ||
-            /Implement a component-level test using [`']?WidgetTester[`']?/i.test(trimmed) ||
-            /Architects a Flutter application using the recommended layered approach/i.test(trimmed) ||
-            /Use [`']?LayoutBuilder[`']?, [`']?MediaQuery[`']?, or [`']?Expanded/i.test(trimmed) ||
-            /Fixes Flutter layout errors/i.test(trimmed) ||
-            /Create model classes with [`']?fromJson[`']? and [`']?toJson[`']? methods/i.test(trimmed) ||
-            /Configure [`']?MaterialApp\\.router[`']? using a package like [`']?go_router[`']?/i.test(trimmed) ||
-            /Add [`']?flutter_localizations[`']? and [`']?intl[`']? dependencies/i.test(trimmed) ||
-            /Use the [`']?http[`']? package to execute GET, POST, PUT, or DELETE requests/i.test(trimmed)) {
-            let res = trimmed
-                .replace(new RegExp("^(\\\\/?agy-customizations\\\\s+)?Comprehensive guide and reference for the Antigravity Customization System[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "Antigravity 自定义系统的全面指南与参考。用于解释自定义工作机制、加载优先级、发现机制，并指导技能、规则、插件、钩子及 MCP 服务的创建。")
-                .replace(new RegExp("^(\\\\/?android-cli\\\\s+)?Provides instructions for installing and using the [`']?android[`']? CLI[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "提供安装和使用 android CLI 的说明。该命令行工具是 Android 开发的关键工具，可帮助创建新项目、在设备上运行应用、管理与交互虚拟设备、管理 SDK 组件等。")
-                .replace(new RegExp("^(\\\\/?antigravity-guide\\\\s+)?Provides a comprehensive guide, quick reference, and sitemap for Google Antigravity[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "提供 Google Antigravity (AGY) 的全面指南、快速参考与站点地图，包括 CLI (agy)、2.0、IDE、Python SDK、斜杠指令、快捷键及自定义配置。")
-                .replace(new RegExp("^(\\\\/?generative_ui\\\\s+)?How to render rich interactive HTML widgets inline in the chat[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "如何在对话内嵌或独立工件中渲染丰富的交互式 HTML 小部件。用于向用户展示图表、数据可视化、交互控件等富视觉内容。")
-                .replace(new RegExp("^(\\\\/?migrate-workflows\\\\s+)?Automatically migrate legacy workflows to modern skills[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。")
-                .replace(new RegExp("^(\\\\/?a11y-debugging\\\\s+)?Uses Chrome DevTools MCP for accessibility \\\\(a11y\\\\) debugging[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "基于 web.dev 指南，使用 Chrome DevTools MCP 进行无障碍功能（a11y）调试与审核。在测试语义化 HTML、ARIA 标签、焦点状态、键盘导航、点击目标和色彩对比度时使用。")
-                .replace(new RegExp("^(\\\\/?(?:automation|自动化)\\\\s+)?Interactive guide to design and create a scheduled background automation[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "设计和创建定时后台自动化的交互式指南。当用户需要创建自动化或定期计划任务（例如“每天早上汇总我的邮件”、“每周一发送待办清单”）时使用。也可通过 /automation 斜杠指令触发。")
-                .replace(new RegExp("^(\\\\/?chrome-devtools\\\\s+)?Uses Chrome DevTools via MCP for efficient debugging[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "通过 MCP 使用 Chrome DevTools 实现高效调试、故障排查及浏览器自动化。在调试网页、自动化浏览器交互、分析性能或检查网络请求时使用。此技能不适用于 --slim 模式。")
-                .replace(new RegExp("^(\\\\/?chrome-extensions\\\\s+)?Build and publish Chrome Extensions using Manifest V3 best practices[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用 Manifest V3 最佳实践构建和发布 Chrome 扩展程序。每当需要创建、修改、调试或理解 Chrome 浏览器扩展、插件或涉及 Chrome Extensions API 的任何内容时使用。")
-                .replace(new RegExp("^(\\\\/?debug-optimize-lcp\\\\s+)?Guides debugging and optimizing Largest Contentful Paint[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "指导使用 Chrome DevTools MCP 工具调试与优化最大内容绘制（LCP）。当涉及 LCP 性能、页面加载缓慢、Core Web Vitals 优化，或需要排查主页面内容渲染过慢时使用。")
-                .replace(new RegExp("^(\\\\/?extension-to-functions-codebase\\\\s+)?Skill for converting an installed Firebase Extension[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "用于将已安装的 Firebase Extension（或扩展源码）转换为独立的 Cloud Functions for Firebase 代码库或可发布的 npm 包，包含 V1 到 V2 触发器升级、生命周期钩子及声明式安全策略。")
-                .replace(new RegExp("^(\\\\/?firebase-ai-logic-basics\\\\s+)?Official skill for integrating Firebase AI Logic[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "将 Firebase AI Logic (Gemini API) 集成到 Web 应用程序的官方技能。涵盖环境搭建、多模态推理、结构化输出与安全性。")
-                .replace(new RegExp("^(\\\\/?firebase-app-hosting-basics\\\\s+)?Deploys and manages full-stack web applications[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用 Firebase App Hosting 部署和管理具有服务端渲染（SSR）的全栈 Web 应用（Next.js、Angular）。用于部署应用、配置 apphosting.yaml、管理密钥及 CI/CD。")
-                .replace(new RegExp("^(\\\\/?firebase-auth-basics\\\\s+)?Guide for setting up and using Firebase Authentication[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "设置和使用 Firebase Authentication 的指南。当应用需要用户登录、用户管理或基于身份验证规则的安全数据访问时使用。")
-                .replace(new RegExp("^(\\\\/?firebase-basics\\\\s+)?Provides foundational Firebase CLI setup[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "提供 Firebase CLI 基础设置、CLI 安装与版本检查、CLI 登录、项目创建与切换，以及应用配置文件（google-services.json、GoogleService-Info.plist）下载。")
-                .replace(new RegExp("^(\\\\/?firebase-crashlytics\\\\s+)?Comprehensive guide for Firebase Crashlytics[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "Firebase Crashlytics 全面指南，涵盖环境配置及 SDK 使用。当需要在应用中配置 Crashlytics、添加崩溃报告或使用 Crashlytics SDK 时使用。")
-                .replace(new RegExp("^(\\\\/?firebase-data-connect\\\\s+)?Builds and deploys Firebase SQL Connect[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "安全构建和部署基于 PostgreSQL 的 Firebase SQL Connect（又名 Firebase Data Connect）后端。用于设计表结构与关系、编写授权查询与变更、配置实时数据更新及生成类型安全 SDK。")
-                .replace(new RegExp("^(\\\\/?firebase-firestore\\\\s+)?Sets up, manages, queries, and configures Cloud Firestore databases[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "设置、管理、查询和配置 Cloud Firestore 数据库（标准版/企业版），包括数据建模、安全规则、索引以及 SDK 集成（Web、Python、iOS、Android、Flutter）。")
-                .replace(new RegExp("^(\\\\/?firebase-hosting-basics\\\\s+)?Deploys and configures classic Firebase Hosting[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "为静态网站、单页应用（SPA）和微服务部署并配置传统 Firebase Hosting。用于静态站点部署、自定义域名配置、重定向与重写规则设置及预览通道管理。")
-                .replace(new RegExp("^(\\\\/?firebase-remote-config-basics\\\\s+)?Manages Firebase Remote Config templates[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "管理 Firebase Remote Config 模板、功能开关（Feature Flags）、加载策略及 SDK（Android、iOS）。用于配置模板、版本管理、应用内默认值及实时监听。")
-                .replace(new RegExp("^(\\\\/?firebase-security-rules-auditor\\\\s+)?Audits Firebase \\\\(Firestore, Cloud Storage\\\\) security rules[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "审核 Firebase（Firestore、Cloud Storage）安全规则的潜在漏洞、特权提升、角色绕过、创建与更新不一致、资源耗尽、类型安全及所有权检查。")
-                .replace(new RegExp("^(\\\\/?firestore-rules-creation\\\\s+)?Designs, authors, refactors, and hardens production-grade Cloud Firestore Security Rules[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "设计、编写、重构并加固生产级 Cloud Firestore 安全规则（firestore.rules）。")
-                .replace(new RegExp("^(\\\\/?gcalendar\\\\s+)?Read, create, and manage Google Calendar events[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "读取、创建和管理 Google 日历日程。当用户分享日历链接、查询日程安排、查找/创建/修改/删除/移动日程、RSVP 回复、排查日程冲突或设置勿扰/外出时间时使用。")
-                .replace(new RegExp("^(\\\\/?gdocs\\\\s+)?Read, create, edit, and manage Google Docs[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "读取、创建、编辑和管理 Google Docs 文档。当用户分享文档链接、提取/总结文档内容、起草或排版文档、添加评论、插入表格与图像、导入 Markdown 或导出文档时使用。")
-                .replace(new RegExp("^(\\\\/?gdrive\\\\s+)?Browse, search, and manage Google Drive files and folders[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "浏览、搜索和管理 Google 云端硬盘（Google Drive）文件与文件夹。用于查找、下载、上传、重命名、移动、管理共享权限及导出文件（PDF、Markdown、CSV 等）。")
-                .replace(new RegExp("^(\\\\/?gemini-api-dev\\\\s+)?Use this skill when writing code that calls the Gemini API[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "在编写调用 Gemini API 的代码时使用，涵盖文本生成、多轮对话、多模态理解、图像/视频/语音生成、流式响应、函数调用、结构化输出及 SDK 最佳实践（Python/TypeScript）。")
-                .replace(new RegExp("^(\\\\/?gemini-live-api-dev\\\\s+)?Use this skill when building real-time, bidirectional streaming applications with the Gemini Live API[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "在使用 Gemini Live API 构建实时双向流式传输应用或迁移 Live 模型时使用。涵盖基于 WebSocket 的音视频/文本流式传输、语音活动检测（VAD）、扩展思考推理、实时转录与翻译。")
-                .replace(new RegExp("^(\\\\/?gemini-omni-flash-api\\\\s+)?Use this skill for generative video editing, text-to-video[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用 Gemini Omni 1.1 Flash 进行生成式视频编辑、文本生成视频、参考图生成视频、首尾帧过渡及视频拓展。包含 ffmpeg 预处理优化及逐轮视频编辑工作流。")
-                .replace(new RegExp("^(\\\\/?google-antigravity-sdk\\\\s+)?Design, implement, and debug autonomous AI agents[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用 Google Antigravity (AGY) SDK 设计、实现和调试自主 AI 智能体与多智能体系统。当需要创建、配置或编排 Antigravity 智能体时使用。")
-                .replace(new RegExp("^(\\\\/?gsheets\\\\s+)?Read, write, format, and manage Google Sheets[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "读取、写入、格式化和管理 Google 表格（Google Sheets）。用于读取分析表格数据、单元格读写排版、数据排序过滤、数据透视表与图表制作、CSV 导入及表格导出。")
-                .replace(new RegExp("^(\\\\/?gslides\\\\s+)?Read, create, and edit Google Slides presentations[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "读取、创建和编辑 Google 幻灯片演示文稿（Google Slides）。用于新建演示文稿、提取汇总幻灯片内容、起草或修改幻灯片页面及导出演示文稿。")
-                .replace(new RegExp("^(\\\\/?memory-leak-debugging\\\\s+)?Diagnoses and resolves memory leaks in JavaScript[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "诊断并解决 JavaScript/Node.js 应用程序中的内存泄漏问题。当遇到高内存占用、OOM 内存溢出错误，或需要分析堆快照（Heap Snapshot）及使用 memlab 检测时使用。")
-                .replace(new RegExp("^(\\\\/?modern-web-guidance\\\\s+)?Search tool for modern web development best practices[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "现代 Web 开发最佳实践检索工具。涵盖最新的 HTML/CSS 及客户端 JavaScript 规范、Web API、布局、动画与性能优化建议。")
-                .replace(new RegExp("^(\\\\/?permissioned-github\\\\s+)?Guidelines for interacting with GitHub[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "与 GitHub 交互的指导规范。当命令因智能体环境限制失败时，向用户申请执行权限。")
-                .replace(new RegExp("^(\\\\/?plugin\\\\s+)?How to manage and create plugins[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "如何管理和创建插件 —— 将技能、智能体、规则、MCP 服务和钩子打包为可作为整体安装、启用和禁用的命名空间单元。也可通过 /plugin 指令触发。")
-                .replace(new RegExp("^(\\\\/?troubleshooting\\\\s+)?Uses Chrome DevTools MCP and documentation to troubleshoot connection[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用 Chrome DevTools MCP 和文档排查连接与目标问题。当 list_pages、new_page、navigate_page 失败或服务器初始化异常时触发。")
-                .replace(new RegExp("^(\\\\/?ui-plugin-navigation\\\\s+)?Discover UI plugin panels relevant to the current task[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "发现与当前任务相关的 UI 插件面板，并在对话中呈现一键点击按钮以在侧边栏打开（切换）该面板。")
-                .replace(new RegExp("^(\\\\/?xcode-project-setup\\\\s+)?Safely modifies Xcode projects[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "安全修改 Xcode 项目（.pbxproj）以添加 Swift 软件包及关联文件。当 iOS 项目需要安装依赖项（如 Firebase、Alamofire）时使用。")
-                .replace(new RegExp("^(\\\\/?dart-use-ffigen\\\\s+)?Guide agents to use [`']?package:ffigen[`']?[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "指导智能体使用 package:ffigen 自动生成 FFI 绑定，而不是手动编写。在涉及编写新 FFI 绑定、扩展 C/Objective-C/Swift 集成时使用。")
-                .replace(new RegExp("^(\\\\/?dart-use-pattern-matching\\\\s+)?Use switch expressions and pattern matching[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "在合适的地方使用 switch 表达式和模式匹配（Pattern Matching）。")
-                .replace(new RegExp("^(\\\\/?dart-write-documentation\\\\s+)?Rules and formatting guidelines for writing Dart[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "编写 Dart /// API 文档和文档注释的规则与格式指南。")
-                .replace(new RegExp("^(\\\\/?flutter-add-integration-test\\\\s+)?Configures Flutter Driver for app interaction[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "配置用于应用交互的 Flutter Driver，并将 MCP 操作转换为持久化集成测试。")
-                .replace(new RegExp("^(\\\\/?flutter-add-widget-preview\\\\s+)?Adds interactive widget previews to the project[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用 previews.dart 系统向项目中添加交互式 Widget 组件预览。")
-                .replace(new RegExp("^(\\\\/?flutter-add-widget-test\\\\s+)?Implement a component-level test using[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用 WidgetTester 实现组件级测试，以验证 UI 渲染和用户交互（点击、滚动、文本输入）。")
-                .replace(new RegExp("^(\\\\/?flutter-apply-architecture-best-practices\\\\s+)?Architects a Flutter application using the recommended layered approach[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用官方推荐的分层架构方法（UI、业务逻辑、数据层）构建 Flutter 应用程序。")
-                .replace(new RegExp("^(\\\\/?flutter-build-responsive-layout\\\\s+)?Use [`']?LayoutBuilder[`']?[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用 LayoutBuilder、MediaQuery 或 Expanded/Flexible 创建适应不同屏幕尺寸的响应式布局。")
-                .replace(new RegExp("^(\\\\/?flutter-fix-layout-issues\\\\s+)?Fixes Flutter layout errors[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用 Dart 和 Flutter MCP 工具修复 Flutter 布局错误（溢出、无界约束）。")
-                .replace(new RegExp("^(\\\\/?flutter-implement-json-serialization\\\\s+)?Create model classes with [`']?fromJson[`']?[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用 dart:convert 创建带有 fromJson 和 toJson 方法的模型类，进行简单数据结构的 JSON 映射。")
-                .replace(new RegExp("^(\\\\/?flutter-setup-declarative-routing\\\\s+)?Configure [`']?MaterialApp\\\\.router[`']?[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用类似 go_router 的软件包配置 MaterialApp.router，实现高级基于 URL 的导航与深度链接。")
-                .replace(new RegExp("^(\\\\/?flutter-setup-localization\\\\s+)?Add [`']?flutter_localizations[`']?[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "添加 flutter_localizations 和 intl 依赖项，启用多语言本地化配置。")
-                .replace(new RegExp("^(\\\\/?flutter-use-http-package\\\\s+)?Use the [`']?http[`']? package[\\\\s\\\\S]*$", 'i'), (m, p1) => (p1 || '') + "使用 http 软件包执行 GET、POST、PUT 或 DELETE 网络请求以连接 REST API。");
-            if (res !== trimmed) return res;
+                        // Skills & Agents descriptions dynamic matching (full text, truncated with ... / …, or with /command)
+        const SKILL_RULES = [
+        {
+                "prefix": "Uses Chrome DevTools MCP for accessibility",
+                "zh": "基于 web.dev 指南，使用 Chrome DevTools MCP 进行无障碍功能（a11y）调试与审核。在测试语义化 HTML、ARIA 标签、焦点状态、键盘导航、点击目标和色彩对比度时使用。"
+        },
+        {
+                "prefix": "Interactive guide to design and create a scheduled background automation",
+                "zh": "设计和创建定时后台自动化的交互式指南。当用户需要创建自动化或定期计划任务（例如“每天早上汇总我的邮件”、“每周一发送待办清单”）时使用。也可通过 /automation 斜杠指令触发。"
+        },
+        {
+                "prefix": "Uses Chrome DevTools via MCP for efficient debugging",
+                "zh": "通过 MCP 使用 Chrome DevTools 实现高效调试、故障排查及浏览器自动化。在调试网页、自动化浏览器交互、分析性能或检查网络请求时使用。此技能不适用于 --slim 模式。"
+        },
+        {
+                "prefix": "Build and publish Chrome Extensions using Manifest V3 best practices",
+                "zh": "使用 Manifest V3 最佳实践构建和发布 Chrome 扩展程序。每当需要创建、修改、调试或理解 Chrome 浏览器扩展、插件或涉及 Chrome Extensions API 的任何内容时使用。"
+        },
+        {
+                "prefix": "Guides debugging and optimizing Largest Contentful Paint",
+                "zh": "指导使用 Chrome DevTools MCP 工具调试与优化最大内容绘制（LCP）。当涉及 LCP 性能、页面加载缓慢、Core Web Vitals 优化，或需要排查主页面内容渲染过慢时使用。"
+        },
+        {
+                "prefix": "Skill for converting an installed Firebase Extension",
+                "zh": "用于将已安装的 Firebase Extension（或扩展源码）转换为独立的 Cloud Functions for Firebase 代码库或可发布的 npm 包，包含 V1 到 V2 触发器升级、生命周期钩子及声明式安全策略。"
+        },
+        {
+                "prefix": "Official skill for integrating Firebase AI Logic",
+                "zh": "将 Firebase AI Logic (Gemini API) 集成到 Web 应用程序的官方技能。涵盖环境搭建、多模态推理、结构化输出与安全性。"
+        },
+        {
+                "prefix": "Deploys and manages full-stack web applications",
+                "zh": "使用 Firebase App Hosting 部署和管理具有服务端渲染（SSR）的全栈 Web 应用（Next.js、Angular）。用于部署应用、配置 apphosting.yaml、管理密钥及 CI/CD。"
+        },
+        {
+                "prefix": "Guide for setting up and using Firebase Authentication",
+                "zh": "设置和使用 Firebase Authentication 的指南。当应用需要用户登录、用户管理或基于身份验证规则的安全数据访问时使用。"
+        },
+        {
+                "prefix": "Provides foundational Firebase CLI setup",
+                "zh": "提供 Firebase CLI 基础设置、CLI 安装与版本检查、CLI 登录、项目创建与切换，以及应用配置文件（google-services.json、GoogleService-Info.plist）下载。"
+        },
+        {
+                "prefix": "Comprehensive guide for Firebase Crashlytics",
+                "zh": "Firebase Crashlytics 全面指南，涵盖环境配置及 SDK 使用。当需要在应用中配置 Crashlytics、添加崩溃报告或使用 Crashlytics SDK 时使用。"
+        },
+        {
+                "prefix": "Builds and deploys Firebase SQL Connect",
+                "zh": "安全构建和部署基于 PostgreSQL 的 Firebase SQL Connect（又名 Firebase Data Connect）后端。用于设计表结构与关系、编写授权查询与变更、配置实时数据更新及生成类型安全 SDK。"
+        },
+        {
+                "prefix": "Sets up, manages, queries, and configures Cloud Firestore databases",
+                "zh": "设置、管理、查询和配置 Cloud Firestore 数据库（标准版/企业版），包括数据建模、安全规则、索引以及 SDK 集成（Web、Python、iOS、Android、Flutter）。"
+        },
+        {
+                "prefix": "Deploys and configures classic Firebase Hosting for static websites",
+                "zh": "为静态网站、单页应用（SPA）和微服务部署并配置传统 Firebase Hosting。用于静态站点部署、自定义域名配置、重定向与重写规则设置及预览通道管理。"
+        },
+        {
+                "prefix": "Manages Firebase Remote Config templates",
+                "zh": "管理 Firebase Remote Config 模板、功能开关（Feature Flags）、加载策略及 SDK（Android、iOS）。用于配置模板、版本管理、应用内默认值及实时监听。"
+        },
+        {
+                "prefix": "Audits Firebase (Firestore, Cloud Storage) security rules",
+                "zh": "审核 Firebase（Firestore、Cloud Storage）安全规则的潜在漏洞、特权提升、角色绕过、创建与更新不一致、资源耗尽、类型安全及所有权检查。"
+        },
+        {
+                "prefix": "Designs, authors, refactors, and hardens production-grade Cloud Firestore Security Rules",
+                "zh": "设计、编写、重构并加固生产级 Cloud Firestore 安全规则（firestore.rules）。"
+        },
+        {
+                "prefix": "Read, create, and manage Google Calendar events",
+                "zh": "读取、创建和管理 Google 日历日程。当用户分享日历链接、查询日程安排、查找/创建/修改/删除/移动日程、RSVP 回复、排查日程冲突或设置勿扰/外出时间时使用。"
+        },
+        {
+                "prefix": "Read, create, edit, and manage Google Docs",
+                "zh": "读取、创建、编辑和管理 Google Docs 文档。当用户分享文档链接、提取/总结文档内容、起草或排版文档、添加评论、插入表格与图像、导入 Markdown 或导出文档时使用。"
+        },
+        {
+                "prefix": "Browse, search, and manage Google Drive files and folders",
+                "zh": "浏览、搜索和管理 Google 云端硬盘（Google Drive）文件与文件夹。用于查找、下载、上传、重命名、移动、管理共享权限及导出文件（PDF、Markdown、CSV 等）。"
+        },
+        {
+                "prefix": "Use this skill when writing code that calls the Gemini API",
+                "zh": "在编写调用 Gemini API 的代码时使用，涵盖文本生成、多轮对话、多模态理解、图像/视频/语音生成、流式响应、函数调用、结构化输出及 SDK 最佳实践（Python/TypeScript）。"
+        },
+        {
+                "prefix": "Use this skill when building real-time, bidirectional streaming applications with the Gemini Live API",
+                "zh": "在使用 Gemini Live API 构建实时双向流式传输应用或迁移 Live 模型时使用。涵盖基于 WebSocket 的音视频/文本流式传输、语音活动检测（VAD）、扩展思考推理、实时转录与翻译。"
+        },
+        {
+                "prefix": "Use this skill for generative video editing, text-to-video",
+                "zh": "使用 Gemini Omni 1.1 Flash 进行生成式视频编辑、文本生成视频、参考图生成视频、首尾帧过渡及视频拓展。包含 ffmpeg 预处理优化及逐轮视频编辑工作流。"
+        },
+        {
+                "prefix": "Design, implement, and debug autonomous AI agents and multi-agent systems using the Google Antigravity",
+                "zh": "使用 Google Antigravity (AGY) SDK 设计、实现和调试自主 AI 智能体与多智能体系统。当需要创建、配置或编排 Antigravity 智能体时使用。"
+        },
+        {
+                "prefix": "Read, write, format, and manage Google Sheets",
+                "zh": "读取、写入、格式化和管理 Google 表格（Google Sheets）。用于读取分析表格数据、单元格读写排版、数据排序过滤、数据透视表与图表制作、CSV 导入及表格导出。"
+        },
+        {
+                "prefix": "Read, create, and edit Google Slides presentations",
+                "zh": "读取、创建和编辑 Google 幻灯片演示文稿（Google Slides）。用于新建演示文稿、提取汇总幻灯片内容、起草或修改幻灯片页面及导出演示文稿。"
+        },
+        {
+                "prefix": "Diagnoses and resolves memory leaks in JavaScript",
+                "zh": "诊断并解决 JavaScript/Node.js 应用程序中的内存泄漏问题。当遇到高内存占用、OOM 内存溢出错误，或需要分析堆快照（Heap Snapshot）及使用 memlab 检测时使用。"
+        },
+        {
+                "prefix": "Search tool for modern web development best practices",
+                "zh": "现代 Web 开发最佳实践检索工具。涵盖最新的 HTML/CSS 及客户端 JavaScript 规范、Web API、布局、动画与性能优化建议。"
+        },
+        {
+                "prefix": "Guidelines for interacting with GitHub and request permissions",
+                "zh": "与 GitHub 交互的指导规范。当命令因智能体环境限制失败时，向用户申请执行权限。"
+        },
+        {
+                "prefix": "How to manage and create plugins",
+                "zh": "如何管理和创建插件 —— 将技能、智能体、规则、MCP 服务和钩子打包为可作为整体安装、启用和禁用的命名空间单元。也可通过 /plugin 指令触发。"
+        },
+        {
+                "prefix": "Uses Chrome DevTools MCP and documentation to troubleshoot connection",
+                "zh": "使用 Chrome DevTools MCP 和文档排查连接与目标问题。当 list_pages、new_page、navigate_page 失败或服务器初始化异常时触发。"
+        },
+        {
+                "prefix": "Discover UI plugin panels relevant to the current task",
+                "zh": "发现与当前任务相关的 UI 插件面板，并在对话中呈现一键点击按钮以在侧边栏打开（切换）该面板。"
+        },
+        {
+                "prefix": "Safely modifies Xcode projects",
+                "zh": "安全修改 Xcode 项目（.pbxproj）以添加 Swift 软件包及关联文件。当 iOS 项目需要安装依赖项（如 Firebase、Alamofire）时使用。"
+        },
+        {
+                "prefix": "Comprehensive guide and reference for the Antigravity Customization System",
+                "zh": "Antigravity 自定义系统的全面指南与参考。用于解释自定义工作机制、加载优先级、发现机制，并指导技能、规则、插件、钩子及 MCP 服务的创建。"
+        },
+        {
+                "prefix": "Provides instructions for installing and using the",
+                "zh": "提供安装和使用 android CLI 的说明。该命令行工具是 Android 开发的关键工具，可帮助创建新项目、在设备上运行应用、管理与交互虚拟设备、管理 SDK 组件等。"
+        },
+        {
+                "prefix": "Provides a comprehensive guide, quick reference, and sitemap for Google Antigravity",
+                "zh": "提供 Google Antigravity (AGY) 的全面指南、快速参考与站点地图，包括 CLI (agy)、2.0、IDE、Python SDK、斜杠指令、快捷键及自定义配置。"
+        },
+        {
+                "prefix": "How to render rich interactive HTML widgets inline in the chat",
+                "zh": "如何在对话内嵌或独立工件中渲染丰富的交互式 HTML 小部件。用于向用户展示图表、数据可视化、交互控件等富视觉内容。"
+        },
+        {
+                "prefix": "Automatically migrate legacy workflows to modern skills",
+                "zh": "自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。"
+        },
+        {
+                "prefix": "Guide agents to use",
+                "zh": "指导智能体使用 package:ffigen 自动生成 FFI 绑定，而不是手动编写。在涉及编写新 FFI 绑定、扩展 C/Objective-C/Swift 集成时使用。"
+        },
+        {
+                "prefix": "Use switch expressions and pattern matching where appropriate",
+                "zh": "在合适的地方使用 switch 表达式和模式匹配（Pattern Matching）。"
+        },
+        {
+                "prefix": "Rules and formatting guidelines for writing Dart",
+                "zh": "编写 Dart /// API 文档和文档注释的规则与格式指南。"
+        },
+        {
+                "prefix": "Configures Flutter Driver for app interaction",
+                "zh": "配置用于应用交互的 Flutter Driver，并将 MCP 操作转换为持久化集成测试。"
+        },
+        {
+                "prefix": "Adds interactive widget previews to the project",
+                "zh": "使用 previews.dart 系统向项目中添加交互式 Widget 组件预览。"
+        },
+        {
+                "prefix": "Implement a component-level test using",
+                "zh": "使用 WidgetTester 实现组件级测试，以验证 UI 渲染和用户交互（点击、滚动、文本输入）。"
+        },
+        {
+                "prefix": "Architects a Flutter application using the recommended layered approach",
+                "zh": "使用官方推荐的分层架构方法（UI、业务逻辑、数据层）构建 Flutter 应用程序。"
+        },
+        {
+                "prefix": "create a layout that adapts to different screen sizes",
+                "zh": "使用 LayoutBuilder、MediaQuery 或 Expanded/Flexible 创建适应不同屏幕尺寸的响应式布局。"
+        },
+        {
+                "prefix": "Fixes Flutter layout errors",
+                "zh": "使用 Dart 和 Flutter MCP 工具修复 Flutter 布局错误（溢出、无界约束）。"
+        },
+        {
+                "prefix": "Create model classes with",
+                "zh": "使用 dart:convert 创建带有 fromJson 和 toJson 方法的模型类，进行简单数据结构的 JSON 映射。"
+        },
+        {
+                "prefix": "advanced URL-based navigation",
+                "zh": "使用类似 go_router 的软件包配置 MaterialApp.router，实现高级基于 URL 的导航与深度链接。"
+        },
+        {
+                "prefix": "flutter_localizations",
+                "zh": "添加 flutter_localizations 和 intl 依赖项，启用多语言本地化配置。"
+        },
+        {
+                "prefix": "package to execute GET, POST, PUT, or DELETE requests",
+                "zh": "使用 http 软件包执行 GET、POST、PUT 或 DELETE 网络请求以连接 REST API。"
+        },
+        {
+                "prefix": "MANDATORY specialist subagent for Cloud Firestore Security Rules",
+                "zh": "Cloud Firestore 安全规则（firestore.rules）的强制专家级子智能体。每当您的任务需要创建、编写或修改 Firestore 安全规则（firestore.rules）时，您必须将规则编写委托给该子智能体，而不是在主智能体中直接编写 firestore.rules。"
+        },
+        {
+                "prefix": "Expert at reviewing Flutter code for accessibility",
+                "zh": "审查 Flutter 代码无障碍功能（a11y）问题的专家。调用此智能体对代码库、待定更改或 PR 执行无障碍审查。"
+        }
+];
+        for (let i = 0; i < SKILL_RULES.length; i++) {
+            const rule = SKILL_RULES[i];
+            if (trimmed.includes(rule.prefix)) {
+                if (trimmed.startsWith('/')) {
+                    const m = trimmed.match(/^(\s*\/[a-zA-Z0-9_.-]+\s+)/);
+                    return leadingSpace + (m ? m[1] : '') + rule.zh + trailingSpace;
+                }
+                return leadingSpace + rule.zh + trailingSpace;
+            }
         }
 
         // Custom Agents descriptions dynamic matching (full or truncated with ... / …)
