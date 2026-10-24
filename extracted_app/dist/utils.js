@@ -50,6 +50,7 @@ const fs = __importStar(require("fs"));
 const paths_1 = require("./paths");
 const loadingOverlay_1 = require("./loadingOverlay");
 const wsl_1 = require("./wsl");
+const debugConsole_1 = require("./debugConsole");
 exports.showQuitConfirmation = false;
 function setShowQuitConfirmation(value) {
     exports.showQuitConfirmation = value;

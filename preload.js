@@ -94,6 +94,7 @@ const agentAPI = {
 };
 const electronNativeAPI = {
     getZoomLevel: () => electron_1.webFrame.getZoomFactor(),
+    getPathForFile: (file) => electron_1.webUtils.getPathForFile(file),
     setTitleBarOverlay: (options) => electron_1.ipcRenderer.invoke('window:set-title-bar-overlay', options),
     minimize: () => electron_1.ipcRenderer.invoke('window:minimize'),
     maximize: () => electron_1.ipcRenderer.invoke('window:maximize'),
@@ -114,6 +115,7 @@ const electronNativeAPI = {
     revealInFilePicker: (path) => electron_1.ipcRenderer.invoke('shell:reveal-in-file-picker', path),
     showContextMenu: (items) => electron_1.ipcRenderer.invoke('window:show-context-menu', items),
     closeContextMenu: () => electron_1.ipcRenderer.invoke('window:close-context-menu'),
+    executeJavaScriptInIsolatedWorld: (wcId, worldId, code) => electron_1.ipcRenderer.invoke('webview:execute-js-isolated-world', wcId, worldId, code),
 };
 const ideAPI = {
     isInstalled: () => electron_1.ipcRenderer.invoke('ide:is-installed'),

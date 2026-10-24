@@ -42,6 +42,7 @@ const path = __importStar(require("path"));
 const utils_1 = require("./utils");
 const updater_1 = require("./updater");
 const wsl_1 = require("./wsl");
+const debugConsole_1 = require("./debugConsole");
 /**
  * Applies modifications to the default application menu.
  */
@@ -72,27 +73,14 @@ function setupApplicationMenu(url) {
             }));
         }
     }
-    // Adds Docs and Toggle Developer Tools to the Help menu
+    // Adds Docs to the Help menu.
     addItemToSubmenu(menu, 'Help', 0, new electron_1.MenuItem({
         label: '文档',
         click: async () => {
             await electron_1.shell.openExternal('https://antigravity.google/docs');
         },
     }));
-    const hideDevTools = (menuInstance) => {
-        menuInstance.items?.forEach((item) => {
-            // Typing specifies this as 'toggleDevTools', but observing this
-            // having the value 'toggledevtools'.
-            if (item.role?.toLocaleLowerCase() === 'toggledevtools') {
-                item.visible = false;
-            }
-            // Recursively search submenus (like 'View').
-            if (item.submenu) {
-                hideDevTools(item.submenu);
-            }
-        });
-    };
-    hideDevTools(menu);
+    (0, debugConsole_1.configureDebugConsoleMenu)(menu);
     // Re-apply the menu so the change takes effect.
     electron_1.Menu.setApplicationMenu(menu);
     // Asynchronously adds "Connect to WSL" (Windows only, when WSL is present).
