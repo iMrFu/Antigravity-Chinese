@@ -1742,6 +1742,12 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Folders': '文件夹',
         'Add Folder': '添加文件夹',
         'Agent Settings': '智能体设置',
+        'Permission Preset': '权限预设',
+        'Permission Presets': '权限预设',
+        'Permission preset': '权限预设',
+        'Permission presets': '权限预设',
+        'permission preset': '权限预设',
+        'permission presets': '权限预设',
         'Security Preset': '安全预设',
         'Security Presets': '安全预设',
         'Execution Preset': '执行预设',
@@ -1756,6 +1762,13 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Ask before sensitive operations.': '执行敏感操作前进行提示。',
         'Ask before sensitive operations': '执行敏感操作前进行提示',
         'Run all commands without restrictions.': '无限制运行所有命令。',
+        'Auto (Preview)': '自动（预览）',
+        'Auto (preview)': '自动（预览）',
+        'Auto(Preview)': '自动（预览）',
+        'Auto(preview)': '自动（预览）',
+        'Auto': '自动',
+        'Automatically decide if commands run.': '自动决定是否运行命令。',
+        'Automatically decide if commands run': '自动决定是否运行命令',
         'Run all commands without restrictions': '无限制运行所有命令',
         'Controls the actions the agent can take.': '控制智能体可以执行的操作。',
         'Controls the actions the agent can take': '控制智能体可以执行的操作',
@@ -1796,6 +1809,8 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Manage project folders, agent settings, and permissions.': '管理项目文件夹、智能体设置和权限。',
         'Agent settings and permissions for conversations outside of projects.': '项目外对话的智能体设置和权限。',
         'Agent settings and permissions for conversations outside of projects': '项目外对话的智能体设置和权限',
+        'Modified in': '已在',
+        'Modified in ': '已在 ',
         'Also includes': '同时包含',
         'Also includes ': '同时包含 ',
         'when working': '工作时生效于',
@@ -2152,17 +2167,17 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         }
 
         // "Modified in X projects/workspaces/conversations [chevron]"
-        if (/^Modified in\s+(\d+)\s+projects?(.*)$/i.test(trimmed)) {
-            const m = trimmed.match(/^Modified in\s+(\d+)\s+projects?(.*)$/i);
-            return leadingSpace + '已在 ' + m[1] + ' 个项目中修改' + m[2] + trailingSpace;
+        if (/Modified in\s+(\d+)\s+projects?/i.test(trimmed)) {
+            const m = trimmed.match(/Modified in\s+(\d+)\s+projects?(.*)$/i);
+            return leadingSpace + '已在 ' + (m ? m[1] : '') + ' 个项目中修改' + (m ? m[2] : '') + trailingSpace;
         }
-        if (/^Modified in\s+(\d+)\s+workspaces?(.*)$/i.test(trimmed)) {
-            const m = trimmed.match(/^Modified in\s+(\d+)\s+workspaces?(.*)$/i);
-            return leadingSpace + '已在 ' + m[1] + ' 个工作区中修改' + m[2] + trailingSpace;
+        if (/Modified in\s+(\d+)\s+workspaces?/i.test(trimmed)) {
+            const m = trimmed.match(/Modified in\s+(\d+)\s+workspaces?(.*)$/i);
+            return leadingSpace + '已在 ' + (m ? m[1] : '') + ' 个工作区中修改' + (m ? m[2] : '') + trailingSpace;
         }
-        if (/^Modified in\s+(\d+)\s+conversations?(.*)$/i.test(trimmed)) {
-            const m = trimmed.match(/^Modified in\s+(\d+)\s+conversations?(.*)$/i);
-            return leadingSpace + '已在 ' + m[1] + ' 个对话中修改' + m[2] + trailingSpace;
+        if (/Modified in\s+(\d+)\s+conversations?/i.test(trimmed)) {
+            const m = trimmed.match(/Modified in\s+(\d+)\s+conversations?(.*)$/i);
+            return leadingSpace + '已在 ' + (m ? m[1] : '') + ' 个对话中修改' + (m ? m[2] : '') + trailingSpace;
         }
         
         // --- Dynamic String Translation ---
@@ -3370,6 +3385,38 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         }
     } catch (_) {}
 
+    function checkAndTranslateModifiedInElement(el) {
+        if (!el || !el.textContent || !/Modified in\s+\d+\s+(?:projects?|workspaces?|conversations?)/i.test(el.textContent)) {
+            return false;
+        }
+        const textNodes = [];
+        for (let i = 0; i < el.childNodes.length; i++) {
+            const c = el.childNodes[i];
+            if (c.nodeType === Node.TEXT_NODE && c.nodeValue && c.nodeValue.trim()) {
+                textNodes.push(c);
+            }
+        }
+        if (textNodes.length >= 2) {
+            for (let i = 0; i < textNodes.length; i++) {
+                const tn = textNodes[i];
+                if (/Modified in/i.test(tn.nodeValue)) {
+                    tn.nodeValue = tn.nodeValue.replace(/Modified in/gi, '已在');
+                }
+                if (/projects?/i.test(tn.nodeValue)) {
+                    tn.nodeValue = tn.nodeValue.replace(/projects?/gi, '个项目中修改');
+                }
+                if (/workspaces?/i.test(tn.nodeValue)) {
+                    tn.nodeValue = tn.nodeValue.replace(/workspaces?/gi, '个工作区中修改');
+                }
+                if (/conversations?/i.test(tn.nodeValue)) {
+                    tn.nodeValue = tn.nodeValue.replace(/conversations?/gi, '个对话中修改');
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     function translateNode(node) {
         if (!node) return;
         if (node.nodeType === Node.TEXT_NODE) {
@@ -3384,6 +3431,7 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             }
         } else if (node.nodeType === Node.ELEMENT_NODE) {
             translateAttributes(node);
+            checkAndTranslateModifiedInElement(node);
             const tag = node.tagName ? node.tagName.toLowerCase() : '';
             if (tag === 'iframe' || tag === 'webview') {
                 try {
