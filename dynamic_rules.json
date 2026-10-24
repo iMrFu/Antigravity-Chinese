@@ -8360,5 +8360,14 @@
   "^.*flutter_localizations.*$": "添加 flutter_localizations 和 intl 依赖项，启用多语言本地化配置。",
   "^.*package to execute GET, POST, PUT, or DELETE requests.*$": "使用 http 软件包执行 GET、POST、PUT 或 DELETE 网络请求以连接 REST API。",
   "^.*MANDATORY specialist subagent for Cloud Firestore Security Rules.*$": "Cloud Firestore 安全规则（firestore.rules）的强制专家级子智能体。每当您的任务需要创建、编写或修改 Firestore 安全规则（firestore.rules）时，您必须将规则编写委托给该子智能体，而不是在主智能体中直接编写 firestore.rules。",
-  "^.*Expert at reviewing Flutter code for accessibility.*$": "审查 Flutter 代码无障碍功能（a11y）问题的专家。调用此智能体对代码库、待定更改或 PR 执行无障碍审查。"
+  "^.*Expert at reviewing Flutter code for accessibility.*$": "审查 Flutter 代码无障碍功能（a11y）问题的专家。调用此智能体对代码库、待定更改或 PR 执行无障碍审查。",
+  "Permission Settings": "权限设置",
+  "Permission settings": "权限设置",
+  "permission settings": "权限设置",
+  "Permission Setting": "权限设置",
+  "Permission setting": "权限设置",
+  "when working": "工作时生效于",
+  "when working ": "工作时生效于 ",
+  "When working": "工作时生效于",
+  "When working ": "工作时生效于 "
 }
