@@ -1548,6 +1548,41 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Enter a prompt': '输入提示词',
         'All scheduled tasks run as Flash.': '所有定时任务均以 Flash 模型运行。',
         'All scheduled tasks run as Flash': '所有定时任务均以 Flash 模型运行',
+        'Device Name': '设备名称',
+        'Device name': '设备名称',
+        'device name': '设备名称',
+        'Scan the code to open this device in Remote Control, or copy link.': '扫描二维码以在远程控制中打开此设备，或复制链接。',
+        'Scan the code to open this device in Remote Control, or copy link': '扫描二维码以在远程控制中打开此设备，或复制链接',
+        'Scan the code to open this device in Remote Control, or ': '扫描二维码以在远程控制中打开此设备，或 ',
+        'Scan the code to open this device in Remote Control, or': '扫描二维码以在远程控制中打开此设备，或',
+        'copy link': '复制链接',
+        'copy link.': '复制链接。',
+        'Copy link.': '复制链接。',
+        'remote control': '远程控制',
+        'on Sunday': '周日',
+        'on Sunday ': '周日 ',
+        'on Monday': '周一',
+        'on Monday ': '周一 ',
+        'on Tuesday': '周二',
+        'on Tuesday ': '周二 ',
+        'on Wednesday': '周三',
+        'on Wednesday ': '周三 ',
+        'on Thursday': '周四',
+        'on Thursday ': '周四 ',
+        'on Friday': '周五',
+        'on Friday ': '周五 ',
+        'on Saturday': '周六',
+        'on Saturday ': '周六 ',
+        'on weekdays': '工作日',
+        'on weekends': '周末',
+        'Sunday': '周日',
+        'Monday': '周一',
+        'Tuesday': '周二',
+        'Wednesday': '周三',
+        'Thursday': '周四',
+        'Friday': '周五',
+        'Saturday': '周六',
+
         'Run now': '立即运行',
         'Run Now': '立即运行',
         'Pause': '暂停',
@@ -2456,6 +2491,15 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         const terminalsMatch = trimmed.match(/^Terminals\s*(\d*)\s*([>›v∨˅]?)$/i);
         if (terminalsMatch) {
             return `终端${terminalsMatch[1] ? ' ' + terminalsMatch[1] : ''}${terminalsMatch[2] ? ' ' + terminalsMatch[2] : ''}`;
+        }
+
+        // Schedule time: "9:00 AM GMT+8" or "10:30 PM GMT+8" or "9:00 AM"
+        const schedTimeMatch = trimmed.match(/^(\d{1,2}:\d{2})\s*(AM|PM)(?:\s*(GMT[+-]\d+))?$/i);
+        if (schedTimeMatch) {
+            const time = schedTimeMatch[1];
+            const ampm = schedTimeMatch[2].toUpperCase() === 'AM' ? '上午' : '下午';
+            const tz = schedTimeMatch[3] ? ' ' + schedTimeMatch[3] : '';
+            return leadingSpace + ampm + ' ' + time + tz + trailingSpace;
         }
 
         // "See all (X)"
