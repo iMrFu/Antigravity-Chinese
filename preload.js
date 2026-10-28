@@ -116,6 +116,15 @@ const electronNativeAPI = {
     showContextMenu: (items) => electron_1.ipcRenderer.invoke('window:show-context-menu', items),
     closeContextMenu: () => electron_1.ipcRenderer.invoke('window:close-context-menu'),
     executeJavaScriptInIsolatedWorld: (wcId, worldId, code) => electron_1.ipcRenderer.invoke('webview:execute-js-isolated-world', wcId, worldId, code),
+    onWebviewOpenNewTab: (callback) => {
+        const handler = (_event, url, webContentsId) => {
+            callback(url, webContentsId);
+        };
+        electron_1.ipcRenderer.on('webview:open-new-tab', handler);
+        return () => {
+            electron_1.ipcRenderer.removeListener('webview:open-new-tab', handler);
+        };
+    },
 };
 const ideAPI = {
     isInstalled: () => electron_1.ipcRenderer.invoke('ide:is-installed'),

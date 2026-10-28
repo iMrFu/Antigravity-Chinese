@@ -51,6 +51,7 @@ const wsl_1 = require("./wsl");
 const menu_1 = require("./menu");
 const node_fs = __importStar(require("fs"));
 const node_path = __importStar(require("path"));
+const utils_1 = require("./utils");
 function buildContextMenuTemplate(items, onSelect) {
     return items.map((item) => {
         if (item.type === 'separator') {
@@ -82,6 +83,15 @@ function buildContextMenuTemplate(items, onSelect) {
  * Registers all IPC handlers for the main process.
  */
 function registerIpcHandlers(storageManager) {
+    const getTargetHubWindow = () => {
+        const focused = electron_1.BrowserWindow.getFocusedWindow();
+        if (focused &&
+            !focused
+                .__isWebviewPopupWindow) {
+            return focused;
+        }
+        return (0, utils_1.getHubWindows)()[0];
+    };
     // Dialog
     // In WSL mode, start the folder dialog in the distro's home directory.
     async function dialogDefaultPath() {
@@ -165,7 +175,7 @@ function registerIpcHandlers(storageManager) {
             silent: options.silent ?? false,
         });
         notification.on('click', () => {
-            const win = electron_1.BrowserWindow.getAllWindows()[0];
+            const win = (0, utils_1.getHubWindows)()[0];
             if (win) {
                 if (win.isMinimized()) {
                     win.restore();
@@ -239,7 +249,7 @@ function registerIpcHandlers(storageManager) {
     });
     // Window
     electron_1.ipcMain.handle('window:set-title-bar-overlay', async (_event, options) => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         if (win && process.platform === 'win32') {
             win.setTitleBarOverlay({
                 color: options.color,
@@ -249,42 +259,42 @@ function registerIpcHandlers(storageManager) {
         }
     });
     electron_1.ipcMain.handle('window:minimize', async () => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         if (win) {
             win.minimize();
         }
     });
     electron_1.ipcMain.handle('window:maximize', async () => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         if (win) {
             win.maximize();
         }
     });
     electron_1.ipcMain.handle('window:unmaximize', async () => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         if (win) {
             win.unmaximize();
         }
     });
     electron_1.ipcMain.handle('window:is-maximized', async () => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         return win ? win.isMaximized() : false;
     });
     electron_1.ipcMain.handle('window:close', async () => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         if (win) {
             win.close();
         }
     });
     electron_1.ipcMain.handle('window:toggle-devtools', async () => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         if (win) {
             win.webContents.toggleDevTools();
         }
     });
     let activeContextMenu = null;
     electron_1.ipcMain.handle('window:show-context-menu', async (_event, items) => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         if (!win || !Array.isArray(items) || items.length === 0) {
             return null;
         }
@@ -317,7 +327,7 @@ function registerIpcHandlers(storageManager) {
         });
     });
     electron_1.ipcMain.handle('window:close-context-menu', () => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         activeContextMenu?.closePopup?.(win);
         activeContextMenu = null;
     });
@@ -327,7 +337,7 @@ function registerIpcHandlers(storageManager) {
     const ZOOM_LEVEL_KEY = 'zoomLevel';
     const ZOOM_STEP = 0.5;
     electron_1.ipcMain.handle('window:zoom-in', async () => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         if (win) {
             const newLevel = win.webContents.getZoomLevel() + ZOOM_STEP;
             win.webContents.setZoomLevel(newLevel);
@@ -337,7 +347,7 @@ function registerIpcHandlers(storageManager) {
         }
     });
     electron_1.ipcMain.handle('window:zoom-out', async () => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         if (win) {
             const newLevel = win.webContents.getZoomLevel() - ZOOM_STEP;
             win.webContents.setZoomLevel(newLevel);
@@ -347,7 +357,7 @@ function registerIpcHandlers(storageManager) {
         }
     });
     electron_1.ipcMain.handle('window:reset-zoom', async () => {
-        const win = electron_1.BrowserWindow.getFocusedWindow() || electron_1.BrowserWindow.getAllWindows()[0];
+        const win = getTargetHubWindow();
         if (win) {
             win.webContents.setZoomLevel(0);
             await storageManager.updateItems({ [ZOOM_LEVEL_KEY]: String(0) });
