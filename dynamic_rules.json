@@ -8698,5 +8698,9 @@
   "to ask for content changes for legal reasons": "以因法律原因请求更改内容",
   " to ask for content changes for legal reasons.": " 以因法律原因请求更改内容。",
   " to ask for content changes for legal reasons": " 以因法律原因请求更改内容",
-  "^Send\\s+feedback\\s+as\\s+(.+)$": "以 $1 身份发送反馈"
+  "^Send\\s+feedback\\s+as\\s+(.+)$": "以 $1 身份发送反馈",
+  "^How to write and run a dynamic workflow script with the.*": "如何使用 run_workflow 工具编写并运行动态工作流脚本：通过 Python 脚本使用 agent、parallel、pipeline 和 phase 编排多个智能体。当任务需要拆分为许多独立或分阶段的子任务时使用。",
+  "^How to manage and create plugins.*": "如何管理和创建插件 — 包含技能、智能体、规则、MCP 服务器和钩子的命名空间组合包，可作为一个单元进行安装、启用和禁用。当需要管理或打包新自定义功能时使用。",
+  "^Uses Chrome DevTools MCP for inspecting, debugging, and testing cookies.*": "使用 Chrome DevTools MCP 检查、调试和测试 Cookie、会话状态、身份验证问题以及 Cookie 权限合规性。在诊断 401/403 错误或 SameSite 警告时使用。",
+  "^Safely modifies Xcode projects.*": "安全修改 Xcode 工程（.pbxproj）以添加 Swift 软件包并链接文件。在 iOS 工程需要安装依赖（如 Firebase、Alamofire）时使用。"
 }

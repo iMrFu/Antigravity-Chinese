@@ -2923,6 +2923,14 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
                         // Skills & Agents descriptions dynamic matching (full text, truncated with ... / …, or with /command)
         const SKILL_RULES = [
         {
+                "prefix": "How to write and run a dynamic workflow script with the",
+                "zh": "如何使用 run_workflow 工具编写并运行动态工作流脚本：通过 Python 脚本使用 agent、parallel、pipeline 和 phase 编排多个智能体。当任务需要拆分为许多独立或分阶段的子任务时使用。"
+        },
+        {
+                "prefix": "Uses Chrome DevTools MCP for inspecting, debugging, and testing cookies",
+                "zh": "使用 Chrome DevTools MCP 检查、调试和测试 Cookie、会话状态、身份验证问题以及 Cookie 权限合规性。在诊断 401/403 错误或 SameSite 警告时使用。"
+        },
+        {
                 "prefix": "Uses Chrome DevTools MCP for accessibility",
                 "zh": "基于 web.dev 指南，使用 Chrome DevTools MCP 进行无障碍功能（a11y）调试与审核。在测试语义化 HTML、ARIA 标签、焦点状态、键盘导航、点击目标和色彩对比度时使用。"
         },
