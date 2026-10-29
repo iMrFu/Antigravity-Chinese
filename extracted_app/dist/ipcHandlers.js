@@ -51,6 +51,7 @@ const wsl_1 = require("./wsl");
 const menu_1 = require("./menu");
 const node_fs = __importStar(require("fs"));
 const node_path = __importStar(require("path"));
+const scriptJail_1 = require("./scriptJail");
 const utils_1 = require("./utils");
 function buildContextMenuTemplate(items, onSelect) {
     return items.map((item) => {
@@ -450,6 +451,14 @@ function registerIpcHandlers(storageManager) {
             throw new Error(`WebContents ${webContentsId} is not owned by the calling renderer`);
         }
         return wc.executeJavaScriptInIsolatedWorld(worldId, [{ code }], false);
+    });
+    // Execute an untrusted agent script inside a single-use, zero-egress
+    // Electron script jail and transfer the paired MessagePort to the caller.
+    electron_1.ipcMain.handle('script-jail:run', async (event, req) => {
+        return (0, scriptJail_1.runScriptInJail)(event?.sender, req, event?.senderFrame);
+    });
+    electron_1.ipcMain.handle('script-jail:abort', (event, jailId) => {
+        return (0, scriptJail_1.abortScriptInJail)(event?.sender, jailId, event?.senderFrame);
     });
 
     // Dynamic i18n rules (supports Ctrl + R live hot-reloading)
