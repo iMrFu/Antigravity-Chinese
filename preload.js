@@ -1782,6 +1782,23 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         
         // --- Browser Page ---
         'Browser Settings': '浏览器设置',
+        'Built-in Browser': '内置浏览器',
+        'Built-in browser': '内置浏览器',
+        'built-in browser': '内置浏览器',
+        'Configure link opening and built-in browser preferences.': '配置链接打开方式和内置浏览器偏好设置。',
+        'Configure link opening and built-in browser preferences': '配置链接打开方式和内置浏览器偏好设置',
+        'Open Links In': '打开链接方式',
+        'Open links in': '打开链接方式',
+        'open links in': '打开链接方式',
+        'Choose where links open by default when clicked.': '选择点击链接时默认打开的位置。',
+        'Choose where links open by default when clicked': '选择点击链接时默认打开的位置',
+        'External Browser': '外部浏览器',
+        'External browser': '外部浏览器',
+        'external browser': '外部浏览器',
+        'Browser Subagent': '浏览器子智能体',
+        'Browser subagent': '浏览器子智能体',
+        'browser subagent': '浏览器子智能体',
+
         'Configure the browser subagent. It requires': '配置浏览器子智能体。它需要安装 ',
         'to be installed. The browser subagent can be invoked by typing /browser in the conversation input box.': '。可以通过在对话输入框中输入 /browser 来调用浏览器子智能体。',
         'Configure the browser subagent. It requires Google Chrome to be installed. The browser subagent can be invoked by typing /browser in the conversation input box.': '配置浏览器子智能体。它需要安装 Google Chrome。可以通过在对话输入框中输入 /browser 来调用浏览器子智能体。',

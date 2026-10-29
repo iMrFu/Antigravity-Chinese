@@ -8706,5 +8706,21 @@
   "^.*Uses Chrome DevTools MCP for inspecting.*": "使用 Chrome DevTools MCP 检查、调试和测试 Cookie、会话状态、身份验证问题以及 Cookie 权限合规性。在诊断 401/403 错误或 SameSite 警告时使用。",
   "^.*Search tool for modern web development best practices.*": "现代 Web 开发最佳实践搜索工具。涵盖 UI 布局、滚动动画、性能指标（LCP、INP）、安全性、Web 组件等前端最佳规范。",
   "^.*Instructions for the Android Compose Preview sidecar.*": "Android Compose Preview 辅助工具说明：用于独立渲染 Jetpack Compose 预览并处理交互事件。",
-  "^.*Instructions for working with the Android Device Hub sidecar.*": "Android Device Hub 辅助工具说明：用于列出、启动、停止和管理连接的 Android 设备与模拟器。"
+  "^.*Instructions for working with the Android Device Hub sidecar.*": "Android Device Hub 辅助工具说明：用于列出、启动、停止和管理连接的 Android 设备与模拟器。",
+  "Built-in Browser": "内置浏览器",
+  "Built-in browser": "内置浏览器",
+  "built-in browser": "内置浏览器",
+  "Configure link opening and built-in browser preferences.": "配置链接打开方式和内置浏览器偏好设置。",
+  "Configure link opening and built-in browser preferences": "配置链接打开方式和内置浏览器偏好设置",
+  "Open Links In": "打开链接方式",
+  "Open links in": "打开链接方式",
+  "open links in": "打开链接方式",
+  "Choose where links open by default when clicked.": "选择点击链接时默认打开的位置。",
+  "Choose where links open by default when clicked": "选择点击链接时默认打开的位置",
+  "External Browser": "外部浏览器",
+  "External browser": "外部浏览器",
+  "external browser": "外部浏览器",
+  "Browser Subagent": "浏览器子智能体",
+  "Browser subagent": "浏览器子智能体",
+  "browser subagent": "浏览器子智能体"
 }
