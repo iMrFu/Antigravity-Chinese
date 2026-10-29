@@ -595,6 +595,14 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Opus 5.5 and Sonnet 5.5 are now available on paid Pro and Ultra plans. Starting November 2, 2026, your current plan will no longer provide access to third-party models.': 'Opus 5.5 和 Sonnet 5.5 现在可在付费的 Pro 和 Ultra 计划中使用。自 2026 年 11 月 2 日起，您当前计划将不再提供第三方模型访问权限。',
         'Notice': '通知',
         'notice': '通知',
+        'Unavailable': '不可用',
+        'unavailable': '不可用',
+        'UNAVAILABLE': '不可用',
+        'Temporarily Unavailable': '暂时不可用',
+        'Temporarily unavailable': '暂时不可用',
+        'temporarily unavailable': '暂时不可用',
+        'Available': '可用',
+        'available': '可用',
         'Limited time': '限时',
         'Limited Time': '限时',
         'limited time': '限时',
@@ -2070,9 +2078,23 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Within each group, models share a weekly limit and a 5-hour limit. Quota is consumed proportionally to the cost of the tokens. Thus, limits will last longer with shorter tasks or using more cost-effective models. The 5-hour limit smooths out aggregate demand to fairly distribute global capacity across all users, while your weekly limit is tied directly to your individual tier.': '在每个组中，模型共享每周限制和 5 小时限制。配额的消耗与 Token 的成本成正比。因此，任务越短或使用性价比更高的模型，限制持续时间越长。5 小时限制可以平滑总体需求，以便在所有用户之间分配全局容量，而您的每周限制直接与您的个人等级绑定。',
         'Gemini Models': 'Gemini 模型',
         'Weekly Limit': '每周限制',
+        'Weekly limit': '每周限制',
+        'weekly limit': '每周限制',
         'Five Hour Limit': '5小时限制',
+        'Five hour limit': '5小时限制',
         '5-Hour Limit': '5小时限制',
         '5-hour limit': '5小时限制',
+        '5h limit': '5小时限制',
+        '5h Limit': '5小时限制',
+        '5H limit': '5小时限制',
+        '5H Limit': '5小时限制',
+        'Daily limit': '每日限制',
+        'Daily Limit': '每日限制',
+        'daily limit': '每日限制',
+        'Monthly limit': '每月限制',
+        'Monthly Limit': '每月限制',
+        'monthly limit': '每月限制',
+        'left': '剩余',
         'Refresh': '刷新',
         
         // --- Customizations Page ---
@@ -2444,17 +2466,18 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
     loadDynamicRules();
 
     function translateDuration(str) {
+        if (!str || typeof str !== 'string') return '';
         return str
-            .replace(/(\d+)\s*days?/gi, '$1 天')
-            .replace(/(\d+)\s*d\b/gi, '$1 天')
-            .replace(/(\d+)\s*hours?/gi, '$1 小时')
-            .replace(/(\d+)\s*h\b/gi, '$1 小时')
-            .replace(/(\d+)\s*minutes?/gi, '$1 分钟')
-            .replace(/(\d+)\s*mins?\b/gi, '$1 分钟')
-            .replace(/(\d+)\s*m\b/gi, '$1 分钟')
-            .replace(/(\d+)\s*seconds?/gi, '$1 秒')
-            .replace(/(\d+)\s*secs?\b/gi, '$1 秒')
-            .replace(/(\d+)\s*s\b/gi, '$1 秒')
+            .replace(/(\d+)\s*days?/gi, '$1 天 ')
+            .replace(/(\d+)\s*d(?![a-zA-Z])/gi, '$1 天 ')
+            .replace(/(\d+)\s*hours?/gi, '$1 小时 ')
+            .replace(/(\d+)\s*h(?![a-zA-Z])/gi, '$1 小时 ')
+            .replace(/(\d+)\s*minutes?/gi, '$1 分钟 ')
+            .replace(/(\d+)\s*mins?(?![a-zA-Z])/gi, '$1 分钟 ')
+            .replace(/(\d+)\s*m(?![a-zA-Z])/gi, '$1 分钟 ')
+            .replace(/(\d+)\s*seconds?/gi, '$1 秒 ')
+            .replace(/(\d+)\s*secs?(?![a-zA-Z])/gi, '$1 秒 ')
+            .replace(/(\d+)\s*s(?![a-zA-Z])/gi, '$1 秒 ')
             .replace(/,\s*/g, ' ')
             .replace(/\s+/g, ' ')
             .trim();
@@ -2597,6 +2620,38 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         
         // --- Dynamic String Translation ---
         
+        // "Resets in X" or "将在 X 后重置"
+        const resetsInMatch = trimmed.match(/^Resets\s+in\s+([\s\S]+?)$/i);
+        if (resetsInMatch) {
+            return leadingSpace + `将在 ${translateDuration(resetsInMatch[1])}后重置` + trailingSpace;
+        }
+        const resetsZhMatch = trimmed.match(/^将在\s+([\s\S]+?)\s*后重置$/i);
+        if (resetsZhMatch) {
+            return leadingSpace + `将在 ${translateDuration(resetsZhMatch[1])}后重置` + trailingSpace;
+        }
+
+        // "Worked for X [>]"
+        const workedForEarlyMatch = trimmed.match(/^Worked\s+for\s+([\s\S]+?)(?:\s*([>›»]))?$/i);
+        if (workedForEarlyMatch) {
+            const dur = translateDuration(workedForEarlyMatch[1]);
+            const arrow = workedForEarlyMatch[2] ? ' ' + workedForEarlyMatch[2] : '';
+            return leadingSpace + `耗时 ${dur}${arrow}` + trailingSpace;
+        }
+
+        // "X% left" / "X left"
+        const pctLeftMatch = trimmed.match(/^([\d.]+%?)\s+left$/i);
+        if (pctLeftMatch) {
+            return leadingSpace + `${pctLeftMatch[1]} 剩余` + trailingSpace;
+        }
+
+        // "Xh/Xd/Xw limit"
+        const limitMatch = trimmed.match(/^(\d+)\s*(h|d|w|m)\s+limit$/i);
+        if (limitMatch) {
+            const unitMap = { 'h': '小时', 'd': '天', 'w': '周', 'm': '分钟' };
+            const u = unitMap[limitMatch[2].toLowerCase()] || limitMatch[2];
+            return leadingSpace + `${limitMatch[1]}${u}限制` + trailingSpace;
+        }
+
         // Check dynamic regex rules from dynamic_rules.json
         for (let i = 0; i < dynamicRegexRules.length; i++) {
             const rule = dynamicRegexRules[i];
@@ -3480,19 +3535,7 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             return `技能 (${skillsMatch[1]})`;
         }
 
-        // "Resets in X"
-        const resetsInMatch = trimmed.match(/^Resets\s+in\s+([\s\S]+?)$/i);
-        if (resetsInMatch) {
-            return `将在 ${translateDuration(resetsInMatch[1])} 后重置`;
-        }
-
-        // "Worked for X [>]"
-        const workedForMatch = trimmed.match(/^Worked\s+for\s+([\s\S]+?)(?:\s*([>›»]))?$/i);
-        if (workedForMatch) {
-            const dur = translateDuration(workedForMatch[1]);
-            const arrow = workedForMatch[2] ? ' ' + workedForMatch[2] : '';
-            return `耗时 ${dur}${arrow}`;
-        }
+// (Resets in X and Worked for X handled earlier before dynamic regex)
 
         // "X finished [>]"
         const finishedMatch = trimmed.match(/^([\s\S]+?)\s+finished(?:\s*([>›»]))?$/i);
