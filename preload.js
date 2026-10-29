@@ -2095,6 +2095,8 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Monthly Limit': '每月限制',
         'monthly limit': '每月限制',
         'left': '剩余',
+        '% left': '% 剩余',
+        '%left': '% 剩余',
         'Refresh': '刷新',
         
         // --- Customizations Page ---
@@ -2638,7 +2640,10 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             return leadingSpace + `耗时 ${dur}${arrow}` + trailingSpace;
         }
 
-        // "X% left" / "X left"
+        // "% left" / "X% left" / "left"
+        if (/^%?\s*left$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.startsWith('%') ? '% 剩余' : '剩余') + trailingSpace;
+        }
         const pctLeftMatch = trimmed.match(/^([\d.]+%?)\s+left$/i);
         if (pctLeftMatch) {
             return leadingSpace + `${pctLeftMatch[1]} 剩余` + trailingSpace;
