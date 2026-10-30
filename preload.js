@@ -2097,6 +2097,12 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'left': '剩余',
         '% left': '% 剩余',
         '%left': '% 剩余',
+        'Recommended': '推荐',
+        'recommended': '推荐',
+        '(Recommended)': '(推荐)',
+        '(recommended)': '(推荐)',
+        'Other': '其他',
+        'other': '其他',
         'Refresh': '刷新',
         
         // --- Customizations Page ---
@@ -2558,6 +2564,14 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         }
         if (translationMap[trimmed.toLowerCase()]) {
             return leadingSpace + translationMap[trimmed.toLowerCase()] + trailingSpace;
+        }
+
+        // "(Recommended) ..." or "Recommended: ..." option prefixes
+        const recPrefixMatch = trimmed.match(/^(\(?Recommended\)?\s*[:：\-]?\s*)([\s\S]+)$/i);
+        if (recPrefixMatch) {
+            const rest = recPrefixMatch[2];
+            const transRest = translateText(rest) || rest;
+            return leadingSpace + `(推荐) ${transRest.trim()}` + trailingSpace;
         }
 
         // Numbered list items / prompt options (e.g. "1 Yes, allow this time", "5 No (tell the agent what to do instead)")

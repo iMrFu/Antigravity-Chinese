@@ -7955,7 +7955,7 @@
   "Write your answer...": "填写您的回答...",
   "Write your response...": "填写您的回答...",
   "Recommended": "推荐",
-  "(Recommended)": "（推荐）",
+  "(Recommended)": "(推荐)",
   "in the Automations dashboard": "在自动化仪表板中",
   "Automations dashboard": "自动化仪表板",
   "Yes, execute a test run now to configure permissions": "是，现在执行测试运行以配置权限",
@@ -8790,5 +8790,10 @@
   "^Resets in (\\d+)\\s*d$": "将在 $1 天后重置",
   "^Resets in (\\d+)\\s*h$": "将在 $1 小时后重置",
   "^Resets in (\\d+)\\s*m$": "将在 $1 分钟后重置",
-  "^Resets in (\\d+)\\s*s$": "将在 $1 秒后重置"
+  "^Resets in (\\d+)\\s*s$": "将在 $1 秒后重置",
+  "recommended": "推荐",
+  "(recommended)": "(推荐)",
+  "Other": "其他",
+  "other": "其他",
+  "^\\(?Recommended\\)?\\s*[:：\\-]?\\s*([\\s\\S]+)$": "(推荐) $1"
 }
