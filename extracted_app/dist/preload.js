@@ -2103,6 +2103,12 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         '(recommended)': '(推荐)',
         'Other': '其他',
         'other': '其他',
+        'write-in': '自主填写',
+        '(write-in)': '(自主填写)',
+        'Write-in': '自主填写',
+        '(Write-in)': '(自主填写)',
+        'question': '个问题',
+        'questions': '个问题',
         'Refresh': '刷新',
         
         // --- Customizations Page ---
@@ -2572,6 +2578,26 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             const rest = recPrefixMatch[2];
             const transRest = translateText(rest) || rest;
             return leadingSpace + `(推荐) ${transRest.trim()}` + trailingSpace;
+        }
+
+        // "... (write-in)" option suffixes or standalone "write-in"
+        if (/^\(?write-in\)?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.startsWith('(') ? '(自主填写)' : '自主填写') + trailingSpace;
+        }
+        const writeInSuffixMatch = trimmed.match(/^([\s\S]+?)\s*\(write-in\)$/i);
+        if (writeInSuffixMatch) {
+            const rest = writeInSuffixMatch[1];
+            const transRest = translateText(rest) || rest;
+            return leadingSpace + `${transRest.trim()} (自主填写)` + trailingSpace;
+        }
+
+        // "question(s)" standalone or child-split node e.g. "1" + " question"
+        if (/^questions?$/i.test(trimmed)) {
+            return leadingSpace + '个问题' + trailingSpace;
+        }
+        const qMatch = trimmed.match(/^(\d+)\s*questions?$/i);
+        if (qMatch) {
+            return leadingSpace + `${qMatch[1]} 个问题` + trailingSpace;
         }
 
         // Numbered list items / prompt options (e.g. "1 Yes, allow this time", "5 No (tell the agent what to do instead)")
