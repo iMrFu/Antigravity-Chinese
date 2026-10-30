@@ -2120,6 +2120,19 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Side Question': '补充提问',
         'Side question': '补充提问',
         'side question': '补充提问',
+        'Side Questions': '补充提问',
+        'Side questions': '补充提问',
+        'side questions': '补充提问',
+        'Next question': '下一个问题',
+        'next question': '下一个问题',
+        'Next Question': '下一个问题',
+        'Previous question': '上一个问题',
+        'previous question': '上一个问题',
+        'Previous Question': '上一个问题',
+        'View side questions': '查看补充提问',
+        'View side question': '查看补充提问',
+        'view side questions': '查看补充提问',
+        'view side question': '查看补充提问',
         'write-in': '自主填写',
         '(write-in)': '(自主填写)',
         'Write-in': '自主填写',
@@ -2589,11 +2602,35 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             return leadingSpace + translationMap[trimmed.toLowerCase()] + trailingSpace;
         }
 
-        // "Side Question: ..." or "Side Question"
-        if (/^Side Question[:：]?/i.test(trimmed)) {
-            const m = trimmed.match(/^Side Question[:：]?\s*([\s\S]*)$/i);
+        // "View X side questions" / "View side questions" / "View side question"
+        const viewSqMatch = trimmed.match(/^View\s+(\d+)\s+side\s+questions?$/i);
+        if (viewSqMatch) {
+            return leadingSpace + `查看 ${viewSqMatch[1]} 个补充提问` + trailingSpace;
+        }
+        if (/^View\s+side\s+questions?$/i.test(trimmed)) {
+            return leadingSpace + '查看补充提问' + trailingSpace;
+        }
+
+        // "X side questions" / "1 side question"
+        const sqCountMatch = trimmed.match(/^(\d+)\s+side\s+questions?$/i);
+        if (sqCountMatch) {
+            return leadingSpace + `${sqCountMatch[1]} 个补充提问` + trailingSpace;
+        }
+
+        // "Next question" / "Previous question"
+        if (/^Next\s+question$/i.test(trimmed)) {
+            return leadingSpace + '下一个问题' + trailingSpace;
+        }
+        if (/^Previous\s+question$/i.test(trimmed)) {
+            return leadingSpace + '上一个问题' + trailingSpace;
+        }
+
+        // "Side Question: <rest>" or "Side Questions" or "Side Question"
+        if (/^Side\s+Questions?[:：]?/i.test(trimmed)) {
+            const m = trimmed.match(/^Side\s+Questions?[:：]?\s*([\s\S]*)$/i);
             const rest = m && m[1] ? m[1].trim() : '';
-            return leadingSpace + (rest ? `补充提问: ${rest}` : '补充提问:') + trailingSpace;
+            const label = trimmed.includes(':') || trimmed.includes('：') ? '补充提问:' : '补充提问';
+            return leadingSpace + (rest ? `补充提问: ${rest}` : label) + trailingSpace;
         }
 
         // "(Recommended) ..." or "Recommended: ..." option prefixes
