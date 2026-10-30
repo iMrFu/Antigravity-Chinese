@@ -2103,6 +2103,10 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         '(recommended)': '(推荐)',
         'Other': '其他',
         'other': '其他',
+        'Compact the conversation now (summarize history to free up the context window).': '立即压缩当前对话（总结历史记录以释放上下文窗口空间）。',
+        'Compact the conversation now (summarize history to free up the context window)': '立即压缩当前对话（总结历史记录以释放上下文窗口空间）',
+        'Compact the conversation now': '立即压缩当前对话',
+        'summarize history to free up the context window': '总结历史记录以释放上下文窗口空间',
         'write-in': '自主填写',
         '(write-in)': '(自主填写)',
         'Write-in': '自主填写',
@@ -3099,7 +3103,7 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         }
 
         // Slash commands popup dynamic match (e.g. "btw Ask a quick question..." or "goal Run until...")
-        if (/^(?:\/)?(?:btw|goal|schedule|browser|grill-me|teamwork-preview|learn|boost|plan)\b/i.test(trimmed)) {
+        if (/^(?:\/)?(?:btw|goal|schedule|browser|grill-me|teamwork-preview|learn|boost|plan|compact)\b/i.test(trimmed)) {
             let res = trimmed
                 .replace(/^(\/?btw\s+)Ask a quick question without interrupting the main conversation\.?/i, '$1在不中断主对话的情况下快速提问。')
                 .replace(/^(\/?goal\s+)Run until the specified goal is completely finished\.?/i, '$1持续运行直至指定目标完全达成。')
@@ -3109,7 +3113,9 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
                 .replace(/^(\/?teamwork-preview\s+)Invoke a team of agents to autonomously tackle large projects\.?/i, '$1调用智能体团队自主处理大型项目。')
                 .replace(/^(\/?learn\s+)Reflect on recent successes or corrections to capture reusable skills or rules\.?/i, '$1总结近期经验或修正，沉淀为可复用的技能或规则。')
                 .replace(/^(\/?boost\s+)Invoke the Boost multi-agent orchestrator for complex tasks\.?/i, '$1调用 Boost 多智能体编排器处理复杂任务。')
-                .replace(/^(\/?plan\s+)Plan carefully before executing a task\.?/i, '$1在执行任务前仔细规划。');
+                .replace(/^(\/?plan\s+)Plan carefully before executing a task\.?/i, '$1在执行任务前仔细规划。')
+                .replace(/^(\/?compact\s+)Compact the conversation now \(summarize history to free up the context window\)\.?/i, '$1立即压缩当前对话（总结历史记录以释放上下文窗口空间）。')
+                .replace(/^(\/?compact\s+)Compact the conversation now\.?/i, '$1立即压缩当前对话。');
             if (res !== trimmed) return res;
         }
 

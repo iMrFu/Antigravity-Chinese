@@ -8804,5 +8804,10 @@
   "questions": "个问题",
   "^(\\d+)\\s*questions?$": "$1 个问题",
   "^([\\s\\S]+?)\\s*\\(write-in\\)$": "$1 (自主填写)",
-  "^\\(?write-in\\)?$": "(自主填写)"
+  "^\\(?write-in\\)?$": "(自主填写)",
+  "Compact the conversation now (summarize history to free up the context window).": "立即压缩当前对话（总结历史记录以释放上下文窗口空间）。",
+  "Compact the conversation now (summarize history to free up the context window)": "立即压缩当前对话（总结历史记录以释放上下文窗口空间）",
+  "Compact the conversation now": "立即压缩当前对话",
+  "^(\\/?compact\\s+)Compact the conversation now \\(summarize history to free up the context window\\)\\.?$": "$1立即压缩当前对话（总结历史记录以释放上下文窗口空间）。",
+  "^(\\/?compact\\s+)Compact the conversation now\\.?$": "$1立即压缩当前对话。"
 }
