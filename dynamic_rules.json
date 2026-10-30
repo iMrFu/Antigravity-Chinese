@@ -8809,5 +8809,19 @@
   "Compact the conversation now (summarize history to free up the context window)": "立即压缩当前对话（总结历史记录以释放上下文窗口空间）",
   "Compact the conversation now": "立即压缩当前对话",
   "^(\\/?compact\\s+)Compact the conversation now \\(summarize history to free up the context window\\)\\.?$": "$1立即压缩当前对话（总结历史记录以释放上下文窗口空间）。",
-  "^(\\/?compact\\s+)Compact the conversation now\\.?$": "$1立即压缩当前对话。"
+  "^(\\/?compact\\s+)Compact the conversation now\\.?$": "$1立即压缩当前对话。",
+  "No matching results": "无匹配结果",
+  "no matching results": "无匹配结果",
+  "No matching results.": "无匹配结果。",
+  "no matching results.": "无匹配结果。",
+  "No matching result": "无匹配结果",
+  "no matching result": "无匹配结果",
+  "No matching commands": "无匹配命令",
+  "no matching commands": "无匹配命令",
+  "Side Question:": "补充提问:",
+  "Side question:": "补充提问:",
+  "Side Question": "补充提问",
+  "Side question": "补充提问",
+  "side question": "补充提问",
+  "^Side Question[:：]?\\s*([\\s\\S]*)$": "补充提问: $1"
 }

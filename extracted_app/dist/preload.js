@@ -2107,6 +2107,19 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Compact the conversation now (summarize history to free up the context window)': '立即压缩当前对话（总结历史记录以释放上下文窗口空间）',
         'Compact the conversation now': '立即压缩当前对话',
         'summarize history to free up the context window': '总结历史记录以释放上下文窗口空间',
+        'No matching results': '无匹配结果',
+        'no matching results': '无匹配结果',
+        'No matching results.': '无匹配结果。',
+        'no matching results.': '无匹配结果。',
+        'No matching result': '无匹配结果',
+        'no matching result': '无匹配结果',
+        'No matching commands': '无匹配命令',
+        'no matching commands': '无匹配命令',
+        'Side Question:': '补充提问:',
+        'Side question:': '补充提问:',
+        'Side Question': '补充提问',
+        'Side question': '补充提问',
+        'side question': '补充提问',
         'write-in': '自主填写',
         '(write-in)': '(自主填写)',
         'Write-in': '自主填写',
@@ -2574,6 +2587,13 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         }
         if (translationMap[trimmed.toLowerCase()]) {
             return leadingSpace + translationMap[trimmed.toLowerCase()] + trailingSpace;
+        }
+
+        // "Side Question: ..." or "Side Question"
+        if (/^Side Question[:：]?/i.test(trimmed)) {
+            const m = trimmed.match(/^Side Question[:：]?\s*([\s\S]*)$/i);
+            const rest = m && m[1] ? m[1].trim() : '';
+            return leadingSpace + (rest ? `补充提问: ${rest}` : '补充提问:') + trailingSpace;
         }
 
         // "(Recommended) ..." or "Recommended: ..." option prefixes
