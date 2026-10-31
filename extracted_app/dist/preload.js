@@ -2115,6 +2115,21 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'no matching result': '无匹配结果',
         'No matching commands': '无匹配命令',
         'no matching commands': '无匹配命令',
+        'Trigger': '触发器',
+        'trigger': '触发器',
+        'Time Zone': '时区',
+        'Time zone': '时区',
+        'time zone': '时区',
+        'Add Automation': '添加自动化',
+        'Add automation': '添加自动化',
+        'add automation': '添加自动化',
+        'Enter automation name...': '输入自动化名称...',
+        'Enter automation name': '输入自动化名称',
+        'enter automation name...': '输入自动化名称...',
+        'enter automation name': '输入自动化名称',
+        'This project was created for the': '此项目是为',
+        'this project was created for the': '此项目是为',
+        'automation and its agents have permissions specific to this automation': '自动化创建的，其智能体拥有专门针对此自动化的权限',
         'Side Question:': '补充提问:',
         'Side question:': '补充提问:',
         'Side Question': '补充提问',
@@ -3986,6 +4001,35 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         }
     } catch (_) {}
 
+    function checkAndTranslateAutomationBanner(el) {
+        if (!el || !el.textContent || !/This project was created for the/i.test(el.textContent)) {
+            return false;
+        }
+        const textNodes = [];
+        for (let i = 0; i < el.childNodes.length; i++) {
+            const c = el.childNodes[i];
+            if (c.nodeType === Node.TEXT_NODE && c.nodeValue && c.nodeValue.trim()) {
+                textNodes.push(c);
+            }
+        }
+        if (textNodes.length > 0) {
+            for (let i = 0; i < textNodes.length; i++) {
+                const tn = textNodes[i];
+                if (/This project was created for the/i.test(tn.nodeValue)) {
+                    tn.nodeValue = tn.nodeValue.replace(/This project was created for the/gi, '此项目是为');
+                }
+                if (/automation and its agents have permissions specific to this automation/i.test(tn.nodeValue)) {
+                    tn.nodeValue = tn.nodeValue.replace(/automation and its agents have permissions specific to this automation/gi, '自动化创建的，其智能体拥有专门针对此自动化的权限');
+                }
+                if (/^\s*automation\s*$/i.test(tn.nodeValue)) {
+                    tn.nodeValue = tn.nodeValue.replace(/automation/gi, '自动化');
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     function checkAndTranslateModifiedInElement(el) {
         if (!el || !el.textContent || !/Modified in\s+\d+\s+(?:projects?|workspaces?|conversations?)/i.test(el.textContent)) {
             return false;
@@ -4032,6 +4076,7 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             }
         } else if (node.nodeType === Node.ELEMENT_NODE) {
             translateAttributes(node);
+            checkAndTranslateAutomationBanner(node);
             checkAndTranslateModifiedInElement(node);
             const tag = node.tagName ? node.tagName.toLowerCase() : '';
             if (tag === 'iframe' || tag === 'webview') {

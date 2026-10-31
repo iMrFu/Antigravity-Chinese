@@ -8838,5 +8838,21 @@
   "side questions": "补充提问",
   "^View (\\d+) side questions?$": "查看 $1 个补充提问",
   "^(\\d+)\\s+side\\s+questions?$": "$1 个补充提问",
-  "^Side\\s+Questions?[:：]?\\s*([\\s\\S]*)$": "补充提问: $1"
+  "^Side\\s+Questions?[:：]?\\s*([\\s\\S]*)$": "补充提问: $1",
+  "Trigger": "触发器",
+  "trigger": "触发器",
+  "Time Zone": "时区",
+  "Time zone": "时区",
+  "time zone": "时区",
+  "Add Automation": "添加自动化",
+  "Add automation": "添加自动化",
+  "add automation": "添加自动化",
+  "Enter automation name...": "输入自动化名称...",
+  "Enter automation name": "输入自动化名称",
+  "enter automation name...": "输入自动化名称...",
+  "enter automation name": "输入自动化名称",
+  "This project was created for the": "此项目是为",
+  "this project was created for the": "此项目是为",
+  "automation and its agents have permissions specific to this automation": "自动化创建的，其智能体拥有专门针对此自动化的权限",
+  "^This project was created for the\\s+([\\s\\S]+?)\\s+automation and its agents have permissions specific to this automation(?:\\s*\\(在此项目中工作时\\))?\\.?\\s*(?:了解更多。?)?$": "此项目是为 $1 自动化创建的，其智能体拥有专门针对此自动化的权限（在此项目中工作时）。了解更多。"
 }
