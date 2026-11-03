@@ -2647,6 +2647,31 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
             return leadingSpace + `第 ${turnNumMatch[1]} 轮` + trailingSpace;
         }
 
+        // "(X image attachment(s))" e.g. "12:54  汉化 (1 image attachment)" or "(1 image attachment)"
+        if (/\((\d+)\s+image\s+attachments?\)/i.test(trimmed)) {
+            return leadingSpace + trimmed.replace(/\((\d+)\s+image\s+attachments?\)/gi, (_, c) => `(${c} 个图片附件)`) + trailingSpace;
+        }
+
+        // "(X file attachment(s))"
+        if (/\((\d+)\s+file\s+attachments?\)/i.test(trimmed)) {
+            return leadingSpace + trimmed.replace(/\((\d+)\s+file\s+attachments?\)/gi, (_, c) => `(${c} 个文件附件)`) + trailingSpace;
+        }
+
+        // "(X attachment(s))"
+        if (/\((\d+)\s+attachments?\)/i.test(trimmed)) {
+            return leadingSpace + trimmed.replace(/\((\d+)\s+attachments?\)/gi, (_, c) => `(${c} 个附件)`) + trailingSpace;
+        }
+
+        // "(X image(s))"
+        if (/\((\d+)\s+images?\)/i.test(trimmed)) {
+            return leadingSpace + trimmed.replace(/\((\d+)\s+images?\)/gi, (_, c) => `(${c} 张图片)`) + trailingSpace;
+        }
+
+        // "(X file(s))"
+        if (/\((\d+)\s+files?\)/i.test(trimmed)) {
+            return leadingSpace + trimmed.replace(/\((\d+)\s+files?\)/gi, (_, c) => `(${c} 个文件)`) + trailingSpace;
+        }
+
         // "X image attachment(s)" / "X image attachments"
         const imgAttachMatch = trimmed.match(/^(\d+)\s+image\s+attachments?$/i);
         if (imgAttachMatch) {
