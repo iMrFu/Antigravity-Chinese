@@ -8854,5 +8854,9 @@
   "This project was created for the": "此项目是为",
   "this project was created for the": "此项目是为",
   "automation and its agents have permissions specific to this automation": "自动化创建的，其智能体拥有专门针对此自动化的权限",
-  "^This project was created for the\\s+([\\s\\S]+?)\\s+automation and its agents have permissions specific to this automation(?:\\s*\\(在此项目中工作时\\))?\\.?\\s*(?:了解更多。?)?$": "此项目是为 $1 自动化创建的，其智能体拥有专门针对此自动化的权限（在此项目中工作时）。了解更多。"
+  "^This project was created for the\\s+([\\s\\S]+?)\\s+automation and its agents have permissions specific to this automation(?:\\s*\\(在此项目中工作时\\))?\\.?\\s*(?:了解更多。?)?$": "此项目是为 $1 自动化创建的，其智能体拥有专门针对此自动化的权限（在此项目中工作时）。了解更多。",
+  "Unread": "未读",
+  "unread": "未读",
+  "Read": "已读",
+  "read": "已读"
 }
