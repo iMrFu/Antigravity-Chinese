@@ -2139,6 +2139,20 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'unread': '未读',
         'Read': '已读',
         'read': '已读',
+        'turn': '轮',
+        'turns': '轮对话',
+        'Turn': '轮',
+        'Turns': '轮对话',
+        'image attachment': '个图片附件',
+        'image attachments': '个图片附件',
+        'Image attachment': '个图片附件',
+        'Image attachments': '个图片附件',
+        'attachment': '个附件',
+        'attachments': '个附件',
+        'Attachment': '附件',
+        'Attachments': '附件',
+        'file attachment': '个文件附件',
+        'file attachments': '个文件附件',
         'Side Questions': '补充提问',
         'Side questions': '补充提问',
         'side questions': '补充提问',
@@ -2617,6 +2631,69 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         }
         if (translationMap[trimmed.toLowerCase()]) {
             return leadingSpace + translationMap[trimmed.toLowerCase()] + trailingSpace;
+        }
+
+        // "X turns" / "1 turn"
+        const turnsMatch = trimmed.match(/^(\d+)\s+turns?$/i);
+        if (turnsMatch) {
+            return leadingSpace + `${turnsMatch[1]} 轮对话` + trailingSpace;
+        }
+
+        // "Turn X" / "turn X"
+        const turnNumMatch = trimmed.match(/^Turn\s+(\d+)$/i);
+        if (turnNumMatch) {
+            return leadingSpace + `第 ${turnNumMatch[1]} 轮` + trailingSpace;
+        }
+
+        // "X image attachment(s)" / "X image attachments"
+        const imgAttachMatch = trimmed.match(/^(\d+)\s+image\s+attachments?$/i);
+        if (imgAttachMatch) {
+            return leadingSpace + `${imgAttachMatch[1]} 个图片附件` + trailingSpace;
+        }
+
+        // "X file attachment(s)" / "X file attachments"
+        const fileAttachMatch = trimmed.match(/^(\d+)\s+file\s+attachments?$/i);
+        if (fileAttachMatch) {
+            return leadingSpace + `${fileAttachMatch[1]} 个文件附件` + trailingSpace;
+        }
+
+        // "X attachment(s)" / "1 attachment"
+        const attachCountMatch = trimmed.match(/^(\d+)\s+attachments?$/i);
+        if (attachCountMatch) {
+            return leadingSpace + `${attachCountMatch[1]} 个附件` + trailingSpace;
+        }
+
+        // Time with Turn: e.g. "11:09 Turn 62"
+        const timeTurnMatch = trimmed.match(/^(\d{1,2}:\d{2}(?::\d{2})?)\s+Turn\s+(\d+)$/i);
+        if (timeTurnMatch) {
+            return leadingSpace + `${timeTurnMatch[1]} 第 ${timeTurnMatch[2]} 轮` + trailingSpace;
+        }
+
+        // Time with image attachment: e.g. "11:22 1 image attachment"
+        const timeImgMatch = trimmed.match(/^(\d{1,2}:\d{2}(?::\d{2})?)\s+(\d+)\s+image\s+attachments?$/i);
+        if (timeImgMatch) {
+            return leadingSpace + `${timeImgMatch[1]} ${timeImgMatch[2]} 个图片附件` + trailingSpace;
+        }
+
+        // Time with file attachment: e.g. "11:22 1 file attachment"
+        const timeFileMatch = trimmed.match(/^(\d{1,2}:\d{2}(?::\d{2})?)\s+(\d+)\s+file\s+attachments?$/i);
+        if (timeFileMatch) {
+            return leadingSpace + `${timeFileMatch[1]} ${timeFileMatch[2]} 个文件附件` + trailingSpace;
+        }
+
+        // Time with general attachment: e.g. "11:22 1 attachment"
+        const timeAttMatch = trimmed.match(/^(\d{1,2}:\d{2}(?::\d{2})?)\s+(\d+)\s+attachments?$/i);
+        if (timeAttMatch) {
+            return leadingSpace + `${timeAttMatch[1]} ${timeAttMatch[2]} 个附件` + trailingSpace;
+        }
+
+        // Time range with turns: e.g. "10月8日周四, 11:09 – 17:30 · 14 turns"
+        if (/·\s*(\d+)\s+turns?/i.test(trimmed)) {
+            return leadingSpace + trimmed.replace(/·\s*(\d+)\s+turns?/i, '· $1 轮对话') + trailingSpace;
+        }
+        if (/^[·•]\s*(\d+)\s+turns?$/i.test(trimmed)) {
+            const m = trimmed.match(/^[·•]\s*(\d+)\s+turns?$/i);
+            return leadingSpace + `· ${m[1]} 轮对话` + trailingSpace;
         }
 
         // "View X side questions" / "View side questions" / "View side question"
