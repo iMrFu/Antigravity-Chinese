@@ -2153,6 +2153,8 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         'Attachments': '附件',
         'file attachment': '个文件附件',
         'file attachments': '个文件附件',
+        'Timeline': '时间线',
+        'timeline': '时间线',
         'Side Questions': '补充提问',
         'Side questions': '补充提问',
         'side questions': '补充提问',
@@ -2694,6 +2696,12 @@ electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
         if (/^[·•]\s*(\d+)\s+turns?$/i.test(trimmed)) {
             const m = trimmed.match(/^[·•]\s*(\d+)\s+turns?$/i);
             return leadingSpace + `· ${m[1]} 轮对话` + trailingSpace;
+        }
+
+        // "X of Y" e.g. "113 of 113" -> "113 / 113"
+        const xOfYMatch = trimmed.match(/^(\d+)\s+of\s+(\d+)$/i);
+        if (xOfYMatch) {
+            return leadingSpace + `${xOfYMatch[1]} / ${xOfYMatch[2]}` + trailingSpace;
         }
 
         // "View X side questions" / "View side questions" / "View side question"
