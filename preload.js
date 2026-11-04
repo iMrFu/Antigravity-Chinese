@@ -1606,6 +1606,20 @@ installHubSurfaceThemeAutoSync();
         'Worktrees': '工作树',
         'New Worktree': '新建工作树',
         'New worktree': '新建工作树',
+        'Work in a New Worktree': '在新的工作树中工作',
+        'Work in a new worktree': '在新的工作树中工作',
+        'work in a new worktree': '在新的工作树中工作',
+        'Work in a Worktree': '在工作树中工作',
+        'Work in a worktree': '在工作树中工作',
+        'work in a worktree': '在工作树中工作',
+        'Keeps your checkout untouched': '保持当前检出不受影响',
+        'keeps your checkout untouched': '保持当前检出不受影响',
+        'Keeps your checkout untouched.': '保持当前检出不受影响。',
+        'keeps your checkout untouched.': '保持当前检出不受影响。',
+        'what can we get done today?': '今天我们来完成点什么？',
+        'What can we get done today?': '今天我们来完成点什么？',
+        'what can we get done today': '今天我们来完成点什么？',
+        'What can we get done today': '今天我们来完成点什么？',
         'Worktrees are available for Git repositories': '工作树适用于 Git 代码仓库',
         'Worktrees are available for Git repositories.': '工作树适用于 Git 代码仓库。',
         'Local': '本地',
@@ -2772,6 +2786,19 @@ installHubSurfaceThemeAutoSync();
         }
         if (translationMap[trimmed.toLowerCase()]) {
             return leadingSpace + translationMap[trimmed.toLowerCase()] + trailingSpace;
+        }
+
+        // Greeting headlines e.g. "what can we get done today?"
+        if (/^what can we get done today[?？]?$/i.test(trimmed)) {
+            return leadingSpace + '今天我们来完成点什么？' + trailingSpace;
+        }
+
+        // Worktree branch menu options
+        if (/^work in a new worktree\.?$/i.test(trimmed)) {
+            return leadingSpace + '在新的工作树中工作' + trailingSpace;
+        }
+        if (/^keeps your checkout untouched\.?$/i.test(trimmed)) {
+            return leadingSpace + '保持当前检出不受影响' + trailingSpace;
         }
 
         // "X turns" / "1 turn"

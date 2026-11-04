@@ -8889,5 +8889,21 @@
   "\\((\\d+)\\s+file\\s+attachments?\\)$": "($1 个文件附件)",
   "\\((\\d+)\\s+attachments?\\)$": "($1 个附件)",
   "\\((\\d+)\\s+images?\\)$": "($1 张图片)",
-  "\\((\\d+)\\s+files?\\)$": "($1 个文件)"
+  "\\((\\d+)\\s+files?\\)$": "($1 个文件)",
+  "Work in a New Worktree": "在新的工作树中工作",
+  "Work in a new worktree": "在新的工作树中工作",
+  "work in a new worktree": "在新的工作树中工作",
+  "Work in a Worktree": "在工作树中工作",
+  "Work in a worktree": "在工作树中工作",
+  "Keeps your checkout untouched": "保持当前检出不受影响",
+  "keeps your checkout untouched": "保持当前检出不受影响",
+  "Keeps your checkout untouched.": "保持当前检出不受影响。",
+  "keeps your checkout untouched.": "保持当前检出不受影响。",
+  "what can we get done today?": "今天我们来完成点什么？",
+  "What can we get done today?": "今天我们来完成点什么？",
+  "what can we get done today": "今天我们来完成点什么？",
+  "What can we get done today": "今天我们来完成点什么？",
+  "^what can we get done today[?？]?$": "今天我们来完成点什么？",
+  "^work in a new worktree\\.?$": "在新的工作树中工作",
+  "^keeps your checkout untouched\\.?$": "保持当前检出不受影响"
 }
