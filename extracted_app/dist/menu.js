@@ -56,7 +56,7 @@ function setupApplicationMenu(url) {
         label: '新建窗口',
         accelerator: 'CmdOrCtrl+Shift+N',
         click: () => {
-            (0, utils_1.createWindow)(url);
+            (0, utils_1.createWindow)(url, undefined, { cascade: true });
         },
     }));
     // Add "Check for Updates" to the application menu on macOS.
