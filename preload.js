@@ -865,6 +865,30 @@ installHubSurfaceThemeAutoSync();
         'Keep changes': '保留更改',
         'Revert Changes': '还原更改',
         'Revert changes': '还原更改',
+        'Revert File Changes': '还原文件更改',
+        'Revert file changes': '还原文件更改',
+        'revert file changes': '还原文件更改',
+        'Revert All File Changes': '还原所有文件更改',
+        'Revert all file changes': '还原所有文件更改',
+        'revert all file changes': '还原所有文件更改',
+        'Confirm': '确认',
+        'confirm': '确认',
+        'Confirm ↵': '确认 ↵',
+        'Undo': '撤销',
+        'undo': '撤销',
+        'Confirm Undo': '确认撤销',
+        'Confirm undo': '确认撤销',
+        'confirm undo': '确认撤销',
+        'User cancelled agent execution.': '用户取消了智能体执行。',
+        'User cancelled agent execution': '用户取消了智能体执行',
+        'User canceled agent execution.': '用户取消了智能体执行。',
+        'User canceled agent execution': '用户取消了智能体执行',
+        'Agent execution cancelled.': '智能体执行已取消。',
+        'Agent execution cancelled': '智能体执行已取消',
+        'Agent execution canceled.': '智能体执行已取消。',
+        'Agent execution canceled': '智能体执行已取消',
+        'This undo action will not make any code changes.': '此撤销操作不会产生任何代码更改。',
+        'This undo action will not make any code changes': '此撤销操作不会产生任何代码更改',
         'Discard Changes': '放弃更改',
         'Discard changes': '放弃更改',
         'Pin Conversation': '置顶对话',
@@ -2799,6 +2823,30 @@ installHubSurfaceThemeAutoSync();
         }
         if (/^keeps your checkout untouched\.?$/i.test(trimmed)) {
             return leadingSpace + '保持当前检出不受影响' + trailingSpace;
+        }
+
+        // Undo and agent execution status
+        if (/^User (?:cancelled|canceled) agent execution\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '用户取消了智能体执行。' : '用户取消了智能体执行') + trailingSpace;
+        }
+        if (/^Agent execution (?:cancelled|canceled)\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '智能体执行已取消。' : '智能体执行已取消') + trailingSpace;
+        }
+        if (/^Confirm Undo$/i.test(trimmed)) {
+            return leadingSpace + '确认撤销' + trailingSpace;
+        }
+        if (/^This undo action will not make any code changes\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '此撤销操作不会产生任何代码更改。' : '此撤销操作不会产生任何代码更改') + trailingSpace;
+        }
+        if (/^This undo action will (?:revert|make) (?:any )?code changes\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '此撤销操作将修改代码文件。' : '此撤销操作将修改代码文件') + trailingSpace;
+        }
+        if (/^Revert (?:all )?file changes$/i.test(trimmed)) {
+            return leadingSpace + (/all/i.test(trimmed) ? '还原所有文件更改' : '还原文件更改') + trailingSpace;
+        }
+        if (/^Confirm(?:\s*[↵⏎\u21b5\u23ce\u21a9])?$/i.test(trimmed)) {
+            const hasEnter = /[↵⏎\u21b5\u23ce\u21a9]/.test(trimmed);
+            return leadingSpace + (hasEnter ? '确认 ↵' : '确认') + trailingSpace;
         }
 
         // "X turns" / "1 turn"
