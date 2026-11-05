@@ -8980,5 +8980,22 @@
   "outside of folders": "文件夹外",
   "^Outside of Projects?$": "项目外",
   "^Outside of Workspaces?$": "工作区外",
-  "^Outside of Folders?$": "文件夹外"
+  "^Outside of Folders?$": "文件夹外",
+  "Search Projects": "搜索项目",
+  "Search Projects...": "搜索项目...",
+  "Search projects": "搜索项目",
+  "Search projects...": "搜索项目...",
+  "search projects": "搜索项目",
+  "search projects...": "搜索项目...",
+  "This Computer": "此电脑",
+  "This computer": "此电脑",
+  "this computer": "此电脑",
+  "This PC": "此电脑",
+  "This pc": "此电脑",
+  "this pc": "此电脑",
+  "^Search Projects(?:\\.{3}|…)?$": "搜索项目...",
+  "^This Computer$": "此电脑",
+  "^This Computer\\s*([>›»])?$": "此电脑 $1",
+  "This Computer >": "此电脑 >",
+  "^This PC$": "此电脑"
 }

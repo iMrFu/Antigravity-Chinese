@@ -1348,6 +1348,16 @@ installHubSurfaceThemeAutoSync();
         'Search conversations': '搜索对话',
         'Search projects...': '搜索项目...',
         'Search projects': '搜索项目',
+        'Search Projects...': '搜索项目...',
+        'Search Projects': '搜索项目',
+        'search projects...': '搜索项目...',
+        'search projects': '搜索项目',
+        'This Computer': '此电脑',
+        'This computer': '此电脑',
+        'this computer': '此电脑',
+        'This PC': '此电脑',
+        'This pc': '此电脑',
+        'this pc': '此电脑',
         'Search files...': '搜索文件...',
         'Search files': '搜索文件',
         'Search history...': '搜索历史记录...',
@@ -2737,6 +2747,11 @@ installHubSurfaceThemeAutoSync();
         'write only': '只写',
     };
 
+    const lowerTranslationMap = {};
+    for (const [key, value] of Object.entries(translationMap)) {
+        lowerTranslationMap[key.toLowerCase()] = value;
+    }
+
     const dynamicRegexRules = [];
 
     // Hot-reload dynamic external rules (supports Ctrl + R and focus hot-reload)
@@ -2751,9 +2766,11 @@ installHubSurfaceThemeAutoSync();
                             dynamicRegexRules.push({ regex: new RegExp(key, 'i'), replacement: value });
                         } catch (_) {
                             translationMap[key] = value;
+                            lowerTranslationMap[key.toLowerCase()] = value;
                         }
                     } else {
                         translationMap[key] = value;
+                        lowerTranslationMap[key.toLowerCase()] = value;
                     }
                 }
             }
@@ -2850,8 +2867,12 @@ installHubSurfaceThemeAutoSync();
         if (translationMap[trimmed]) {
             return leadingSpace + translationMap[trimmed] + trailingSpace;
         }
-        if (translationMap[trimmed.toLowerCase()]) {
-            return leadingSpace + translationMap[trimmed.toLowerCase()] + trailingSpace;
+        const lowerTrimmed = trimmed.toLowerCase();
+        if (translationMap[lowerTrimmed]) {
+            return leadingSpace + translationMap[lowerTrimmed] + trailingSpace;
+        }
+        if (lowerTranslationMap[lowerTrimmed]) {
+            return leadingSpace + lowerTranslationMap[lowerTrimmed] + trailingSpace;
         }
 
         // Greeting headlines e.g. "what can we get done today?"
