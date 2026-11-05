@@ -945,6 +945,33 @@ installHubSurfaceThemeAutoSync();
         'Controls': '控制',
         'Toggle Voice Recording': '切换语音录制',
         'Toggle voice recording': '切换语音录制',
+        'Start Voice mode': '开启语音模式',
+        'Start Voice Mode': '开启语音模式',
+        'Start voice mode': '开启语音模式',
+        'start voice mode': '开启语音模式',
+        'Stop Voice mode': '停止语音模式',
+        'Stop Voice Mode': '停止语音模式',
+        'Stop voice mode': '停止语音模式',
+        'stop voice mode': '停止语音模式',
+        'End Voice mode': '结束语音模式',
+        'End Voice Mode': '结束语音模式',
+        'End voice mode': '结束语音模式',
+        'end voice mode': '结束语音模式',
+        'Exit Voice mode': '退出语音模式',
+        'Exit Voice Mode': '退出语音模式',
+        'Exit voice mode': '退出语音模式',
+        'exit voice mode': '退出语音模式',
+        'Pause Voice mode': '暂停语音模式',
+        'Pause Voice Mode': '暂停语音模式',
+        'Pause voice mode': '暂停语音模式',
+        'pause voice mode': '暂停语音模式',
+        'Resume Voice mode': '恢复语音模式',
+        'Resume Voice Mode': '恢复语音模式',
+        'Resume voice mode': '恢复语音模式',
+        'resume voice mode': '恢复语音模式',
+        'Voice mode': '语音模式',
+        'Voice Mode': '语音模式',
+        'voice mode': '语音模式',
         'Find in Pane': '在窗格中查找',
         'Find in pane': '在窗格中查找',
         'Add to Chat/Quote': '添加到聊天/引用',
@@ -2847,6 +2874,24 @@ installHubSurfaceThemeAutoSync();
         if (/^Confirm(?:\s*[↵⏎\u21b5\u23ce\u21a9])?$/i.test(trimmed)) {
             const hasEnter = /[↵⏎\u21b5\u23ce\u21a9]/.test(trimmed);
             return leadingSpace + (hasEnter ? '确认 ↵' : '确认') + trailingSpace;
+        }
+
+        // Voice mode tooltips and controls
+        if (/^(?:Start|Stop|End|Exit|Pause|Resume)\s+Voice\s+mode$/i.test(trimmed)) {
+            const actMap = {
+                'start': '开启',
+                'stop': '停止',
+                'end': '结束',
+                'exit': '退出',
+                'pause': '暂停',
+                'resume': '恢复'
+            };
+            const act = trimmed.split(/\s+/)[0].toLowerCase();
+            const zhAct = actMap[act] || '开启';
+            return leadingSpace + `${zhAct}语音模式` + trailingSpace;
+        }
+        if (/^Voice\s+mode$/i.test(trimmed)) {
+            return leadingSpace + '语音模式' + trailingSpace;
         }
 
         // "X turns" / "1 turn"
