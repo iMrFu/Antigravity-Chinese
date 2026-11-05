@@ -2529,6 +2529,21 @@ installHubSurfaceThemeAutoSync();
         'Manage project folders, agent settings, and permissions.': '管理项目文件夹、智能体设置和权限。',
         'Agent settings and permissions for conversations outside of projects.': '项目外对话的智能体设置和权限。',
         'Agent settings and permissions for conversations outside of projects': '项目外对话的智能体设置和权限',
+        'Outside of Project': '项目外',
+        'Outside of project': '项目外',
+        'outside of project': '项目外',
+        'Outside of Projects': '项目外',
+        'Outside of projects': '项目外',
+        'outside of projects': '项目外',
+        'Outside of Workspace': '工作区外',
+        'Outside of workspace': '工作区外',
+        'outside of workspace': '工作区外',
+        'Outside of Workspaces': '工作区外',
+        'Outside of workspaces': '工作区外',
+        'outside of workspaces': '工作区外',
+        'Outside of Folders': '文件夹外',
+        'Outside of folders': '文件夹外',
+        'outside of folders': '文件夹外',
         'Modified in': '已在',
         'Modified in ': '已在 ',
         'Also includes': '同时包含',
@@ -2892,6 +2907,14 @@ installHubSurfaceThemeAutoSync();
         }
         if (/^Voice\s+mode$/i.test(trimmed)) {
             return leadingSpace + '语音模式' + trailingSpace;
+        }
+
+        // "Outside of Project" / "Outside of Workspace" / "Outside of Folders"
+        if (/^Outside of (?:Projects?|Workspaces?|Folders?)$/i.test(trimmed)) {
+            const m = trimmed.toLowerCase();
+            if (m.includes('project')) return leadingSpace + '项目外' + trailingSpace;
+            if (m.includes('workspace')) return leadingSpace + '工作区外' + trailingSpace;
+            if (m.includes('folder')) return leadingSpace + '文件夹外' + trailingSpace;
         }
 
         // "X turns" / "1 turn"
