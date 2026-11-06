@@ -342,6 +342,18 @@ installHubSurfaceThemeAutoSync();
         'Toggle Auxiliary Pane Ctrl+Alt+B': '切换辅助窗格 Ctrl+Alt+B',
         'Toggle Auxiliary Pane (Ctrl+Alt+B)': '切换辅助窗格 (Ctrl+Alt+B)',
         'Auxiliary Pane': '辅助窗格',
+        'Toggle Side Panel': '切换侧边面板',
+        'Toggle side panel': '切换侧边面板',
+        'toggle side panel': '切换侧边面板',
+        'Toggle Maximize Side Panel': '切换最大化侧边面板',
+        'Toggle maximize side panel': '切换最大化侧边面板',
+        'toggle maximize side panel': '切换最大化侧边面板',
+        'Maximize Side Panel': '最大化侧边面板',
+        'Maximize side panel': '最大化侧边面板',
+        'maximize side panel': '最大化侧边面板',
+        'Side Panel': '侧边面板',
+        'Side panel': '侧边面板',
+        'side panel': '侧边面板',
         'Toggle Primary Side Bar': '切换主侧边栏',
         'Toggle Primary Side Bar Ctrl+B': '切换主侧边栏 Ctrl+B',
         'Toggle Primary Side Bar (Ctrl+B)': '切换主侧边栏 (Ctrl+B)',
@@ -2046,6 +2058,21 @@ installHubSurfaceThemeAutoSync();
         'Change': '更改',
         'Verbose Agent Chat': '详细智能体聊天',
         'Verbose agent chat': '详细智能体聊天',
+        'Verbose': '详细',
+        'verbose': '详细',
+        'Strong': '强',
+        'strong': '强',
+        'Enter Sends immediately': 'Enter 立即发送',
+        'Sends immediately': '立即发送',
+        'sends immediately': '立即发送',
+        'Alt+Enter Queues after the turn': 'Alt+Enter 在本轮后排队',
+        'Queues after the turn': '在本轮后排队',
+        'queues after the turn': '在本轮后排队',
+        'Alt+Enter On empty prompt, sends next in queue': 'Alt+Enter 输入框为空时，发送队列中的下一条',
+        'On empty prompt, sends next in queue': '输入框为空时，发送队列中的下一条',
+        'on empty prompt, sends next in queue': '输入框为空时，发送队列中的下一条',
+        'On empty prompt, sends next in queue.': '输入框为空时，发送队列中的下一条。',
+        'on empty prompt, sends next in queue.': '输入框为空时，发送队列中的下一条。',
         'Display and preserve intermediate thinking steps.': '显示并保留中间思考过程。',
         'Display and preserve intermediate thinking steps': '显示并保留中间思考过程',
         'Conversation Width': '对话宽度',
@@ -2968,6 +2995,22 @@ installHubSurfaceThemeAutoSync();
         if (/^Confirm(?:\s*[↵⏎\u21b5\u23ce\u21a9])?$/i.test(trimmed)) {
             const hasEnter = /[↵⏎\u21b5\u23ce\u21a9]/.test(trimmed);
             return leadingSpace + (hasEnter ? '确认 ↵' : '确认') + trailingSpace;
+        }
+
+        // Side panel shortcut commands
+        if (/^Toggle (?:Maximize )?Side Panel$/i.test(trimmed)) {
+            return leadingSpace + (/maximize/i.test(trimmed) ? '切换最大化侧边面板' : '切换侧边面板') + trailingSpace;
+        }
+
+        // Queued message shortcut tooltips
+        if (/(?:Enter|Return)\s+Sends immediately/i.test(trimmed)) {
+            return leadingSpace + trimmed.replace(/(?:Enter|Return)\s+Sends immediately/gi, 'Enter 立即发送') + trailingSpace;
+        }
+        if (/((?:Alt|Cmd|Option|Ctrl)\+Enter)\s+Queues after the turn/i.test(trimmed)) {
+            return leadingSpace + trimmed.replace(/((?:Alt|Cmd|Option|Ctrl)\+Enter)\s+Queues after the turn/gi, '$1 在本轮后排队') + trailingSpace;
+        }
+        if (/((?:Alt|Cmd|Option|Ctrl)\+Enter)\s+On empty prompt,\s*sends next in queue\.?/i.test(trimmed)) {
+            return leadingSpace + trimmed.replace(/((?:Alt|Cmd|Option|Ctrl)\+Enter)\s+On empty prompt,\s*sends next in queue\.?/gi, '$1 输入框为空时，发送队列中的下一条') + trailingSpace;
         }
 
         // Voice mode tooltips and controls
