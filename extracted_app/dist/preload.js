@@ -1093,6 +1093,18 @@ installHubSurfaceThemeAutoSync();
         'Move Conversation Down': '下移对话',
         'Move conversation down': '下移对话',
         'move conversation down': '下移对话',
+        'Previous Side Panel Tab': '上一个侧边栏标签页',
+        'Previous side panel tab': '上一个侧边栏标签页',
+        'Next Side Panel Tab': '下一个侧边栏标签页',
+        'Next side panel tab': '下一个侧边栏标签页',
+        'Mute Voice Mic': '静音语音麦克风',
+        'Mute voice mic': '静音语音麦克风',
+        'Unmute Voice Mic': '取消静音语音麦克风',
+        'Unmute voice mic': '取消静音语音麦克风',
+        'Mute Voice Speaker': '静音语音扬声器',
+        'Mute voice speaker': '静音语音扬声器',
+        'Unmute Voice Speaker': '取消静音语音扬声器',
+        'Unmute voice speaker': '取消静音语音扬声器',
         'Move Tab Up': '上移标签页',
         'Move tab up': '上移标签页',
         'Move Tab Down': '下移标签页',
@@ -1986,6 +1998,52 @@ installHubSurfaceThemeAutoSync();
         "Configure the agent's visual theme and display preferences.": '配置智能体的视觉主题和显示偏好。',
         "Configure the agent's visual theme and display preferences": '配置智能体的视觉主题和显示偏好',
         'Chat Settings': '聊天设置',
+        'Chat': '对话',
+        'Conversation Steps': '会话步骤',
+        'Conversation steps': '会话步骤',
+        'conversation steps': '会话步骤',
+        'Choose how much detail is shown during a conversation.': '选择对话期间显示的详细程度。',
+        'Choose how much detail is shown during a conversation': '选择对话期间显示的详细程度',
+        'Contrast': '对比度',
+        'contrast': '对比度',
+        'Font': '字体',
+        'font': '字体',
+        'Chat Width': '对话宽度',
+        'Chat width': '对话宽度',
+        'chat width': '对话宽度',
+        'Fill': '铺满',
+        'fill': '铺满',
+        'Accessibility': '无障碍',
+        'accessibility': '无障碍',
+        'Screen Reader Mode': '屏幕阅读器模式',
+        'Screen reader mode': '屏幕阅读器模式',
+        'screen reader mode': '屏幕阅读器模式',
+        'Optimize the interface and terminal output for screen readers.': '优化屏幕阅读器的界面和终端输出。',
+        'Optimize the interface and terminal output for screen readers': '优化屏幕阅读器的界面和终端输出',
+        'Download Location': '下载位置',
+        'Download location': '下载位置',
+        'download location': '下载位置',
+        'Folder where files downloaded in the built-in browser are saved.': '内置浏览器中下载的文件的保存文件夹。',
+        'Folder where files downloaded in the built-in browser are saved': '内置浏览器中下载的文件的保存文件夹',
+        'Browsing History': '浏览历史记录',
+        'Browsing history': '浏览历史记录',
+        'browsing history': '浏览历史记录',
+        'Clear visited URLs and autocomplete suggestions from the built-in browser.': '清除内置浏览器中访问过的 URL 和自动补全建议。',
+        'Clear visited URLs and autocomplete suggestions from the built-in browser': '清除内置浏览器中访问过的 URL 和自动补全建议',
+        'Voice': '语音',
+        'The voice used in Voice mode. Powered by Gemini Live.': '语音模式下使用的声音。由 Gemini Live 提供技术支持。',
+        'The voice used in Voice mode. Powered by Gemini Live': '语音模式下使用的声音。由 Gemini Live 提供技术支持',
+        'Not set': '未设置',
+        'Not Set': '未设置',
+        'not set': '未设置',
+        'Microphone': '麦克风',
+        'microphone': '麦克风',
+        'Input device for voice mode and dictation.': '用于语音模式和听写的输入设备。',
+        'Input device for voice mode and dictation': '用于语音模式和听写的输入设备',
+        'How loud Antigravity\'s voice is.': 'Antigravity 的语音音量大小。',
+        'How loud Antigravity\'s voice is': 'Antigravity 的语音音量大小',
+        'Change...': '更改...',
+        'Change': '更改',
         'Verbose Agent Chat': '详细智能体聊天',
         'Verbose agent chat': '详细智能体聊天',
         'Display and preserve intermediate thinking steps.': '显示并保留中间思考过程。',
@@ -4041,6 +4099,38 @@ installHubSurfaceThemeAutoSync();
         // "Guide me through creating an automated task / automation"
         if (/^Guide me through creating an (?:automated task|automation)\.?$/i.test(trimmed)) {
             return '引导我创建自动化任务';
+        }
+
+        // "You have hit your 5-hour/weekly limit..."
+        if (/^You have hit your/i.test(trimmed)) {
+            // Case 1: "You have hit your 5-hour limit, so the weekly limit does not currently apply. Your 5-hour limit will refresh in 4 hours, 52 minutes."
+            let m = trimmed.match(/^You have hit your ([\w-]+) limit,\s*so the ([\w-]+) limit does not currently apply\.\s*Your ([\w-]+) limit will refresh in (.+?)\.?$/i);
+            if (m) {
+                const lim1 = m[1].toLowerCase().includes('weekly') ? '每周' : (m[1].toLowerCase().includes('5') ? '5 小时' : m[1]);
+                const lim2 = m[2].toLowerCase().includes('weekly') ? '每周' : (m[2].toLowerCase().includes('5') ? '5 小时' : m[2]);
+                const dur = translateDuration(m[4]);
+                return leadingSpace + `您已达到 ${lim1}限制，因此当前不适用 ${lim2}限制。您的 ${lim1}限制将在 ${dur}后刷新。` + trailingSpace;
+            }
+            // Case 2: "You have hit your 5-hour limit, it will refresh in 4 hours, 52 minutes. If on a supported paid plan, you can use AI credits in the interim."
+            m = trimmed.match(/^You have hit your ([\w-]+) limit,\s*it will refresh in (.+?)\.\s*If on a supported paid plan,\s*you can use AI credits in the interim\.?$/i);
+            if (m) {
+                const lim1 = m[1].toLowerCase().includes('weekly') ? '每周' : (m[1].toLowerCase().includes('5') ? '5 小时' : m[1]);
+                const dur = translateDuration(m[2]);
+                return leadingSpace + `您已达到 ${lim1}限制，将在 ${dur}后刷新。如果您使用的是受支持的付费计划，期间可以使用 AI 积分。` + trailingSpace;
+            }
+            // Case 3: "You have hit your 5-hour limit, it will refresh in 4 hours, 52 minutes."
+            m = trimmed.match(/^You have hit your ([\w-]+) limit,\s*it will refresh in (.+?)\.?$/i);
+            if (m) {
+                const lim1 = m[1].toLowerCase().includes('weekly') ? '每周' : (m[1].toLowerCase().includes('5') ? '5 小时' : m[1]);
+                const dur = translateDuration(m[2]);
+                return leadingSpace + `您已达到 ${lim1}限制，将在 ${dur}后刷新。` + trailingSpace;
+            }
+            // Case 4: "You have hit your 5-hour limit."
+            m = trimmed.match(/^You have hit your ([\w-]+) limit\.?$/i);
+            if (m) {
+                const lim1 = m[1].toLowerCase().includes('weekly') ? '每周' : (m[1].toLowerCase().includes('5') ? '5 小时' : m[1]);
+                return leadingSpace + `您已达到 ${lim1}限制。` + trailingSpace;
+            }
         }
 
         // "You have used some of your weekly limit..." (with or without ellipsis/duration)
