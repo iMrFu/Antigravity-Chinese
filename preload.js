@@ -2262,6 +2262,30 @@ installCustomFlagOverridesSync();
         'on empty prompt, sends next in queue': '输入框为空时，发送队列中的下一条',
         'On empty prompt, sends next in queue.': '输入框为空时，发送队列中的下一条。',
         'on empty prompt, sends next in queue.': '输入框为空时，发送队列中的下一条。',
+        'Remote Debugging Required': '需要开启远程调试',
+        'remote debugging required': '需要开启远程调试',
+        'To use browser tools, you need to enable remote debugging:': '若要使用浏览器工具，您需要启用远程调试：',
+        'To use browser tools, you need to enable remote debugging': '若要使用浏览器工具，您需要启用远程调试',
+        'to use browser tools, you need to enable remote debugging:': '若要使用浏览器工具，您需要启用远程调试：',
+        'to use browser tools, you need to enable remote debugging': '若要使用浏览器工具，您需要启用远程调试',
+        'Navigate to': '前往',
+        'navigate to': '前往',
+        'Navigate to ': '前往 ',
+        'navigate to ': '前往 ',
+        'Proceed Anyway': '仍然继续',
+        'Proceed anyway': '仍然继续',
+        'proceed anyway': '仍然继续',
+        'Check again': '重新检查',
+        'Check Again': '重新检查',
+        'check again': '重新检查',
+        'Allow remote debugging for this browser instance': '允许对此浏览器实例进行远程调试',
+        'Allow remote debugging for this browser instance.': '允许对此浏览器实例进行远程调试。',
+        '"Allow remote debugging for this browser instance"': '“允许对此浏览器实例进行远程调试”',
+        '"Allow remote debugging for this browser instance".': '“允许对此浏览器实例进行远程调试”。',
+        'Enable "Allow remote debugging for this browser instance".': '启用“允许对此浏览器实例进行远程调试”。',
+        'Enable "Allow remote debugging for this browser instance"': '启用“允许对此浏览器实例进行远程调试”',
+        '启用 "Allow remote debugging for this browser instance".': '启用“允许对此浏览器实例进行远程调试”。',
+        '启用 "Allow remote debugging for this browser instance"': '启用“允许对此浏览器实例进行远程调试”',
         'Display and preserve intermediate thinking steps.': '显示并保留中间思考过程。',
         'Display and preserve intermediate thinking steps': '显示并保留中间思考过程',
         'Conversation Width': '对话宽度',
@@ -3149,6 +3173,32 @@ installCustomFlagOverridesSync();
             return leadingSpace + lowerTranslationMap[lowerTrimmed] + trailingSpace;
         }
 
+        // Remote debugging required dialog
+        if (/^Remote Debugging Required$/i.test(trimmed)) {
+            return leadingSpace + '需要开启远程调试' + trailingSpace;
+        }
+        if (/^To use browser tools,\s*you need to enable remote debugging:?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith(':') ? '若要使用浏览器工具，您需要启用远程调试：' : '若要使用浏览器工具，您需要启用远程调试') + trailingSpace;
+        }
+        if (/^(?:(\d+)[.、]\s*)?Navigate to:?$/i.test(trimmed)) {
+            const num = trimmed.match(/^(\d+)[.、]\s*/);
+            const prefix = num ? `${num[1]}. ` : '';
+            return leadingSpace + prefix + '前往' + trailingSpace;
+        }
+        if (/Allow remote debugging for this browser instance/i.test(trimmed)) {
+            let res = trimmed;
+            res = res.replace(/Enable\s+/gi, '启用 ');
+            res = res.replace(/["“]Allow remote debugging for this browser instance["”]\.?/gi, '“允许对此浏览器实例进行远程调试”。');
+            res = res.replace(/Allow remote debugging for this browser instance\.?/gi, '允许对此浏览器实例进行远程调试');
+            return leadingSpace + res + trailingSpace;
+        }
+        if (/^Proceed Anyway$/i.test(trimmed)) {
+            return leadingSpace + '仍然继续' + trailingSpace;
+        }
+        if (/^Check again$/i.test(trimmed)) {
+            return leadingSpace + '重新检查' + trailingSpace;
+        }
+
         // Greeting headlines e.g. "what can we get done today?"
         if (/^what can we get done today[?？]?$/i.test(trimmed)) {
             return leadingSpace + '今天我们来完成点什么？' + trailingSpace;
@@ -3382,11 +3432,12 @@ installCustomFlagOverridesSync();
         }
 
         // Numbered list items / prompt options (e.g. "1 Yes, allow this time", "5 No (tell the agent what to do instead)")
-        const nm = trimmed.match(/^(?:(?:\(|\[)?(\d+)(?:\)|\]|[.、])?)\s+([\s\S]+)$/);
+        const nm = trimmed.match(/^(?:(?:\(|\[)?(\d+)(?:\)|\]|([.、]))?)\s+([\s\S]+)$/);
         if (nm) {
-            const tr = translateText(nm[2]);
-            if (tr && tr !== nm[2]) {
-                const prefix = trimmed.startsWith('(') ? `(${nm[1]}) ` : (trimmed.startsWith('[') ? `[${nm[1]}] ` : `${nm[1]} `);
+            const tr = translateText(nm[3]);
+            if (tr && tr !== nm[3]) {
+                const sep = nm[2] ? `${nm[2]} ` : ' ';
+                const prefix = trimmed.startsWith('(') ? `(${nm[1]}) ` : (trimmed.startsWith('[') ? `[${nm[1]}] ` : `${nm[1]}${sep}`);
                 return leadingSpace + prefix + tr.trim() + trailingSpace;
             }
         }
