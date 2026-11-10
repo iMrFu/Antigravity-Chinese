@@ -2391,6 +2391,12 @@ installCustomFlagOverridesSync();
         'Allow/deny agent browser actuation access to specific URLs.': '允许/拒绝智能体对特定 URL 的浏览器执行访问。',
         'Allow/deny agent browser actuation access to specific URLs': '允许/拒绝智能体对特定 URL 的浏览器执行访问',
         'Configure allowed and denied URLs for browser actuation.': '配置允许和拒绝进行浏览器执行的 URL。',
+        'Configure allowed and denied URLs for the browser subagent (invoked with /browser). Requires ': '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 ',
+        'Configure allowed and denied URLs for the browser subagent (invoked with /browser). Requires': '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 ',
+        'Configure allowed and denied URLs for the browser subagent (invoked with /browser).': '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。',
+        'Configure allowed and denied URLs for the browser subagent (invoked with /browser)': '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL',
+        'Configure allowed and denied URLs for the browser subagent (invoked with /browser). Requires Google Chrome.': '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 Google Chrome。',
+        'Configure allowed and denied URLs for the browser subagent (invoked with /browser). Requires Google Chrome': '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 Google Chrome',
         'File Access Permissions': '文件访问权限',
         'File Reads': '文件读取',
         'File reads': '文件读取',
@@ -3231,6 +3237,17 @@ installCustomFlagOverridesSync();
         }
         if (/^Full interface for coding,\s*developer tools,\s*and managing agents\.?$/i.test(trimmed)) {
             return leadingSpace + (trimmed.endsWith('.') ? '适用于编码、开发者工具和管理智能体的完整界面。' : '适用于编码、开发者工具和管理智能体的完整界面') + trailingSpace;
+        }
+
+        // Browser subagent execution rules description
+        if (/Configure allowed and denied URLs for the browser subagent/i.test(trimmed)) {
+            if (/Requires\s*Google Chrome\.?$/i.test(trimmed)) {
+                return leadingSpace + '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 Google Chrome。' + trailingSpace;
+            }
+            if (/Requires:?$/i.test(trimmed)) {
+                return leadingSpace + '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 ' + trailingSpace;
+            }
+            return leadingSpace + (trimmed.endsWith('.') ? '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。' : '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL') + trailingSpace;
         }
 
         // Greeting headlines e.g. "what can we get done today?"

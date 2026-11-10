@@ -9150,5 +9150,14 @@
   "^Knowledge Work$": "知识工作",
   "^Simplified interface for research,\\s*writing,\\s*and everyday tasks\\.?$": "适用于研究、写作和日常任务的简化界面。",
   "^Software Engineering$": "软件工程",
-  "^Full interface for coding,\\s*developer tools,\\s*and managing agents\\.?$": "适用于编码、开发者工具和管理智能体的完整界面。"
+  "^Full interface for coding,\\s*developer tools,\\s*and managing agents\\.?$": "适用于编码、开发者工具和管理智能体的完整界面。",
+  "Configure allowed and denied URLs for the browser subagent (invoked with /browser). Requires ": "配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 ",
+  "Configure allowed and denied URLs for the browser subagent (invoked with /browser). Requires": "配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 ",
+  "Configure allowed and denied URLs for the browser subagent (invoked with /browser).": "配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。",
+  "Configure allowed and denied URLs for the browser subagent (invoked with /browser)": "配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL",
+  "Configure allowed and denied URLs for the browser subagent (invoked with /browser). Requires Google Chrome.": "配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 Google Chrome。",
+  "Configure allowed and denied URLs for the browser subagent (invoked with /browser). Requires Google Chrome": "配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 Google Chrome",
+  "^Configure allowed and denied URLs for the browser subagent \\(invoked with /browser\\)\\. Requires:?\\s*$": "配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 ",
+  "^Configure allowed and denied URLs for the browser subagent \\(invoked with /browser\\)\\. Requires Google Chrome\\.?$": "配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 Google Chrome。",
+  "^Configure allowed and denied URLs for the browser subagent \\(invoked with /browser\\)\\.?$": "配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。"
 }
