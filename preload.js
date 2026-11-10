@@ -22,6 +22,7 @@ const updaterAPI = {
     checkForUpdates: () => electron_1.ipcRenderer.invoke('updater:check-for-updates'),
     getState: () => electron_1.ipcRenderer.invoke('updater:get-state'),
 };
+let deviceChooserSubscriberCount = 0;
 const dialogAPI = {
     showOpenDialog: () => electron_1.ipcRenderer.invoke('dialog:open-workspace'),
     showOpenMultipleFolderDialog: () => electron_1.ipcRenderer.invoke('dialog:open-workspaces'),
@@ -103,9 +104,12 @@ function subscribeIpcChannel(channel, callback) {
 }
 const wcvBrowserAPI = {
     acquire: (req) => electron_1.ipcRenderer.invoke('wcv:acquire', req),
-    show: (tabKey, boundsDip) => electron_1.ipcRenderer.invoke('wcv:show', tabKey, boundsDip),
+    show: (tabKey, boundsCss) => electron_1.ipcRenderer.invoke('wcv:show', tabKey, boundsCss),
     hide: (tabKey) => electron_1.ipcRenderer.invoke('wcv:hide', tabKey),
-    setBounds: (tabKey, boundsDip) => electron_1.ipcRenderer.invoke('wcv:set-bounds', tabKey, boundsDip),
+    setBounds: (tabKey, boundsCss) => {
+        electron_1.ipcRenderer.send('wcv:set-bounds-sync', tabKey, boundsCss);
+        return Promise.resolve();
+    },
     setThemeColor: (color) => electron_1.ipcRenderer.invoke('wcv:set-theme-color', color),
     setPinned: (tabKey, pinned) => electron_1.ipcRenderer.invoke('wcv:set-pinned', tabKey, pinned),
     setAgentControlling: (tabKey, active) => electron_1.ipcRenderer.invoke('wcv:set-agent-controlling', tabKey, active),
@@ -116,9 +120,12 @@ const wcvBrowserAPI = {
     demote: (tabKey, reason) => electron_1.ipcRenderer.invoke('wcv:demote', tabKey, reason),
     navigate: (tabKey, url) => electron_1.ipcRenderer.invoke('wcv:navigate', tabKey, url),
     control: (tabKey, action) => electron_1.ipcRenderer.invoke('wcv:control', tabKey, action),
-    sendMouse: (tabKey, params) => electron_1.ipcRenderer.invoke('wcv:send-mouse', tabKey, params),
+    sendMouse: (tabKey, params, coordSpace) => coordSpace !== undefined
+        ? electron_1.ipcRenderer.invoke('wcv:send-mouse', tabKey, params, coordSpace)
+        : electron_1.ipcRenderer.invoke('wcv:send-mouse', tabKey, params),
     sendKey: (tabKey, params) => electron_1.ipcRenderer.invoke('wcv:send-key', tabKey, params),
     insertText: (tabKey, text) => electron_1.ipcRenderer.invoke('wcv:insert-text', tabKey, text),
+    setViewportSize: (tabKey, size) => electron_1.ipcRenderer.invoke('wcv:set-viewport-size', tabKey, size),
     capturePage: (tabKey) => electron_1.ipcRenderer.invoke('wcv:capture-page', tabKey),
     dispose: (tabKey) => electron_1.ipcRenderer.invoke('wcv:dispose', tabKey),
     onGuestEvent: (cb) => subscribeIpcChannel('wcv:guest-event', cb),
@@ -126,6 +133,7 @@ const wcvBrowserAPI = {
     onShortcutForwarded: (cb) => subscribeIpcChannel('wcv:shortcut-forwarded', cb),
     onCursorChanged: (cb) => subscribeIpcChannel('wcv:cursor-changed', cb),
 };
+let promptRequestSubscriberCount = 0;
 const electronNativeAPI = {
     getZoomLevel: () => electron_1.webFrame.getZoomFactor(),
     getPathForFile: (file) => electron_1.webUtils.getPathForFile(file),
@@ -147,12 +155,35 @@ const electronNativeAPI = {
     },
     openExternal: (url) => electron_1.ipcRenderer.invoke('shell:open-external', url),
     revealInFilePicker: (path) => electron_1.ipcRenderer.invoke('shell:reveal-in-file-picker', path),
+    onWebviewDeviceChooserEvent: (callback) => {
+        if (++deviceChooserSubscriberCount === 1) {
+            electron_1.ipcRenderer.send('webview:device-chooser-subscriber-state', true);
+        }
+        const unsubscribe = subscribeIpcChannel('webview:device-chooser-event', callback);
+        let active = true;
+        return () => {
+            if (!active) {
+                return;
+            }
+            active = false;
+            unsubscribe();
+            if (--deviceChooserSubscriberCount === 0) {
+                electron_1.ipcRenderer.send('webview:device-chooser-subscriber-state', false);
+            }
+        };
+    },
+    respondWebviewDeviceChooser: (requestId, resolution) => electron_1.ipcRenderer.invoke('webview:device-chooser-response', requestId, resolution),
     getWebviewMemoryUsage: (webContentsIds) => electron_1.ipcRenderer.invoke('webview:get-memory-usage', webContentsIds),
+    getDefaultDownloadDirectory: () => electron_1.ipcRenderer.invoke('dialog:get-default-download-dir'),
     showContextMenu: (items) => electron_1.ipcRenderer.invoke('window:show-context-menu', items),
     closeContextMenu: () => electron_1.ipcRenderer.invoke('window:close-context-menu'),
     executeJavaScriptInIsolatedWorld: (wcId, worldId, code) => electron_1.ipcRenderer.invoke('webview:execute-js-isolated-world', wcId, worldId, code),
+    scriptJailProtocol: 2,
+    listWebviewFrames: (wcId) => electron_1.ipcRenderer.invoke('webview:list-frames', wcId),
+    executeJavaScriptInFrameIsolatedWorld: (wcId, frameId, code, expectedOrigin) => electron_1.ipcRenderer.invoke('webview:execute-js-frame-isolated-world', wcId, frameId, code, expectedOrigin),
     runScriptInJail: (req) => electron_1.ipcRenderer.invoke('script-jail:run', req),
     abortScriptJail: (jailId) => electron_1.ipcRenderer.invoke('script-jail:abort', jailId),
+    warmScriptJail: () => electron_1.ipcRenderer.invoke('script-jail:warm'),
     subscribeWebviewSecurityState: (webContentsId, callback) => {
         // The push channel and the initial fetch can race; `seq` orders them.
         let latestSeq = 0;
@@ -179,6 +210,8 @@ const electronNativeAPI = {
             electron_1.ipcRenderer.removeListener('webview:security-state-changed', handler);
         };
     },
+    allowWebviewCertificate: (webContentsId, url) => electron_1.ipcRenderer.invoke('webview:allow-certificate', webContentsId, url),
+    clearWebviewSiteData: (webContentsId, origin) => electron_1.ipcRenderer.invoke('webview:clear-site-data', webContentsId, origin),
     onWebviewOpenNewTab: (callback) => {
         const handler = (_event, url, webContentsId) => {
             callback(url, webContentsId);
@@ -189,6 +222,10 @@ const electronNativeAPI = {
         };
     },
     setWebviewDownloadDirectory: (webContentsId, downloadDir) => electron_1.ipcRenderer.invoke('webview:set-download-dir', webContentsId, downloadDir),
+    openWebviewDownload: (downloadId) => electron_1.ipcRenderer.invoke('webview:open-download', downloadId),
+    showWebviewDownloadInFolder: (downloadId) => electron_1.ipcRenderer.invoke('webview:show-download-in-folder', downloadId),
+    cancelWebviewDownload: (downloadId) => electron_1.ipcRenderer.invoke('webview:cancel-download', downloadId),
+    selectDownloadDirectory: (defaultPath) => electron_1.ipcRenderer.invoke('dialog:select-download-dir', defaultPath),
     onWebviewFaviconUpdated: (callback) => {
         const handler = (_event, payload) => {
             callback(payload);
@@ -210,6 +247,38 @@ const electronNativeAPI = {
     setWebviewDialogPolicy: (webContentsId, policy) => electron_1.ipcRenderer.invoke('webview:set-dialog-policy', webContentsId, policy),
     handleWebviewDialog: (webContentsId, decision) => electron_1.ipcRenderer.invoke('webview:handle-javascript-dialog', webContentsId, decision),
     onWebviewDialogOpening: (callback) => subscribeIpcChannel('webview:javascript-dialog-opening', callback),
+    getWebviewNetworkRequests: (webContentsId) => electron_1.ipcRenderer.invoke('webview:get-network-requests', webContentsId),
+    clearWebviewNetworkRequests: (webContentsId) => electron_1.ipcRenderer.invoke('webview:clear-network-requests', webContentsId),
+    onWebviewNetworkRequest: (callback) => subscribeIpcChannel('webview:network-request-updated', callback),
+    onWebviewPromptRequest: (callback) => {
+        promptRequestSubscriberCount += 1;
+        if (promptRequestSubscriberCount === 1) {
+            electron_1.ipcRenderer.send('webview:prompt-subscriber-state', true);
+        }
+        const unsubscribe = subscribeIpcChannel('webview:prompt-request', callback);
+        let active = true;
+        return () => {
+            if (!active) {
+                return;
+            }
+            active = false;
+            unsubscribe();
+            promptRequestSubscriberCount = Math.max(0, promptRequestSubscriberCount - 1);
+            if (promptRequestSubscriberCount === 0) {
+                electron_1.ipcRenderer.send('webview:prompt-subscriber-state', false);
+            }
+        };
+    },
+    respondWebviewPrompt: (promptId, value) => electron_1.ipcRenderer.invoke('webview:prompt-response', promptId, value),
+    setWebviewFileChooserPolicy: (webContentsId, policy) => electron_1.ipcRenderer.invoke('webview:set-file-chooser-policy', webContentsId, policy),
+    handleWebviewFileChooser: (webContentsId, decision) => electron_1.ipcRenderer.invoke('webview:handle-file-chooser', webContentsId, decision),
+    setWebviewInputFiles: (webContentsId, request) => electron_1.ipcRenderer.invoke('webview:set-input-files', webContentsId, request),
+    resolveWebviewUploadFiles: (request) => electron_1.ipcRenderer.invoke('webview:resolve-upload-files', request),
+    onWebviewFileChooserOpened: (callback) => subscribeIpcChannel('webview:file-chooser-opened', callback),
+    setWebviewWebMcpEnabled: (enabled) => electron_1.ipcRenderer.invoke('webview:webmcp-set-enabled', enabled),
+    listWebviewWebMcpTools: (webContentsId, origin) => electron_1.ipcRenderer.invoke('webview:webmcp-list-tools', webContentsId, origin),
+    callWebviewWebMcpTool: (webContentsId, origin, params) => electron_1.ipcRenderer.invoke('webview:webmcp-call-tool', webContentsId, origin, params),
+    cancelWebviewWebMcpToolCall: (webContentsId, callId) => electron_1.ipcRenderer.invoke('webview:webmcp-cancel-tool-call', webContentsId, callId),
     wcvBrowser: wcvBrowserAPI,
 };
 electron_1.ipcRenderer.on('agy-script-jail:port', (event, payload) => {
@@ -225,6 +294,11 @@ const wslAPI = {
     getState: () => electron_1.ipcRenderer.invoke('wsl:get-state'),
     connect: (distro) => electron_1.ipcRenderer.invoke('wsl:connect', distro),
 };
+const desktopMicAPI = {
+    getAccessStatus: () => electron_1.ipcRenderer.invoke('mic:get-access-status'),
+    requestAccess: () => electron_1.ipcRenderer.invoke('mic:request-access'),
+    openSystemPreferences: () => electron_1.ipcRenderer.invoke('mic:open-system-preferences'),
+};
 electron_1.contextBridge.exposeInMainWorld('electronUpdater', updaterAPI);
 electron_1.contextBridge.exposeInMainWorld('dialog', dialogAPI);
 electron_1.contextBridge.exposeInMainWorld('nativeNotifications', notificationAPI);
@@ -236,6 +310,7 @@ electron_1.contextBridge.exposeInMainWorld('agent', agentAPI);
 electron_1.contextBridge.exposeInMainWorld('electronNative', electronNativeAPI);
 electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
 electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
+electron_1.contextBridge.exposeInMainWorld('desktopMic', desktopMicAPI);
 const HEX6_RE = /^#[0-9a-fA-F]{6}$/;
 const HEX3_RE = /^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/;
 const RGB_RE = /^rgba?\(\s*(\d{1,3})\s*(?:,|\s)\s*(\d{1,3})\s*(?:,|\s)\s*(\d{1,3})(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/i;
@@ -309,23 +384,137 @@ function installHubSurfaceThemeAutoSync() {
         const hex = parseCssColorToHex6(cur);
         if (hex && hex !== lastSyncedHex) {
             lastSyncedHex = hex;
-            void Promise.resolve(electron_1.ipcRenderer.invoke('wcv:set-theme-color', hex))
-                .then((applied) => {
-                if (applied === true) {
-                    return electron_1.ipcRenderer.invoke('storage:update-items', {
-                        hubSurfaceBackgroundColor: hex,
-                    });
-                }
-                return undefined;
-            })
-                .catch(() => undefined);
+            void Promise.resolve(electron_1.ipcRenderer.invoke('wcv:set-theme-color', hex)).catch(() => undefined);
         }
     };
     syncNow();
     g.document.addEventListener?.('DOMContentLoaded', syncNow);
     g.addEventListener?.('load', syncNow);
 }
+const FLAG_KEY = 'jetski.developer.customFlagOverrides';
+const MIG_KEY = `${FLAG_KEY}.migrated`;
+const WRITE_EV = 'agy-flag-overrides-write';
+const parseFlags = (v) => {
+    try {
+        const p = typeof v === 'string' ? JSON.parse(v) : null;
+        return p && typeof p === 'object' && !Array.isArray(p) ? String(v) : null;
+    }
+    catch {
+        return null;
+    }
+};
+/** Hydrates and mirrors `jetski.developer.customFlagOverrides` via `app_storage.json` across ephemeral LS ports. */
+function installCustomFlagOverridesSync() {
+    const g = globalThis;
+    const h = g.location?.hostname;
+    const okHost = !g.location ||
+        (/^https?:$/.test(g.location.protocol ?? '') &&
+            (h === '127.0.0.1' || h === 'localhost'));
+    if (!okHost || (g.top && g.self && g.top !== g.self)) {
+        return;
+    }
+    // Own writes not yet acknowledged; their broadcasts are echoed back before
+    // the reply, so any broadcast seen meanwhile is superseded by our write.
+    let pending = 0;
+    const persist = (v) => {
+        pending++;
+        void Promise.resolve(electron_1.ipcRenderer.invoke('storage:update-items', {
+            [FLAG_KEY]: v,
+            [MIG_KEY]: 'true',
+        }))
+            .catch(() => { })
+            .finally(() => pending--);
+    };
+    const runMain = (js) => void Promise.resolve(electron_1.webFrame.executeJavaScript?.(js)).catch(() => { });
+    let s;
+    let last = null;
+    let suppress = false;
+    try {
+        if (!g.localStorage?.getItem || !g.localStorage.setItem) {
+            return;
+        }
+        s = g.localStorage;
+        const m = electron_1.ipcRenderer.sendSync?.('storage:get-items-sync');
+        if (!m || typeof m !== 'object') {
+            // Untrusted sender or IPC failure: never treat as a fresh install.
+            return;
+        }
+        const kv = m;
+        const migrated = MIG_KEY in kv || FLAG_KEY in kv;
+        const disk = parseFlags(kv[FLAG_KEY]);
+        const localRaw = s.getItem(FLAG_KEY);
+        const local = parseFlags(localRaw);
+        last = migrated ? disk : local;
+        if (disk !== null && localRaw !== disk) {
+            s.setItem(FLAG_KEY, disk);
+        }
+        else if (!migrated && local !== null) {
+            persist(local);
+        }
+        else if (migrated && disk === null && localRaw !== null) {
+            s.removeItem?.(FLAG_KEY);
+        }
+    }
+    catch {
+        return;
+    }
+    const syncOut = () => {
+        try {
+            const raw = suppress ? undefined : s.getItem(FLAG_KEY);
+            const next = raw ? parseFlags(raw) : null;
+            const valid = raw === null || next !== null;
+            if (raw !== undefined && valid && next !== last) {
+                last = next;
+                persist(next);
+            }
+        }
+        catch {
+            // Ignore storage access errors during unload.
+        }
+    };
+    // Not `storage`: that fires when another window on the same origin wrote
+    // the shared localStorage, and that window persists its own change.
+    [WRITE_EV, 'pagehide', 'beforeunload'].forEach((ev) => g.addEventListener?.(ev, syncOut));
+    g.addEventListener?.('visibilitychange', syncOut);
+    const kJson = JSON.stringify(FLAG_KEY);
+    runMain(`(()=>{const P=window.Storage?.prototype,L=window.localStorage,K=${kJson},E=${JSON.stringify(WRITE_EV)};if(!P||!L||P.__agyFlagHook)return;Object.defineProperty(P,'__agyFlagHook',{value:1});const n=()=>{window.dispatchEvent(new Event(E))},si=P.setItem,ri=P.removeItem,cl=P.clear;P.setItem=function(k,v){si.call(this,k,v);if(this===L&&String(k)===K)n()};P.removeItem=function(k){ri.call(this,k);if(this===L&&String(k)===K)n()};P.clear=function(){cl.call(this);if(this===L)n()}})()`);
+    electron_1.ipcRenderer.on('storage:changed', (_e, changes) => {
+        const raw = changes && FLAG_KEY in changes ? changes[FLAG_KEY] : undefined;
+        const next = raw === null ? null : parseFlags(raw);
+        if (raw === undefined || (raw !== null && next === null)) {
+            return;
+        }
+        try {
+            const cur = s.getItem(FLAG_KEY);
+            if (cur === next) {
+                last = next;
+                return;
+            }
+            // A local value not yet persisted (or a newer write from another window
+            // sharing this origin) wins over a possibly stale broadcast.
+            if (pending > 0 || cur !== last) {
+                return;
+            }
+            last = next;
+            suppress = true;
+            if (next === null) {
+                s.removeItem?.(FLAG_KEY);
+            }
+            else {
+                s.setItem(FLAG_KEY, next);
+            }
+            runMain(`window.dispatchEvent(new StorageEvent('storage',{key:${kJson},newValue:${JSON.stringify(next)},storageArea:window.localStorage}))`);
+        }
+        catch {
+            // Ignore teardown write failures.
+        }
+        finally {
+            suppress = false;
+        }
+    });
+}
 installHubSurfaceThemeAutoSync();
+installCustomFlagOverridesSync();
 
 // DOM Translation Injector to localize the embedded React frontend settings and labels to Chinese.
 (() => {
