@@ -2286,6 +2286,23 @@ installCustomFlagOverridesSync();
         'Enable "Allow remote debugging for this browser instance"': '启用“允许对此浏览器实例进行远程调试”',
         '启用 "Allow remote debugging for this browser instance".': '启用“允许对此浏览器实例进行远程调试”。',
         '启用 "Allow remote debugging for this browser instance"': '启用“允许对此浏览器实例进行远程调试”',
+        'Interface Layout': '界面布局',
+        'Interface layout': '界面布局',
+        'interface layout': '界面布局',
+        'Knowledge Work': '知识工作',
+        'Knowledge work': '知识工作',
+        'knowledge work': '知识工作',
+        'Simplified interface for research, writing, and everyday tasks.': '适用于研究、写作和日常任务的简化界面。',
+        'Simplified interface for research, writing, and everyday tasks': '适用于研究、写作和日常任务的简化界面',
+        'simplified interface for research, writing, and everyday tasks.': '适用于研究、写作和日常任务的简化界面。',
+        'simplified interface for research, writing, and everyday tasks': '适用于研究、写作和日常任务的简化界面',
+        'Software Engineering': '软件工程',
+        'Software engineering': '软件工程',
+        'software engineering': '软件工程',
+        'Full interface for coding, developer tools, and managing agents.': '适用于编码、开发者工具和管理智能体的完整界面。',
+        'Full interface for coding, developer tools, and managing agents': '适用于编码、开发者工具和管理智能体的完整界面',
+        'full interface for coding, developer tools, and managing agents.': '适用于编码、开发者工具和管理智能体的完整界面。',
+        'full interface for coding, developer tools, and managing agents': '适用于编码、开发者工具和管理智能体的完整界面',
         'Display and preserve intermediate thinking steps.': '显示并保留中间思考过程。',
         'Display and preserve intermediate thinking steps': '显示并保留中间思考过程',
         'Conversation Width': '对话宽度',
@@ -3197,6 +3214,23 @@ installCustomFlagOverridesSync();
         }
         if (/^Check again$/i.test(trimmed)) {
             return leadingSpace + '重新检查' + trailingSpace;
+        }
+
+        // Interface Layout settings
+        if (/^Interface Layout$/i.test(trimmed)) {
+            return leadingSpace + '界面布局' + trailingSpace;
+        }
+        if (/^Knowledge Work$/i.test(trimmed)) {
+            return leadingSpace + '知识工作' + trailingSpace;
+        }
+        if (/^Simplified interface for research,\s*writing,\s*and everyday tasks\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '适用于研究、写作和日常任务的简化界面。' : '适用于研究、写作和日常任务的简化界面') + trailingSpace;
+        }
+        if (/^Software Engineering$/i.test(trimmed)) {
+            return leadingSpace + '软件工程' + trailingSpace;
+        }
+        if (/^Full interface for coding,\s*developer tools,\s*and managing agents\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '适用于编码、开发者工具和管理智能体的完整界面。' : '适用于编码、开发者工具和管理智能体的完整界面') + trailingSpace;
         }
 
         // Greeting headlines e.g. "what can we get done today?"
