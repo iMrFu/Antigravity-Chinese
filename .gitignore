@@ -1,2 +1,9 @@
 *.bak
 *.log
+
+# 采集与爬虫相关本地内容（严格禁止上传至 GitHub）
+content_crawler_mvp/
+*.db
+*.db-journal
+*.csv
+chrome_profile/
