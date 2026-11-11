@@ -837,6 +837,90 @@ installCustomFlagOverridesSync();
         'Automatically migrate legacy workflows to modern skills across global and workspace configurations. ...': '自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。',
         'Automatically migrate legacy workflows to modern skills across global and workspace configurations. …': '自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。',
         'Automatically migrate legacy workflows to modern skills across global and workspace configurations...': '自动将全局和工作区配置中的旧版工作流迁移为现代技能。扫描现有工作流，创建目标 SKILL.md 并安全归档旧文件。',
+        'Interactive guide to design and create a scheduled background automation. Use this skill when the user wants to create an automated or recurring scheduled task (e.g. "summarize my emails every morning", "every Monday send me a to-do list"). Also triggered by the /automation slash command.': '设计并创建计划后台自动化的交互式指南。当用户需要创建自动化或定期计划任务（例如“每天早上总结我的邮件”、“每周一发送待办清单”）时使用此技能。亦可通过 /automation 斜杠命令触发。',
+        'Interactive guide to design and create a scheduled background automation. Use this skill when the user wants to create an automated or recurring scheduled task (e.g. "summarize my emails every morning", "every Monday send me a to-do list"). Also triggered by the /automation slash command...': '设计并创建计划后台自动化的交互式指南。当用户需要创建自动化或定期计划任务时使用此技能。亦可通过 /automation 斜杠命令触发...',
+        'Interactive guide to design and create a scheduled background automation. Use this skill when the user wants to create an automated or recurring scheduled task (e.g. "summarize my emails every morning", "every Monday send me a to-do list"). Also triggered by the /automation slash command…': '设计并创建计划后台自动化的交互式指南。当用户需要创建自动化或定期计划任务时使用此技能。亦可通过 /automation 斜杠命令触发…',
+        'Interactive guide to design and create a scheduled background automation. Use this skill when the user wants to create an automated or recurring scheduled task...': '设计并创建计划后台自动化的交互式指南。当用户需要创建自动化或定期计划任务时使用此技能...',
+        'Interactive guide to design and create a scheduled background automation. Use this skill when the user wants to create an automated or recurring scheduled task…': '设计并创建计划后台自动化的交互式指南。当用户需要创建自动化或定期计划任务时使用此技能…',
+        'Interactive guide to design and create a scheduled background automation.': '设计并创建计划后台自动化的交互式指南。',
+        'Interactive guide to design and create a scheduled background automation': '设计并创建计划后台自动化的交互式指南',
+        'Migrates the user\'s MCP servers, skills, slash commands, subagents, and instruction files from other coding agents (Claude Code, Codex, Cursor, Gemini CLI) into one new Antigravity plugin. Use when the user wants to bring over, import, or migrate their setup or config from another agent or tool. Don\'t use for installing Marketplace plugins or authoring a new plugin from scratch (use the plugin skill).': '将用户来自其他编码智能体（Claude Code、Codex、Cursor、Gemini CLI）的 MCP 服务、技能、斜杠命令、子智能体和指令文件迁移到一个新的 Antigravity 插件中。当用户希望迁移或导入配置时使用。',
+        'Migrates the user\'s MCP servers, skills, slash commands, subagents, and instruction files from other coding agents (Claude Code, Codex, Cursor, Gemini CLI) into one new Antigravity plugin. Use when the user wants to bring over, import, or migrate their setup or config from another agent or tool...': '将用户来自其他编码智能体（Claude Code、Codex、Cursor、Gemini CLI）的 MCP 服务、技能、斜杠命令等迁移到新插件中...',
+        'Migrates the user\'s MCP servers, skills, slash commands, subagents, and instruction files from other coding agents (Claude Code, Codex, Cursor, Gemini CLI) into one new Antigravity plugin. Use when the user wants to bring over, import, or migrate their setup or config from another agent or tool…': '将用户来自其他编码智能体（Claude Code、Codex、Cursor、Gemini CLI）的 MCP 服务、技能、斜杠命令等迁移到新插件中…',
+        'Migrates the user\'s MCP servers, skills, slash commands, subagents, and instruction files from other coding agents...': '将用户来自其他编码智能体的配置迁移为 Antigravity 插件...',
+        'Migrates the user\'s MCP servers, skills, slash commands, subagents, and instruction files from other coding agents…': '将用户来自其他编码智能体的配置迁移为 Antigravity 插件…',
+        '(Preview & Quota Heavy) Run a swarm: several agents working in parallel on one task, each in its own conversation, collaborating through a shared message board. Use when the work splits into pieces that can be done at the same time, or when a second pair of eyes should check the first pair\'s work.': '（预览版且消耗额度较大）运行蜂群智能体：多个智能体在同一任务上并行工作，各自处于独立对话中，通过共享留言板进行协作。适用于任务可拆分为并行子任务，或需要多重审查的场景。',
+        '(Preview & Quota Heavy) Run a swarm: several agents working in parallel on one task, each in its own conversation, collaborating through a shared message board...': '（预览版且消耗额度较大）运行蜂群智能体：多个智能体在同一任务上并行工作，通过共享留言板进行协作...',
+        '(Preview & Quota Heavy) Run a swarm: several agents working in parallel on one task, each in its own conversation, collaborating through a shared message board…': '（预览版且消耗额度较大）运行蜂群智能体：多个智能体在同一任务上并行工作，通过共享留言板进行协作…',
+        'Run a swarm: several agents working in parallel on one task, each in its own conversation, collaborating through a shared message board.': '运行蜂群智能体：多个智能体在同一任务上并行工作，各自处于独立对话中，通过共享留言板进行协作。',
+        'Run a swarm: several agents working in parallel on one task, each in its own conversation, collaborating through a shared message board': '运行蜂群智能体：多个智能体在同一任务上并行工作，各自处于独立对话中，通过共享留言板进行协作',
+        'Guidelines for interacting with GitHub and request permissions from the user when commands fail due to restrictions in the agent environment.': '与 GitHub 交互的指引准则，当命令因智能体环境限制而失败时向用户申请权限。',
+        'Guidelines for interacting with GitHub and request permissions from the user when commands fail due to restrictions in the agent environment...': '与 GitHub 交互的指引准则，当命令因智能体环境限制而失败时向用户申请权限...',
+        'Guidelines for interacting with GitHub and request permissions from the user when commands fail due to restrictions in the agent environment…': '与 GitHub 交互的指引准则，当命令因智能体环境限制而失败时向用户申请权限…',
+        'How to manage and create plugins — namespaced bundles of skills, agents, rules, MCP servers and hooks that install, enable and disable as a single unit. Use this skill when the user wants to enable, disable, install or uninstall a plugin, when they want to create a new plugin, or when a new customization should be packaged into a plugin rather than left loose. Also triggered by the /plugin slash command. Don\'t use for the underlying customization system itself — discovery roots, loading priority, or authoring a standalone skill, agent, rule, hook or MCP server outside a plugin; see the customizations guide skill for those.': '如何管理和创建插件——包含技能、智能体、规则、MCP 服务与钩子的命名空间套件，可作为整体安装、启用和禁用。当需要管理或创建新插件时使用。亦可通过 /plugin 斜杠命令触发。',
+        'How to manage and create plugins — namespaced bundles of skills, agents, rules, MCP servers and hooks that install, enable and disable as a single unit. Use this skill when the user wants to enable, disable, install or uninstall a plugin...': '如何管理和创建插件——可整体安装、启用和禁用的命名空间定制套件...',
+        'How to manage and create plugins — namespaced bundles of skills, agents, rules, MCP servers and hooks that install, enable and disable as a single unit. Use this skill when the user wants to enable, disable, install or uninstall a plugin…': '如何管理和创建插件——可整体安装、启用和禁用的命名空间定制套件…',
+        'How to manage and create plugins — namespaced bundles of skills, agents, rules, MCP servers and hooks that install, enable and disable as a single unit.': '如何管理和创建插件——包含技能、智能体、规则、MCP 服务与钩子的命名空间套件，可作为整体安装、启用和禁用。',
+        'How to manage and create plugins — namespaced bundles of skills, agents, rules, MCP servers and hooks that install, enable and disable as a single unit': '如何管理和创建插件——包含技能、智能体、规则、MCP 服务与钩子的命名空间套件，可作为整体安装、启用和禁用',
+        'How to write and run a dynamic workflow script with the `run_workflow` tool: a Python script that orchestrates many agents with `agent`, `parallel`, `pipeline`, and `phase`. Use when a task splits into many independent or staged pieces of agent work (fan out over files, modules, bugs, or review angles, then aggregate), or when the user asks for a workflow. Don\'t use for a single delegated task (use a subagent) or for legacy workflow files (see migrate-workflows).': '如何使用 run_workflow 工具编写并运行动态工作流脚本：使用 agent、parallel、pipeline 和 phase 编排多个智能体的 Python 脚本。适用于任务需拆分为多阶段或多分支智能体作业的场景。',
+        'How to write and run a dynamic workflow script with the run_workflow tool: a Python script that orchestrates many agents with agent, parallel, pipeline, and phase. Use when a task splits into many independent or staged pieces of agent work (fan out over files, modules, bugs, or review angles, then aggregate), or when the user asks for a workflow. Don\'t use for a single delegated task (use a subagent) or for legacy workflow files (see migrate-workflows).': '如何使用 run_workflow 工具编写并运行动态工作流脚本：使用 agent、parallel、pipeline 和 phase 编排多个智能体的 Python 脚本。适用于任务需拆分为多阶段或多分支智能体作业的场景。',
+        'How to write and run a dynamic workflow script with the `run_workflow` tool...': '如何使用 run_workflow 工具编写并运行动态工作流脚本...',
+        'How to write and run a dynamic workflow script with the `run_workflow` tool…': '如何使用 run_workflow 工具编写并运行动态工作流脚本…',
+        'ONLY for the native-swarm worker whose brief says it is the monitor. On a timer, it checks whether the whole swarm has stalled and calls on the one member who can unstick it. Coordinators and other workers: do not load this.': '仅供任务指令指定为监控员（monitor）的原生蜂群工作者使用。定期检查整个蜂群是否停滞，并唤醒能够解阻的成员。协调员和其他工作者请勿加载。',
+        'ONLY for the native-swarm worker whose brief says it is the monitor...': '仅供原生蜂群中指定为监控员的工作者使用。定期检查蜂群是否停滞...',
+        'ONLY for the native-swarm worker whose brief says it is the monitor…': '仅供原生蜂群中指定为监控员的工作者使用。定期检查蜂群是否停滞…',
+        'ONLY for the native-swarm worker whose brief says it is the narrator. It watches the board and keeps the facts behind the user\'s Overview (view.json) current. Coordinators and other workers: do not load this.': '仅供任务指令指定为解说员（narrator）的原生蜂群工作者使用。负责监视留言板并保持用户“概览”（view.json）中的事实信息最新。协调员和其他工作者请勿加载。',
+        'ONLY for the native-swarm worker whose brief says it is the narrator...': '仅供原生蜂群中指定为解说员的工作者使用。保持用户概览中的信息最新...',
+        'ONLY for the native-swarm worker whose brief says it is the narrator…': '仅供原生蜂群中指定为解说员的工作者使用。保持用户概览中的信息最新…',
+        'Discover UI plugin panels relevant to the current task and surface a one-click pill in chat to open (toggle) them in the side pane. Use when a running UI plugin\'s panel would help with what the user is doing, or right after the user enables a new UI plugin pane and a shortcut to open it is handy.': '发现与当前任务相关的 UI 插件面板，并在对话中呈现一键胶囊按钮以便在侧窗格中打开（切换）。当运行中的 UI 插件面板对当前操作有帮助时使用。',
+        'Discover UI plugin panels relevant to the current task and surface a one-click pill in chat to open (toggle) them in the side pane...': '发现与当前任务相关的 UI 插件面板，并在对话中提供一键打开按钮...',
+        'Discover UI plugin panels relevant to the current task and surface a one-click pill in chat to open (toggle) them in the side pane…': '发现与当前任务相关的 UI 插件面板，并在对话中提供一键打开按钮…',
+        'Explicitly ask your agent to generate a structured plan before implementation.': '在实施前明确要求智能体生成结构化计划。',
+        'Explicitly ask your agent to generate a structured plan before implementation': '在实施前明确要求智能体生成结构化计划',
+        'Recommend this when the task is complex and requires careful step-by-step planning before execution.': '当任务复杂且需要在执行前进行细致的逐步规划时推荐使用此命令。',
+        'Recommend this when the task is complex and requires careful step-by-step planning before execution': '当任务复杂且需要在执行前进行细致的逐步规划时推荐使用此命令',
+        'Recommend this when the user wants to run a long-running task (e.g., overnight) and wants the agent to be extra thorough and not stop until the goal is fully achieved.': '当用户希望运行长时间任务（如通宵运行），要求智能体格外彻底且在完全达成目标前不停止时推荐使用。',
+        'Recommend this when the user wants to run a long-running task and wants the agent to be extra thorough and not stop until the goal is fully achieved.': '当用户希望运行长时间任务，要求智能体格外彻底且在达成目标前不停止时推荐使用。',
+        'Recommend this when the user wants to run an instruction on a recurring schedule or set a one-time timer.': '当用户希望按循环计划运行指令或设置单次定时器时推荐使用。',
+        'Recommend this when the user\'s task involves web browsing, searching the web, or interacting with web applications.': '当用户任务涉及网页浏览、网络搜索或与 Web 应用交互时推荐使用。',
+        'Recommend this when the task involves web browsing, searching the web, or interacting with web applications.': '当任务涉及网页浏览、网络搜索或与 Web 应用交互时推荐使用。',
+        'Recommend this when the user wants to align on a plan through an interactive interview to resolve design decisions.': '当用户希望通过交互式访谈对齐方案以解决设计决策时推荐使用。',
+        'Recommend this when the user wants to align on a plan through an interactive interview.': '当用户希望通过交互式访谈对齐方案时推荐使用。',
+        'Recommend this when the user has a large project that would benefit from a team of autonomous agents working together.': '当用户有大型项目且适合多个自主智能体分工协同完成时推荐使用。',
+        'Recommend this when the user has corrected the agent or solved a complex setup and wants the agent to persist this behavior for future tasks.': '当用户对智能体做出修正或完成了复杂配置，希望持久化该行为以供未来任务使用时推荐使用。',
+        'Recommend this when the user has a complex coding or research project that requires deep thinking, strategic planning, multiple perspectives, and rigorous verification.': '当用户面临复杂的编码或研究项目，需要深入思考、战略规划、多视角审视和严格验证时推荐使用。',
+        'Compact context to free up window.': '压缩上下文以释放窗口空间。',
+        'Compact context to free up window': '压缩上下文以释放窗口空间',
+        'Compact conversation history.': '压缩对话历史记录。',
+        'Compact conversation history': '压缩对话历史记录',
+        'Recommend this when the conversation is getting long and the user wants to compact or summarize the context to free up the context window.': '当对话过长且用户希望压缩或总结上下文以释放上下文窗口时推荐使用。',
+        'Summarize or compress the conversation history to free up context.': '总结或压缩对话历史记录以释放上下文空间。',
+        'Summarize or compress the conversation history to free up context': '总结或压缩对话历史记录以释放上下文空间',
+        'Design and create a scheduled background automation.': '设计并创建计划后台自动化。',
+        'Design and create a scheduled background automation': '设计并创建计划后台自动化',
+        'Create a scheduled background automation.': '创建计划后台自动化。',
+        'Create a scheduled background automation': '创建计划后台自动化',
+        'Manage and create plugins.': '管理和创建插件。',
+        'Manage and create plugins': '管理和创建插件',
+        'Manage plugins and customizations.': '管理插件与自定义项。',
+        'Manage plugins and customizations': '管理插件与自定义项',
+        'Show help and available commands.': '显示帮助与可用命令。',
+        'Show help and available commands': '显示帮助与可用命令',
+        'Get help with using Antigravity.': '获取使用 Antigravity 的帮助。',
+        'Get help with using Antigravity': '获取使用 Antigravity 的帮助',
+        'Clear conversation history.': '清理对话历史。',
+        'Clear conversation history': '清理对话历史',
+        'Reset conversation.': '重置对话。',
+        'Reset conversation': '重置对话',
+        'Reset the conversation.': '重置当前对话。',
+        'Reset the conversation': '重置当前对话',
+        'Slash Commands': '斜杠命令',
+        'Slash commands': '斜杠命令',
+        'slash commands': '斜杠命令',
+        'Available Commands': '可用命令',
+        'Available commands': '可用命令',
+        'available commands': '可用命令',
+
         'Conversation': '对话',
         'Conversations': '对话',
         'Dismiss': '忽略',
@@ -3250,6 +3334,65 @@ installCustomFlagOverridesSync();
                 return leadingSpace + '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。需要安装 ' + trailingSpace;
             }
             return leadingSpace + (trimmed.endsWith('.') ? '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL。' : '配置浏览器子智能体（通过 /browser 调用）允许和拒绝访问的 URL') + trailingSpace;
+        }
+
+
+        // Builtin skills dynamic matchers
+        if (/^Interactive guide to design and create a scheduled background automation/i.test(trimmed)) {
+            return leadingSpace + '设计并创建计划后台自动化的交互式指南。' + trailingSpace;
+        }
+        if (/^Migrates the user's MCP servers,\s*skills,\s*slash commands/i.test(trimmed)) {
+            return leadingSpace + '将用户来自其他编码智能体的 MCP 服务、技能、斜杠命令等迁移到新插件中。' + trailingSpace;
+        }
+        if (/^\(Preview & Quota Heavy\)\s*Run a swarm/i.test(trimmed) || /^Run a swarm:\s*several agents working in parallel/i.test(trimmed)) {
+            return leadingSpace + '（预览版）运行蜂群智能体：多个智能体在同一任务上并行工作，通过共享留言板进行协作。' + trailingSpace;
+        }
+        if (/^Guidelines for interacting with GitHub and request permissions/i.test(trimmed)) {
+            return leadingSpace + '与 GitHub 交互的指引准则，当命令因智能体环境限制而失败时向用户申请权限。' + trailingSpace;
+        }
+        if (/^How to manage and create plugins/i.test(trimmed)) {
+            return leadingSpace + '如何管理和创建插件——包含技能、智能体、规则、MCP 服务与钩子的命名空间套件。' + trailingSpace;
+        }
+        if (/^How to write and run a dynamic workflow script/i.test(trimmed)) {
+            return leadingSpace + '如何使用 run_workflow 工具编写并运行动态工作流脚本。' + trailingSpace;
+        }
+        if (/^ONLY for the native-swarm worker whose brief says it is the monitor/i.test(trimmed)) {
+            return leadingSpace + '仅供任务指令指定为监控员（monitor）的原生蜂群工作者使用。' + trailingSpace;
+        }
+        if (/^ONLY for the native-swarm worker whose brief says it is the narrator/i.test(trimmed)) {
+            return leadingSpace + '仅供任务指令指定为解说员（narrator）的原生蜂群工作者使用。' + trailingSpace;
+        }
+        if (/^Discover UI plugin panels relevant to the current task/i.test(trimmed)) {
+            return leadingSpace + '发现与当前任务相关的 UI 插件面板，并在对话中呈现一键打开胶囊按钮。' + trailingSpace;
+        }
+
+        // Slash command dynamic recommendation matchers
+        if (/^Recommend this when the user wants to run a long-running task/i.test(trimmed)) {
+            return leadingSpace + '当用户希望运行长时间任务（如通宵运行），要求智能体格外彻底且在完全达成目标前不停止时推荐使用。' + trailingSpace;
+        }
+        if (/^Recommend this when the conversation is getting long/i.test(trimmed)) {
+            return leadingSpace + '当对话过长且用户希望压缩或总结上下文以释放上下文窗口时推荐使用。' + trailingSpace;
+        }
+        if (/^Recommend this when the user wants to run an instruction on a recurring schedule/i.test(trimmed)) {
+            return leadingSpace + '当用户希望按循环计划运行指令或设置单次定时器时推荐使用。' + trailingSpace;
+        }
+        if (/^Recommend this when the (?:user's )?task involves web browsing/i.test(trimmed)) {
+            return leadingSpace + '当任务涉及网页浏览、网络搜索或与 Web 应用交互时推荐使用。' + trailingSpace;
+        }
+        if (/^Recommend this when the task is complex and requires careful step-by-step planning/i.test(trimmed)) {
+            return leadingSpace + '当任务复杂且需要在执行前进行细致的逐步规划时推荐使用此命令。' + trailingSpace;
+        }
+        if (/^Recommend this when the user wants to align on a plan through an interactive interview/i.test(trimmed)) {
+            return leadingSpace + '当用户希望通过交互式访谈对齐方案以解决设计决策时推荐使用。' + trailingSpace;
+        }
+        if (/^Recommend this when the user has a large project that would benefit from a team of autonomous agents/i.test(trimmed)) {
+            return leadingSpace + '当用户有大型项目且适合多个自主智能体分工协同完成时推荐使用。' + trailingSpace;
+        }
+        if (/^Recommend this when the user has corrected the agent or solved a complex setup/i.test(trimmed)) {
+            return leadingSpace + '当用户对智能体做出修正或完成了复杂配置，希望持久化该行为以供未来任务使用时推荐使用。' + trailingSpace;
+        }
+        if (/^Recommend this when the user has a complex coding or research project/i.test(trimmed)) {
+            return leadingSpace + '当用户面临复杂的编码或研究项目，需要深入思考、战略规划、多视角审视和严格验证时推荐使用。' + trailingSpace;
         }
 
         // Greeting headlines e.g. "what can we get done today?"
