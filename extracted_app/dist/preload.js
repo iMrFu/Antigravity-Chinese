@@ -283,12 +283,21 @@ const electronNativeAPI = {
     cancelWebviewWebMcpToolCall: (webContentsId, callId) => electron_1.ipcRenderer.invoke('webview:webmcp-cancel-tool-call', webContentsId, callId),
     wcvBrowser: wcvBrowserAPI,
 };
-electron_1.ipcRenderer.on('agy-script-jail:port', (event, payload) => {
-    window.postMessage({
-        type: 'agy-script-jail-port',
-        jailId: payload?.jailId,
-    }, '*', event.ports);
-});
+// SSH windows (a switch in additionalArguments): the LS and its paths are
+// remote, so laptop file APIs are hidden and the toolkit uses remote ones.
+const BACKEND_SWITCH = '--agy-backend=';
+const isRemoteWindow = process.argv
+    .find((a) => a.startsWith(BACKEND_SWITCH))
+    ?.slice(BACKEND_SWITCH.length) === 'ssh';
+// SSH windows have no script jail.
+if (!isRemoteWindow) {
+    electron_1.ipcRenderer.on('agy-script-jail:port', (event, payload) => {
+        window.postMessage({
+            type: 'agy-script-jail-port',
+            jailId: payload?.jailId,
+        }, '*', event.ports);
+    });
+}
 const ideAPI = {
     isInstalled: () => electron_1.ipcRenderer.invoke('ide:is-installed'),
 };
@@ -301,18 +310,152 @@ const desktopMicAPI = {
     requestAccess: () => electron_1.ipcRenderer.invoke('mic:request-access'),
     openSystemPreferences: () => electron_1.ipcRenderer.invoke('mic:open-system-preferences'),
 };
-electron_1.contextBridge.exposeInMainWorld('electronUpdater', updaterAPI);
-electron_1.contextBridge.exposeInMainWorld('dialog', dialogAPI);
+function createLocalSshRemoteAPI() {
+    const progressCallbacks = new Map();
+    // A random start: a connect from before a reload can't match a new call.
+    let lastRequestId = Math.floor(Math.random() * 2 ** 30);
+    electron_1.ipcRenderer.on('ssh:progress', (_event, progress) => {
+        const callback = typeof progress?.requestId === 'number'
+            ? progressCallbacks.get(progress.requestId)
+            : undefined;
+        if (callback && typeof progress?.message === 'string') {
+            try {
+                callback(progress.message);
+            }
+            catch {
+                // The page's callback failed; the connect goes on.
+            }
+        }
+    });
+    return {
+        kind: 'local',
+        getState: () => electron_1.ipcRenderer.invoke('ssh:get-state'),
+        listHosts: (options) => electron_1.ipcRenderer.invoke('ssh:list-hosts', { configFile: options?.configFile }),
+        chooseConfigFile: () => electron_1.ipcRenderer.invoke('ssh:choose-config-file'),
+        connect: async (host, options) => {
+            const requestId = ++lastRequestId;
+            const onProgress = options?.onProgress;
+            if (typeof onProgress === 'function') {
+                progressCallbacks.set(requestId, onProgress);
+            }
+            try {
+                return await electron_1.ipcRenderer.invoke('ssh:connect', host, {
+                    requestId,
+                    intent: options?.intent,
+                    configFile: options?.configFile,
+                });
+            }
+            catch {
+                // The main process refused the call: still a result, not a rejection.
+                return {
+                    ok: false,
+                    code: 'UNKNOWN',
+                    message: "Couldn't connect to the SSH host. See the app log.",
+                };
+            }
+            finally {
+                progressCallbacks.delete(requestId);
+            }
+        },
+    };
+}
+function createRemoteSshRemoteAPI() {
+    const intentCallbacks = new Set();
+    const takeIntent = async () => {
+        let intent;
+        try {
+            intent = await electron_1.ipcRenderer.invoke('ssh:take-intent');
+        }
+        catch {
+            // The page is going away, or its window is no longer an SSH window.
+            return;
+        }
+        if (intent !== 'newProject') {
+            return;
+        }
+        for (const callback of [...intentCallbacks]) {
+            try {
+                callback(intent);
+            }
+            catch {
+                // The page's callback failed.
+            }
+        }
+    };
+    electron_1.ipcRenderer.on('ssh:intent', () => {
+        if (intentCallbacks.size > 0) {
+            void takeIntent();
+        }
+    });
+    return {
+        kind: 'ssh',
+        getState: () => electron_1.ipcRenderer.invoke('ssh:get-state'),
+        stopServer: () => electron_1.ipcRenderer.invoke('ssh:stop-server'),
+        onIntent: (callback) => {
+            if (typeof callback !== 'function') {
+                return () => { };
+            }
+            intentCallbacks.add(callback);
+            void takeIntent();
+            return () => {
+                intentCallbacks.delete(callback);
+            };
+        },
+        openLocalWindow: async () => {
+            try {
+                await electron_1.ipcRenderer.invoke('ssh:open-local-window');
+            }
+            catch {
+                // Refused, e.g. while this window isn't focused.
+            }
+        },
+    };
+}
 electron_1.contextBridge.exposeInMainWorld('nativeNotifications', notificationAPI);
 electron_1.contextBridge.exposeInMainWorld('nativeStorage', storageAPI);
-electron_1.contextBridge.exposeInMainWorld('logs', logsAPI);
-electron_1.contextBridge.exposeInMainWorld('extensions', extensionsAPI);
-electron_1.contextBridge.exposeInMainWorld('deepLink', deepLinkAPI);
 electron_1.contextBridge.exposeInMainWorld('agent', agentAPI);
-electron_1.contextBridge.exposeInMainWorld('electronNative', electronNativeAPI);
-electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
-electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
-electron_1.contextBridge.exposeInMainWorld('desktopMic', desktopMicAPI);
+// Sidecar UIs: the toolkit maps them to plugin:// only where this exists. A
+// local window's send sets the laptop's map; an SSH window's only refreshes
+// its host's, which main builds from the host's server (remoteSidecars.ts).
+electron_1.contextBridge.exposeInMainWorld('extensions', extensionsAPI);
+if (isRemoteWindow) {
+    // No laptop-only APIs (updater, logs, deep links with auth codes; main
+    // refuses them too). Of electronNative, no built-in browser,
+    // script jail or getPathForFile: dropped files get uploaded
+    // instead of passing laptop paths to the remote agent. Remote paths can't
+    // be shown in Finder either.
+    // The toolkit uses window.sshRemote only where window.electronNative exists.
+    const remoteNative = {
+        getZoomLevel: electronNativeAPI.getZoomLevel,
+        setTitleBarOverlay: electronNativeAPI.setTitleBarOverlay,
+        minimize: electronNativeAPI.minimize,
+        maximize: electronNativeAPI.maximize,
+        unmaximize: electronNativeAPI.unmaximize,
+        isMaximized: electronNativeAPI.isMaximized,
+        close: electronNativeAPI.close,
+        toggleDevTools: electronNativeAPI.toggleDevTools,
+        zoomIn: electronNativeAPI.zoomIn,
+        zoomOut: electronNativeAPI.zoomOut,
+        resetZoom: electronNativeAPI.resetZoom,
+        openExternal: electronNativeAPI.openExternal,
+        showContextMenu: electronNativeAPI.showContextMenu,
+        closeContextMenu: electronNativeAPI.closeContextMenu,
+        revealInFilePicker: () => Promise.resolve(),
+    };
+    electron_1.contextBridge.exposeInMainWorld('electronNative', remoteNative);
+    electron_1.contextBridge.exposeInMainWorld('sshRemote', createRemoteSshRemoteAPI());
+}
+else {
+    electron_1.contextBridge.exposeInMainWorld('electronUpdater', updaterAPI);
+    electron_1.contextBridge.exposeInMainWorld('dialog', dialogAPI);
+    electron_1.contextBridge.exposeInMainWorld('logs', logsAPI);
+    electron_1.contextBridge.exposeInMainWorld('deepLink', deepLinkAPI);
+    electron_1.contextBridge.exposeInMainWorld('electronNative', electronNativeAPI);
+    electron_1.contextBridge.exposeInMainWorld('ide', ideAPI);
+    electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
+    electron_1.contextBridge.exposeInMainWorld('desktopMic', desktopMicAPI);
+    electron_1.contextBridge.exposeInMainWorld('sshRemote', createLocalSshRemoteAPI());
+}
 const HEX6_RE = /^#[0-9a-fA-F]{6}$/;
 const HEX3_RE = /^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/;
 const RGB_RE = /^rgba?\(\s*(\d{1,3})\s*(?:,|\s)\s*(\d{1,3})\s*(?:,|\s)\s*(\d{1,3})(?:\s*[,/]\s*([\d.]+%?))?\s*\)$/i;
@@ -515,8 +658,11 @@ function installCustomFlagOverridesSync() {
         }
     });
 }
-installHubSurfaceThemeAutoSync();
-installCustomFlagOverridesSync();
+// Not SSH windows: no built-in browser tabs; flag overrides are the laptop's.
+if (!isRemoteWindow) {
+    installHubSurfaceThemeAutoSync();
+    installCustomFlagOverridesSync();
+}
 
 // DOM Translation Injector to localize the embedded React frontend settings and labels to Chinese.
 (() => {
