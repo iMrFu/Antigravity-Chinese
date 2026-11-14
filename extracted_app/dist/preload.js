@@ -1520,6 +1520,34 @@ if (!isRemoteWindow) {
         'Toggle terminal': '切换终端',
         'Focus Input': '聚焦输入框',
         'Focus input': '聚焦输入框',
+        'Submit Prompt (Alternate to Enter)': '提交提示词（Enter 备用快捷键）',
+        'Submit prompt (Alternate to Enter)': '提交提示词（Enter 备用快捷键）',
+        'Submit Prompt (alternate to Enter)': '提交提示词（Enter 备用快捷键）',
+        'submit prompt (alternate to enter)': '提交提示词（Enter 备用快捷键）',
+        'Submit Prompt': '提交提示词',
+        'Submit prompt': '提交提示词',
+        'submit prompt': '提交提示词',
+        'Enter always submits. This adds a second shortcut.': 'Enter 始终为提交。此处可添加第二个快捷键。',
+        'Enter always submits. This adds a second shortcut': 'Enter 始终为提交。此处可添加第二个快捷键',
+        'Jump to Previous Prompt': '跳转到上一个提示词',
+        'Jump to previous prompt': '跳转到上一个提示词',
+        'jump to previous prompt': '跳转到上一个提示词',
+        'Previous Prompt': '上一个提示词',
+        'Previous prompt': '上一个提示词',
+        'Jump to Next Prompt': '跳转到下一个提示词',
+        'Jump to next prompt': '跳转到下一个提示词',
+        'jump to next prompt': '跳转到下一个提示词',
+        'Next Prompt': '下一个提示词',
+        'Next prompt': '下一个提示词',
+        'Pin / Unpin Conversation': '置顶 / 取消置顶对话',
+        'Pin / unpin conversation': '置顶 / 取消置顶对话',
+        'pin / unpin conversation': '置顶 / 取消置顶对话',
+        'Pin / Unpin conversation': '置顶 / 取消置顶对话',
+        'Pin/Unpin Conversation': '置顶 / 取消置顶对话',
+        'Pin/Unpin conversation': '置顶 / 取消置顶对话',
+        'pin/unpin conversation': '置顶 / 取消置顶对话',
+        'Pin or Unpin Conversation': '置顶或取消置顶对话',
+        'Pin or unpin conversation': '置顶或取消置顶对话',
         'Go Back': '后退',
         'Go back': '后退',
         'Go Forward': '前进',
@@ -3451,6 +3479,23 @@ if (!isRemoteWindow) {
         }
         if (lowerTranslationMap[lowerTrimmed]) {
             return leadingSpace + lowerTranslationMap[lowerTrimmed] + trailingSpace;
+        }
+
+        // Conversation shortcuts
+        if (/^Submit Prompt\s*\(Alternate to Enter\)$/i.test(trimmed)) {
+            return leadingSpace + '提交提示词（Enter 备用快捷键）' + trailingSpace;
+        }
+        if (/^Enter always submits\.\s*This adds a second shortcut\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? 'Enter 始终为提交。此处可添加第二个快捷键。' : 'Enter 始终为提交。此处可添加第二个快捷键') + trailingSpace;
+        }
+        if (/^Jump to Previous Prompt$/i.test(trimmed)) {
+            return leadingSpace + '跳转到上一个提示词' + trailingSpace;
+        }
+        if (/^Jump to Next Prompt$/i.test(trimmed)) {
+            return leadingSpace + '跳转到下一个提示词' + trailingSpace;
+        }
+        if (/^Pin\s*[/／]\s*Unpin\s+Conversation$/i.test(trimmed)) {
+            return leadingSpace + '置顶 / 取消置顶对话' + trailingSpace;
         }
 
         // Select folder/file dialog headers
