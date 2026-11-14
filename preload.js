@@ -3145,6 +3145,20 @@ if (!isRemoteWindow) {
         'manage workspace folders and settings': '管理工作区文件夹与设置',
         'Agent settings and permissions for conversations outside of projects.': '项目外对话的智能体设置和权限。',
         'Agent settings and permissions for conversations outside of projects': '项目外对话的智能体设置和权限',
+        'Settings for conversations outside of projects.': '项目外对话的设置。',
+        'Settings for conversations outside of projects': '项目外对话的设置',
+        'settings for conversations outside of projects.': '项目外对话的设置。',
+        'settings for conversations outside of projects': '项目外对话的设置',
+        'Settings for conversations outside of workspaces.': '工作区外对话的设置。',
+        'Settings for conversations outside of workspaces': '工作区外对话的设置',
+        'settings for conversations outside of workspaces.': '工作区外对话的设置。',
+        'settings for conversations outside of workspaces': '工作区外对话的设置',
+        'Unlock the power of agent swarms.': '释放智能体蜂群的强大能力。',
+        'Unlock the power of agent swarms': '释放智能体蜂群的强大能力',
+        'unlock the power of agent swarms.': '释放智能体蜂群的强大能力。',
+        'unlock the power of agent swarms': '释放智能体蜂群的强大能力',
+        'Unlock the power of swarms.': '释放蜂群的强大能力。',
+        'Unlock the power of swarms': '释放蜂群的强大能力',
         'Outside of Project': '未关联项目',
         'Outside of project': '未关联项目',
         'outside of project': '未关联项目',
@@ -3496,6 +3510,17 @@ if (!isRemoteWindow) {
         }
         if (/^Pin\s*[/／]\s*Unpin\s+Conversation$/i.test(trimmed)) {
             return leadingSpace + '置顶 / 取消置顶对话' + trailingSpace;
+        }
+
+        // Conversations outside of projects settings description
+        if (/^Settings for conversations outside of (?:projects|workspaces)\.?$/i.test(trimmed)) {
+            const isWorkspace = /workspaces/i.test(trimmed);
+            return leadingSpace + (trimmed.endsWith('.') ? (isWorkspace ? '工作区外对话的设置。' : '项目外对话的设置。') : (isWorkspace ? '工作区外对话的设置' : '项目外对话的设置')) + trailingSpace;
+        }
+
+        // Swarm description
+        if (/^Unlock the power of (?:agent )?swarms\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '释放智能体蜂群的强大能力。' : '释放智能体蜂群的强大能力') + trailingSpace;
         }
 
         // Select folder/file dialog headers

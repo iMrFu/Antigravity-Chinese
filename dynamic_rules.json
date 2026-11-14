@@ -9324,5 +9324,21 @@
   "^Enter always submits\\.\\s*This adds a second shortcut\\.?$": "Enter 始终为提交。此处可添加第二个快捷键。",
   "^Jump to Previous Prompt$": "跳转到上一个提示词",
   "^Jump to Next Prompt$": "跳转到下一个提示词",
-  "^Pin\\s*[/／]\\s*Unpin\\s+Conversation$": "置顶 / 取消置顶对话"
+  "^Pin\\s*[/／]\\s*Unpin\\s+Conversation$": "置顶 / 取消置顶对话",
+  "Settings for conversations outside of projects.": "项目外对话的设置。",
+  "Settings for conversations outside of projects": "项目外对话的设置",
+  "settings for conversations outside of projects.": "项目外对话的设置。",
+  "settings for conversations outside of projects": "项目外对话的设置",
+  "Settings for conversations outside of workspaces.": "工作区外对话的设置。",
+  "Settings for conversations outside of workspaces": "工作区外对话的设置",
+  "settings for conversations outside of workspaces.": "工作区外对话的设置。",
+  "settings for conversations outside of workspaces": "工作区外对话的设置",
+  "Unlock the power of agent swarms.": "释放智能体蜂群的强大能力。",
+  "Unlock the power of agent swarms": "释放智能体蜂群的强大能力",
+  "unlock the power of agent swarms.": "释放智能体蜂群的强大能力。",
+  "unlock the power of agent swarms": "释放智能体蜂群的强大能力",
+  "Unlock the power of swarms.": "释放蜂群的强大能力。",
+  "Unlock the power of swarms": "释放蜂群的强大能力",
+  "^Settings for conversations outside of (?:projects|workspaces)\\.?$": "项目外对话的设置。",
+  "^Unlock the power of (?:agent )?swarms\\.?$": "释放智能体蜂群的强大能力。"
 }
