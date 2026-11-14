@@ -3106,6 +3106,15 @@ if (!isRemoteWindow) {
         'global settings': '全局设置',
         '. Local permissions have higher priority.': '。本地权限具有更高的优先级。',
         'Manage project folders, agent settings, and permissions.': '管理项目文件夹、智能体设置和权限。',
+        'Manage project folders, agent settings, and permissions': '管理项目文件夹、智能体设置和权限',
+        'Manage project folders and settings.': '管理项目文件夹与设置。',
+        'Manage project folders and settings': '管理项目文件夹与设置',
+        'manage project folders and settings.': '管理项目文件夹与设置。',
+        'manage project folders and settings': '管理项目文件夹与设置',
+        'Manage workspace folders and settings.': '管理工作区文件夹与设置。',
+        'Manage workspace folders and settings': '管理工作区文件夹与设置',
+        'manage workspace folders and settings.': '管理工作区文件夹与设置。',
+        'manage workspace folders and settings': '管理工作区文件夹与设置',
         'Agent settings and permissions for conversations outside of projects.': '项目外对话的智能体设置和权限。',
         'Agent settings and permissions for conversations outside of projects': '项目外对话的智能体设置和权限',
         'Outside of Project': '未关联项目',
@@ -3450,6 +3459,13 @@ if (!isRemoteWindow) {
         }
         if (/^Select\s+Files?(?:\(s\))?:?$/i.test(trimmed)) {
             return leadingSpace + (trimmed.endsWith(':') ? '选择文件：' : '选择文件') + trailingSpace;
+        }
+
+        // Manage project/workspace folders and settings
+        if (/^Manage (?:project|workspace)?\s*folders and settings\.?$/i.test(trimmed)) {
+            const isWorkspace = /workspace/i.test(trimmed);
+            const zhNoun = isWorkspace ? '工作区' : '项目';
+            return leadingSpace + (trimmed.endsWith('.') ? `管理${zhNoun}文件夹与设置。` : `管理${zhNoun}文件夹与设置`) + trailingSpace;
         }
 
         // Remote debugging required dialog

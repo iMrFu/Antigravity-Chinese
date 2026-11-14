@@ -9280,5 +9280,16 @@
   "Select files": "选择文件",
   "select files": "选择文件",
   "^Select\\s+Folders?(?:\\(s\\))?:?$": "选择文件夹",
-  "^Select\\s+Files?(?:\\(s\\))?:?$": "选择文件"
+  "^Select\\s+Files?(?:\\(s\\))?:?$": "选择文件",
+  "Manage project folders, agent settings, and permissions": "管理项目文件夹、智能体设置和权限",
+  "Manage project folders and settings.": "管理项目文件夹与设置。",
+  "Manage project folders and settings": "管理项目文件夹与设置",
+  "manage project folders and settings.": "管理项目文件夹与设置。",
+  "manage project folders and settings": "管理项目文件夹与设置",
+  "Manage workspace folders and settings.": "管理工作区文件夹与设置。",
+  "Manage workspace folders and settings": "管理工作区文件夹与设置",
+  "manage workspace folders and settings.": "管理工作区文件夹与设置。",
+  "manage workspace folders and settings": "管理工作区文件夹与设置",
+  "^Manage project folders and settings\\.?$": "管理项目文件夹与设置。",
+  "^Manage workspace folders and settings\\.?$": "管理工作区文件夹与设置。"
 }
