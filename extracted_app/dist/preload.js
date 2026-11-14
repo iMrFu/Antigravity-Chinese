@@ -750,7 +750,23 @@ if (!isRemoteWindow) {
         'Remove Folder': '移除文件夹',
         'Remove folder': '移除文件夹',
         'Select Folder': '选择文件夹',
+        'Select folder': '选择文件夹',
+        'select folder': '选择文件夹',
+        'Select Folder(s)': '选择文件夹',
+        'Select folder(s)': '选择文件夹',
+        'select folder(s)': '选择文件夹',
+        'Select Folders': '选择文件夹',
+        'Select folders': '选择文件夹',
+        'select folders': '选择文件夹',
         'Select File': '选择文件',
+        'Select file': '选择文件',
+        'select file': '选择文件',
+        'Select File(s)': '选择文件',
+        'Select file(s)': '选择文件',
+        'select file(s)': '选择文件',
+        'Select Files': '选择文件',
+        'Select files': '选择文件',
+        'select files': '选择文件',
         'New Project': '新建项目',
         'No Workspace Open': '未打开工作区',
         'No Project Selected': '未选择项目',
@@ -3426,6 +3442,14 @@ if (!isRemoteWindow) {
         }
         if (lowerTranslationMap[lowerTrimmed]) {
             return leadingSpace + lowerTranslationMap[lowerTrimmed] + trailingSpace;
+        }
+
+        // Select folder/file dialog headers
+        if (/^Select\s+Folders?(?:\(s\))?:?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith(':') ? '选择文件夹：' : '选择文件夹') + trailingSpace;
+        }
+        if (/^Select\s+Files?(?:\(s\))?:?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith(':') ? '选择文件：' : '选择文件') + trailingSpace;
         }
 
         // Remote debugging required dialog
