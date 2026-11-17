@@ -1144,6 +1144,180 @@ if (!isRemoteWindow) {
         'Prototype, build & run modern apps that user…': '使用 Firebase 进行原型设计、构建并运行深受用户喜爱的现代应用...',
         'Science': 'Science',
         'Curated collection of agent skills for science tasks.': '精选的适用于科学任务的智能体技能合集。',
+        'Productivity & Project Management': '生产力与项目管理',
+        'productivity & project management': '生产力与项目管理',
+        'Plan work, track issues, sign documents, and manage your notes and files.': '规划工作、跟踪事务、签署文档并管理笔记与文件。',
+        'Plan work, track issues, sign documents, and manage your notes and files': '规划工作、跟踪事务、签署文档并管理笔记与文件',
+        'Cloud Hosting & Deployment': '云托管与部署',
+        'cloud hosting & deployment': '云托管与部署',
+        'Deploy and host your apps, sites, and their backends.': '部署并托管应用、网站及其后端。',
+        'Deploy and host your apps, sites, and their backends': '部署并托管应用、网站及其后端',
+        'Developer Tools': '开发者工具',
+        'developer tools': '开发者工具',
+        'APIs, services, and tools to build, test, secure, and run your apps.': '用于构建、测试、保障安全和运行应用的 API、服务与工具。',
+        'APIs, services, and tools to build, test, secure, and run your apps': '用于构建、测试、保障安全和运行应用的 API、服务与工具',
+        'Design, Creative & Media': '设计、创意与媒体',
+        'design, creative & media': '设计、创意与媒体',
+        'Design, creative, and media tools.': '设计、创意与媒体工具。',
+        'Design, creative, and media tools': '设计、创意与媒体工具',
+        'Business': '商业与业务管理',
+        'business': '商业与业务管理',
+        'Payments, CRM, accounting, data, identity, customer support, marketing, and workflow automation.': '支付、客户关系管理（CRM）、财务会计、数据、身份认证、客户支持、营销及工作流自动化。',
+        'Payments, CRM, accounting, data, identity, customer support, marketing, and workflow automation': '支付、客户关系管理（CRM）、财务会计、数据、身份认证、客户支持、营销及工作流自动化',
+        'Google Workspace': 'Google Workspace',
+        'Connect to Google Workspace, including Docs, Sheets, Slides, Drive, Calendar, and Gmail.': '连接到 Google Workspace，包括 Docs、Sheets、Slides、Drive、Calendar 和 Gmail。',
+        'Connect to Google Workspace, including Docs, Sheets, Slides, Drive, Calendar, and Gmail': '连接到 Google Workspace，包括 Docs、Sheets、Slides、Drive、Calendar 和 Gmail',
+        'Build with Google': 'Build with Google (谷歌生态构建)',
+        'Build on Google\'s developer platforms, including Android, Chrome, Gemini, and Google Cloud.': '在 Google 开发者平台上构建应用，包括 Android、Chrome、Gemini 和 Google Cloud。',
+        'Build on Google\'s developer platforms, including Android, Chrome, Gemini, and Google Cloud': '在 Google 开发者平台上构建应用，包括 Android、Chrome、Gemini 和 Google Cloud',
+        'More Plugins': '更多插件',
+        'more plugins': '更多插件',
+        'Explore other marketplace customizations': '探索其他插件市场自定义项',
+        'Explore other marketplace customizations.': '探索其他插件市场自定义项。',
+        'UI Extensions': 'UI 扩展',
+        'ui extensions': 'UI 扩展',
+        'MCP Servers': 'MCP 服务',
+        'mcp servers': 'MCP 服务',
+        'MCP Tools': 'MCP 工具',
+        'mcp tools': 'MCP 工具',
+        'Rules': '规则',
+        'rules': '规则',
+        'Skills': '技能',
+        'skills': '技能',
+        'Overview': '概览',
+        'overview': '概览',
+        'See 1 more': '查看更多 (1)',
+        'See 2 more': '查看更多 (2)',
+        'See 3 more': '查看更多 (3)',
+        'See 4 more': '查看更多 (4)',
+        'See 5 more': '查看更多 (5)',
+        '+ See 1 more': '+ 查看更多 (1)',
+        '+ See 2 more': '+ 查看更多 (2)',
+        '+ See 3 more': '+ 查看更多 (3)',
+        '+ See 4 more': '+ 查看更多 (4)',
+        '+ See 5 more': '+ 查看更多 (5)',
+        'Advancing accessible robotics': '推动普惠可及的机器人技术',
+        'Robotics plugin for Antigravity': 'Antigravity 机器人插件',
+        'From one prompt to a working robot: perceive, plan, act, verify.': '从一句提示词到真正运转的机器人：感知、规划、执行、验证。',
+        'Bring up': '快速启动 / 联调',
+        'Connect, calibrate, first safe motion': '连接、校准与首次安全运动',
+        'Perceive': '感知',
+        'Find objects in 3D from RGB cameras': '基于 RGB 相机识别三维物体',
+        'Plan': '规划',
+        'Collision-free arm motion': '无碰撞机械臂运动',
+        'Act': '执行',
+        'Closed-loop visual servoing': '闭环视觉伺服',
+        'Verify': '验证',
+        'Stress-test in MuJoCo before real': '实机运行前在 MuJoCo 中进行压力测试',
+        'Simulation (MuJoCo)': '仿真环境 (MuJoCo)',
+        'Real robot': '真实机器人',
+        'same controller': '相同控制器',
+        'learn and retry': '总结经验并重试',
+        'Localize the target object in 3D from RGB-only cameras': '基于纯 RGB 相机对目标物体进行三维定位',
+        'Plan a collision-free joint trajectory in MuJoCo': '在 MuJoCo 中规划无碰撞的关节运动轨迹',
+        'Run closed-loop eye-in-hand visual servoing': '运行手眼闭环视觉伺服控制',
+        'Run the Sim-to-Real Gauntlet and compare paired CRN controller candidates': '运行仿真到实机基准测试并对比配对控制器候选方案',
+        'Launch a live MuJoCo Studio simulation in this workspace': '在此工作区中启动实时 MuJoCo Studio 仿真',
+        'Audit an existing MuJoCo model.xml with the 10-scenario physics suite and fix any defects': '使用物理场景套件审计现有的 MuJoCo model.xml 并修复缺陷',
+        'This plugin provides a specialized suite of skills for data engineers and database practitioners working on Google Cloud. It acts as an expert assistant, allowing you to use natural language prompts in your preferred coding agent to architect complex data pipelines, transform data with dbt, write Spark and BigQuery SQL notebooks, and orchestrate end-to-end workflows across GCP\'s data ecosystem.': '数据工程与数据库专家的技能套件。使用自然语言构建复杂数据管道，通过 dbt 转换数据，编写 Spark 和 BigQuery SQL 笔记本，并在 GCP 数据生态系统中编排端到端工作流。',
+        'This plugin provides a specialized suite of skills for data engineers and database practitioners working on Google Cloud. It acts as an expert assistant, allowing you to use natural language prompts in your preferred coding agent to architect complex data pipelines, transform data with dbt, write Spark and BigQuery SQL notebooks, and orchestrate end-to-end workflows across GCP\'s data ecosystem': '数据工程与数据库专家的技能套件。使用自然语言构建复杂数据管道，通过 dbt 转换数据，编写 Spark 和 BigQuery SQL 笔记本，并在 GCP 数据生态系统中编排端到端工作流',
+        'Check availability, schedule events, and RSVP.': '连接 Google Calendar：查看空闲时间、安排活动日程并回复会议邀请。',
+        'Check availability, schedule events, and RSVP': '连接 Google Calendar：查看空闲时间、安排活动日程并回复会议邀请',
+        'Read, draft, and edit docs.': '连接 Google Docs：阅读、起草和编辑文档。',
+        'Read, draft, and edit docs': '连接 Google Docs：阅读、起草和编辑文档',
+        'Search, upload, download, and share files.': '连接 Google Drive：搜索、上传、下载和共享文件。',
+        'Search, upload, download, and share files': '连接 Google Drive：搜索、上传、下载和共享文件',
+        'Search, read, draft, and send emails in Gmail.': '连接 Gmail：在 Gmail 中搜索、阅读、起草和发送电子邮件。',
+        'Search, read, draft, and send emails in Gmail': '连接 Gmail：在 Gmail 中搜索、阅读、起草和发送电子邮件',
+        'Read, write, and format spreadsheets.': '连接 Google Sheets：读取、编写和格式化电子表格。',
+        'Read, write, and format spreadsheets': '连接 Google Sheets：读取、编写和格式化电子表格',
+        'Read, edit, and export presentations.': '连接 Google Slides：阅读、编辑和导出演示文稿幻灯片。',
+        'Read, edit, and export presentations': '连接 Google Slides：阅读、编辑和导出演示文稿幻灯片',
+        'Core tools and knowledge required to develop for Android.': '开发 Android 所需的核心工具和知识。支持创建项目、在设备/模拟器上运行应用、检查 UI 并为上架 Google Play 做准备。',
+        'Core tools and knowledge required to develop for Android': '开发 Android 所需的核心工具和知识。支持创建项目、在设备/模拟器上运行应用、检查 UI 并为上架 Google Play 做准备',
+        'Reliable automation, in-depth debugging, and performance analysis in Chrome using Chrome DevTools and Puppeteer': '使用 Chrome DevTools 和 Puppeteer 在 Chrome 中实现可靠的网页自动化、深度调试和性能分析。',
+        'Prototype, build & run modern apps that users love with Firebase\'s backend, AI, and operational infrastructure.': '借助 Firebase 的后端、AI 和运维基础设施，进行原型设计、构建并运行深受用户喜爱的现代应用。',
+        'Prototype, build & run modern apps that users love with Firebase\'s backend, AI, and operational infrastructure': '借助 Firebase 的后端、AI 和运维基础设施，进行原型设计、构建并运行深受用户喜爱的现代应用',
+        'Using the Google Antigravity Python SDK to build AI agents': '使用 Google Antigravity Python SDK 构建自主 AI 智能体与多智能体系统。',
+        'Search and retrieve official documentation across Google Cloud, Gemini, Android, Firebase, Flutter, and Web. Requires Google Cloud credentials (ADC) or an API key.': '跨 Google Cloud、Gemini、Android、Firebase、Flutter 和 Web 搜索并检索官方开发文档。',
+        'Search and retrieve official documentation across Google Cloud, Gemini, Android, Firebase, Flutter, and Web. Requires Google Cloud credentials (ADC) or an API key': '跨 Google Cloud、Gemini、Android、Firebase、Flutter 和 Web 搜索并检索官方开发文档',
+        'Integration skill and tools for Google Maps Platform APIs': 'Google Maps Platform API 的集成技能与工具。',
+        'Build applications and shell workflows with the Gemini Interactions API, Decisions API, Live API, and Gemini API CLI, including text, image, video, and speech generation, managed agents, and real-time multimodal streaming.': '使用 Gemini 交互 API、Decisions API、Live API 及命令行构建应用程序，涵盖文本、图像、视频、语音生成及实时多模态流。',
+        'Build applications and shell workflows with the Gemini Interactions API, Decisions API, Live API, and Gemini API CLI, including text, image, video, and speech generation, managed agents, and real-time multimodal streaming': '使用 Gemini 交互 API、Decisions API、Live API 及命令行构建应用程序，涵盖文本、图像、视频、语音生成及实时多模态流',
+        'Google Cloud guidance for coding agents: first-project onboarding, authentication and credential selection, and safety-critical validation for gcloud CLI commands. Includes the Google Developer Knowledge MCP server for grounded, up-to-date Google Cloud documentation.': '编码智能体的 Google Cloud 实用指南：新手入门、身份验证与凭据选择，以及安全关键性命令验证。',
+        'Google Cloud guidance for coding agents: first-project onboarding, authentication and credential selection, and safety-critical validation for gcloud CLI commands. Includes the Google Developer Knowledge MCP server for grounded, up-to-date Google Cloud documentation': '编码智能体的 Google Cloud 实用指南：新手入门、身份验证与凭据选择，以及安全关键性命令验证',
+        'Keep your coding agent up to date with the latest web best practices.': '现代 Web 开发的最佳实践与指南，涵盖响应式设计、性能优化与前端工程规范。',
+        'Keep your coding agent up to date with the latest web best practices': '现代 Web 开发的最佳实践与指南，涵盖响应式设计、性能优化与前端工程规范',
+        'Curated collection of agent skills for science tasks.': '精选的适用于科学计算、分析与前沿探索的智能体技能合集。',
+        'Curated collection of agent skills for science tasks': '精选的适用于科学计算、分析与前沿探索的智能体技能合集',
+        'Develop ideas with context and review documents with fresh eyes.': 'Enterprise Growth Management 插件，支持企业增长分析、数据跟踪与策略指标规划。',
+        'Develop ideas with context and review documents with fresh eyes': 'Enterprise Growth Management 插件，支持企业增长分析、数据跟踪与策略指标规划',
+        'Official plugin for Dart and Flutter that installs Flutter/Dart Skills, Rules, Custom Agents, and Dart MCP server for building natively compiled, visually stunning applications for mobile, web, desktop, and embedded devices from a single codebase': '使用 Flutter 构建高质量跨平台应用：从单一代码库为移动、Web 和桌面平台设计美观的响应式 UI。',
+        'Connect to your managed Looker MCP server to explore data, run saved Looks, build dashboards, and validate LookML.': '连接到托管的 Looker MCP 服务以探索数据、运行保存的 Looks、构建仪表盘并验证 LookML。',
+        'Connect to your managed Looker MCP server to explore data, run saved Looks, build dashboards, and validate LookML': '连接到托管的 Looker MCP 服务以探索数据、运行保存的 Looks、构建仪表盘并验证 LookML',
+        'Robotics skills for any robot: 3D perception, collision-free motion planning, visual servoing, robot bring-up, sim2real, agent iteration, MuJoCo simulation, SimReady 3D asset authoring and physics auditing, and a live MuJoCo Studio 3D web sidecar.': '适用于机器人的综合技能套件：3D 感知、无碰撞运动规划、视觉伺服、机器人快速联调、Sim2Real、仿真与实时 MuJoCo Studio 3D 协作。',
+        'Robotics skills for any robot: 3D perception, collision-free motion planning, visual servoing, robot bring-up, sim2real, agent iteration, MuJoCo simulation, SimReady 3D asset authoring and physics auditing, and a live MuJoCo Studio 3D web sidecar': '适用于机器人的综合技能套件：3D 感知、无碰撞运动规划、视觉伺服、机器人快速联调、Sim2Real、仿真与实时 MuJoCo Studio 3D 协作',
+        'Accept payments and grow your business. Stripe\'s official MCP server enables AI agents to manage customers, products, prices, payment links, invoices, subscriptions, and refunds, as well as search Stripe documentation.': '接受全球支付并拓展业务。Stripe 官方 MCP 服务使 AI 智能体能够管理客户、产品、价格、支付链接、发票、订阅、退款并检索文档。',
+        'Accept payments and grow your business. Stripe\'s official MCP server enables AI agents to manage customers, products, prices, payment links, invoices, subscriptions, and refunds, as well as search Stripe documentation': '接受全球支付并拓展业务。Stripe 官方 MCP 服务使 AI 智能体能够管理客户、产品、价格、支付链接、发票、订阅、退款并检索文档',
+        'Query Arize AX projects, traces, datasets, and experiments from Antigravity, with skills for tracing, evals, and prompt optimization.': '在 Antigravity 中查询 Arize AX 项目、跟踪链路、数据集与实验，涵盖链路追踪、评估与提示词优化技能。',
+        'Query Arize AX projects, traces, datasets, and experiments from Antigravity, with skills for tracing, evals, and prompt optimization': '在 Antigravity 中查询 Arize AX 项目、跟踪链路、数据集与实验，涵盖链路追踪、评估与提示词优化技能',
+        'Teamwork Graph CLI is Atlassian\'s agent-first interface to your entire work context: Jira issues, Confluence pages, Bitbucket PRs, along with your connected third-party data sources. Purpose-built for coding agents like Antigravity (terminal or desktop), and powered by Atlassian\'s context graph. Try: "draft a Jira issue from this PR and link it to the epic." Run /twg-setup after install to connect Atlassian Teamwork Graph CLI to Antigravity.': 'Teamwork Graph CLI 是 Atlassian 面向智能体的上下文接口：覆盖 Jira 任务、Confluence 页面、Bitbucket PR 等全方位工作协作。',
+        'Teamwork Graph CLI is Atlassian\'s agent-first interface to your entire work context: Jira issues, Confluence pages, Bitbucket PRs, along with your connected third-party data sources. Purpose-built for coding agents like Antigravity (terminal or desktop), and powered by Atlassian\'s context graph. Try: "draft a Jira issue from this PR and link it to the epic." Run /twg-setup after install to connect Atlassian Teamwork Graph CLI to Antigravity': 'Teamwork Graph CLI 是 Atlassian 面向智能体的上下文接口：覆盖 Jira 任务、Confluence 页面、Bitbucket PR 等全方位工作协作',
+        'Add Auth0 authentication to any app: login, MFA, SSO, Organizations, RBAC, custom domains, and branding. Debug auth errors and migrate from other providers.': '为任何应用添加 Auth0 身份认证：登录认证、多因素认证（MFA）、单点登录（SSO）、组织架构、角色权限（RBAC）与自定义域名。',
+        'Add Auth0 authentication to any app: login, MFA, SSO, Organizations, RBAC, custom domains, and branding. Debug auth errors and migrate from other providers': '为任何应用添加 Auth0 身份认证：登录认证、多因素认证（MFA）、单点登录（SSO）、组织架构、角色权限（RBAC）与自定义域名',
+        'Build and deploy Base44 full-stack apps: CLI project management, JavaScript/TypeScript SDK development, and production troubleshooting skills.': '构建并部署 Base44 全栈应用：CLI 项目管理、JavaScript/TypeScript SDK 开发与生产环境故障排查技能。',
+        'Build and deploy Base44 full-stack apps: CLI project management, JavaScript/TypeScript SDK development, and production troubleshooting skills': '构建并部署 Base44 全栈应用：CLI 项目管理、JavaScript/TypeScript SDK 开发与生产环境故障排查技能',
+        'Give your agent a real browser: navigate, click, type, screenshot, and extract data from any site, locally or on Browserbase cloud browsers.': '为您的智能体赋予真实浏览器：在本地或 Browserbase 云端浏览器上导航、点击、输入、截屏并从任意网站提取数据。',
+        'Give your agent a real browser: navigate, click, type, screenshot, and extract data from any site, locally or on Browserbase cloud browsers': '为您的智能体赋予真实浏览器：在本地或 Browserbase 云端浏览器上导航、点击、输入、截屏并从任意网站提取数据',
+        'Create, edit, review, resize, and brand-check Canva designs with the Canva MCP server.': '借助 Canva MCP 服务创建、编辑、审查、调整尺寸并进行品牌规范检查。',
+        'Create, edit, review, resize, and brand-check Canva designs with the Canva MCP server': '借助 Canva MCP 服务创建、编辑、审查、调整尺寸并进行品牌规范检查',
+        'Build, deploy and manage apps on Cloudflare Workers, storage and AI, with platform skills and the Cloudflare API through one MCP server.': '发现并选择适用于应用、API、存储、AI 智能体及安全防护的 Cloudflare 全套产品与云服务。',
+        'Build, deploy and manage apps on Cloudflare Workers, storage and AI, with platform skills and the Cloudflare API through one MCP server': '发现并选择适用于应用、API、存储、AI 智能体及安全防护的 Cloudflare 全套产品与云服务',
+        'Databricks skills for the CLI, Apps, Lakebase, Model Serving, Lakeflow Jobs, Spark Declarative Pipelines, Declarative Automation Bundles (DABs), and classic-to-serverless migration.': '用于 CLI、应用、Lakebase、模型服务、Lakeflow 任务、Spark 声明式管道、DABs 与持续运维的 Databricks 技能。',
+        'Databricks skills for the CLI, Apps, Lakebase, Model Serving, Lakeflow Jobs, Spark Declarative Pipelines, Declarative Automation Bundles (DABs), and classic-to-serverless migration': '用于 CLI、应用、Lakebase、模型服务、Lakeflow 任务、Spark 声明式管道、DABs 与持续运维的 Databricks 技能',
+        'Connect Antigravity to Dropbox to search, inspect, summarize, share, collect uploads, organize folders, and clean up files with confirmation for write actions.': '将 Antigravity 连接到 Dropbox，用于搜索、检查、总结、共享文件、收集上传内容并整理文件夹。',
+        'Connect Antigravity to Dropbox to search, inspect, summarize, share, collect uploads, organize folders, and clean up files with confirmation for write actions': '将 Antigravity 连接到 Dropbox，用于搜索、检查、总结、共享文件、收集上传内容并整理文件夹',
+        'Turn Figma designs into production code, map components with Code Connect, and create or edit Figma files in Antigravity.': '将 Figma 设计转化为生产级代码，通过 Code Connect 映射组件，并在 Antigravity 中创建或编辑 Figma 文件。',
+        'Turn Figma designs into production code, map components with Code Connect, and create or edit Figma files in Antigravity': '将 Figma 设计转化为生产级代码，通过 Code Connect 映射组件，并在 Antigravity 中创建或编辑 Figma 文件',
+        'The product development system for teams and agents. Manage issues, projects, and documents across your Linear workspace from Antigravity.': '面向现代软件团队与智能体的高效产品研发与项目管理系统。',
+        'The product development system for teams and agents. Manage issues, projects, and documents across your Linear workspace from Antigravity': '面向现代软件团队与智能体的高效产品研发与项目管理系统',
+        'Give your AI agent 600,000+ real app screens, and the skills to use them. Includes the Mobbin MCP and a skill that redesigns your screen from patterns real apps ship, in your own design system, with the references behind every change.': '为您的 AI 智能体提供 600,000+ 真实应用界面库及配套检索技能，赋能 UI 设计与产品研发。',
+        'Give your AI agent 600,000+ real app screens, and the skills to use them. Includes the Mobbin MCP and a skill that redesigns your screen from patterns real apps ship, in your own design system, with the references behind every change': '为您的 AI 智能体提供 600,000+ 真实应用界面库及配套检索技能，赋能 UI 设计与产品研发',
+        'Plan and track work in monday.com from Antigravity: create, update and assign items, write docs, and build forms that turn requests into items.': '直接在 Antigravity 中规划、跟踪并推进 monday.com 上的团队工作与项目进度。',
+        'Plan and track work in monday.com from Antigravity: create, update and assign items, write docs, and build forms that turn requests into items': '直接在 Antigravity 中规划、跟踪并推进 monday.com 上的团队工作与项目进度',
+        'Build and deploy on Netlify: functions, edge functions, blobs, database, identity, forms, image CDN, caching, and AI Gateway, plus the Netlify MCP server.': '在 Netlify 上构建与部署应用：云函数、边缘函数、Blobs、数据库、身份认证、表单、图像 CDN、缓存及 AI 网关，包含 Netlify MCP。',
+        'Build and deploy on Netlify: functions, edge functions, blobs, database, identity, forms, image CDN, caching, and AI Gateway, plus the Netlify MCP server': '在 Netlify 上构建与部署应用：云函数、边缘函数、Blobs、数据库、身份认证、表单、图像 CDN、缓存及 AI 网关，包含 Netlify MCP',
+        'Connect Antigravity to your Notion workspace with the Notion MCP server, plus skills for research, documentation, meeting prep, specs, trackers, and project updates.': '将 Antigravity 连接到您的 Notion 工作区，经确认后安全地阅读、写入和搜索文档、数据库与页面。',
+        'Connect Antigravity to your Notion workspace with the Notion MCP server, plus skills for research, documentation, meeting prep, specs, trackers, and project updates': '将 Antigravity 连接到您的 Notion 工作区，经确认后安全地阅读、写入和搜索文档、数据库与页面',
+        'Create and send proposals, quotes, and contracts for e-signature. Track signing progress and identify documents that need follow-up.': '直接在 Antigravity 中创建、签署并发送商业提案、报价单与正式合同。',
+        'Create and send proposals, quotes, and contracts for e-signature. Track signing progress and identify documents that need follow-up': '直接在 Antigravity 中创建、签署并发送商业提案、报价单与正式合同',
+        'Deploy, configure, monitor, and troubleshoot apps, databases, and infrastructure on Railway from Antigravity with Railway\'s agent skill and hosted MCP server.': '借助 Railway 智能体技能与托管 MCP 服务，在 Antigravity 中部署、配置、监控并排查应用、数据库与基础设施。',
+        'Deploy, configure, monitor, and troubleshoot apps, databases, and infrastructure on Railway from Antigravity with Railway\'s agent skill and hosted MCP server': '借助 Railway 智能体技能与托管 MCP 服务，在 Antigravity 中部署、配置、监控并排查应用、数据库与基础设施',
+        'Unity\'s official plugin for Antigravity, with curated skills for game development, monetization, and performance optimization.': 'Unity 官方插件，提供针对游戏开发、商业化变现与性能优化的专业技能。',
+        'Unity\'s official plugin for Antigravity, with curated skills for game development, monetization, and performance optimization': 'Unity 官方插件，提供针对游戏开发、商业化变现与性能优化的专业技能',
+        'Build and deploy web apps and AI agents on Vercel with skills for Next.js, AI SDK, and cloud services, plus the official Vercel MCP server.': '在 Vercel 上构建与部署 Web 应用和 AI 智能体，包含 Next.js、AI SDK 和云服务技能，以及官方 Vercel MCP 服务。',
+        'Build and deploy web apps and AI agents on Vercel with skills for Next.js, AI SDK, and cloud services, plus the official Vercel MCP server': '在 Vercel 上构建与部署 Web 应用和 AI 智能体，包含 Next.js、AI SDK 和云服务技能，以及官方 Vercel MCP 服务',
+        'Investigate files, URLs, domains and IP addresses with VirusTotal threat intelligence, analysis and submission recovery.': '利用 VirusTotal 威胁情报、文件/URL/IP 分析与安全报告，在执行前评估可疑文件和风险链接。',
+        'Investigate files, URLs, domains and IP addresses with VirusTotal threat intelligence, analysis and submission recovery': '利用 VirusTotal 威胁情报、文件/URL/IP 分析与安全报告，在执行前评估可疑文件和风险链接',
+        'Search and read your Wispr Flow meeting notes, transcripts, scratchpad notes, and calendar events. Read-only access to your own account.': '搜索并查阅您的 Wispr Flow 会议笔记、录音转录、临时便签与日程活动。',
+        'Search and read your Wispr Flow meeting notes, transcripts, scratchpad notes, and calendar events. Read-only access to your own account': '搜索并查阅您的 Wispr Flow 会议笔记、录音转录、临时便签与日程活动',
+        'Build Wix apps and headless sites, and manage Wix stores, bookings, CMS and more, with Wix CLI skills and the official Wix MCP server.': '借助 Wix CLI 技能和官方 Wix MCP 服务，构建 Wix 应用与无头网站，管理 Wix 商店、预订、CMS 等。',
+        'Build Wix apps and headless sites, and manage Wix stores, bookings, CMS and more, with Wix CLI skills and the official Wix MCP server': '借助 Wix CLI 技能和官方 Wix MCP 服务，构建 Wix 应用与无头网站，管理 Wix 商店、预订、CMS 等',
+        'Build, publish, and manage WordPress.com and Jetpack-connected sites. Draft posts, edit blocks, check traffic stats, moderate comments, and manage plugins.': '构建、发布和管理 WordPress.com 与 Jetpack 关联网站。起草文章、编辑区块、查看流量统计、审核评论并管理插件。',
+        'Build, publish, and manage WordPress.com and Jetpack-connected sites. Draft posts, edit blocks, check traffic stats, moderate comments, and manage plugins': '构建、发布和管理 WordPress.com 与 Jetpack 关联网站。起草文章、编辑区块、查看流量统计、审核评论并管理插件',
+        'Connect 9,000+ apps to your AI workflow. Discover, enable, and execute Zapier actions and workflows directly from your client.': '将 9,000+ 应用程序连接到您的 AI 工作流。直接发现、启用并执行 Zapier 自动化操作。',
+        'Connect 9,000+ apps to your AI workflow. Discover, enable, and execute Zapier actions and workflows directly from your client': '将 9,000+ 应用程序连接到您的 AI 工作流。直接发现、启用并执行 Zapier 自动化操作',
+        'Manage your Bigin CRM from Antigravity: review pipelines, find contacts and deals, log calls, plan follow-ups, and email customers.': '在 Antigravity 中管理 Bigin CRM：查看业务商机管道、查找联系人与交易、记录通话、规划跟进并向客户发送邮件。',
+        'Manage your Bigin CRM from Antigravity: review pipelines, find contacts and deals, log calls, plan follow-ups, and email customers': '在 Antigravity 中管理 Bigin CRM：查看业务商机管道、查找联系人与交易、记录通话、规划跟进并向客户发送邮件',
+        'Build on Zoho CRM v8: REST API, Deluge functions, ClientScript, widgets, COQL and connections, with live CRM data through your Zoho MCP server.': '基于 Zoho CRM v8 构建应用：REST API、Deluge 函数、ClientScript、小部件及实时 CRM 数据交互。',
+        'Build on Zoho CRM v8: REST API, Deluge functions, ClientScript, widgets, COQL and connections, with live CRM data through your Zoho MCP server': '基于 Zoho CRM v8 构建应用：REST API、Deluge 函数、ClientScript、小部件及实时 CRM 数据交互',
+        'Zoho Desk plugin for Antigravity. Review, prioritize, and update Zoho Desk tickets directly from Antigravity through Zoho Desk MCP and includes a Ticket Prioritization Agent for triage and priority updates.': '直接在 Antigravity 中审核、划分优先级并更新 Zoho Desk 客户支持服务工单。',
+        'Zoho Desk plugin for Antigravity. Review, prioritize, and update Zoho Desk tickets directly from Antigravity through Zoho Desk MCP and includes a Ticket Prioritization Agent for triage and priority updates': '直接在 Antigravity 中审核、划分优先级并更新 Zoho Desk 客户支持服务工单',
+        'Connect Zoho Projects to Antigravity to turn tasks and issues into working code. Access project context, investigate bugs, and update work items as you develop.': '将 Zoho Projects 任务和缺陷与代码仓库关联，在开发过程中访问项目上下文并更新工时与进度。',
+        'Connect Zoho Projects to Antigravity to turn tasks and issues into working code. Access project context, investigate bugs, and update work items as you develop': '将 Zoho Projects 任务和缺陷与代码仓库关联，在开发过程中访问项目上下文并更新工时与进度',
+        'Run Zoho Books from Antigravity: invoicing, bills, banking, journals, projects, items, taxes, customization and automation.': '在 Antigravity 中运行 Zoho Books：发票管理、账单、银行对账、会计凭证、税务及自动化财务流。',
+        'Run Zoho Books from Antigravity: invoicing, bills, banking, journals, projects, items, taxes, customization and automation': '在 Antigravity 中运行 Zoho Books：发票管理、账单、银行对账、会计凭证、税务及自动化财务流',
+
         'Curated collection of agent skills for science tasks': '精选的适用于科学任务的智能体技能合集',
         'Curated collection of agent skills for science t...': '精选的适用于科学任务的智能体技能合集...',
         'Curated collection of agent skills for science t…': '精选的适用于科学任务的智能体技能合集...',
@@ -3649,6 +3823,178 @@ if (!isRemoteWindow) {
         }
         if (/^Recommend this when the user has a complex coding or research project/i.test(trimmed)) {
             return leadingSpace + '当用户面临复杂的编码或研究项目，需要深入思考、战略规划、多视角审视和严格验证时推荐使用。' + trailingSpace;
+        }
+
+
+        // --- Marketplace Shelves & Plugins Dynamic Prefix Rules ---
+        // Button "+ See X more"
+        if (/^\+?\s*See\s+(\d+)\s+more$/i.test(trimmed)) {
+            const num = trimmed.match(/\d+/)[0];
+            return leadingSpace + (trimmed.startsWith('+') ? ('+ 查看更多 (' + num + ')') : ('查看更多 (' + num + ')')) + trailingSpace;
+        }
+
+        // Shelves
+        if (/^Productivity & Project Management$/i.test(trimmed)) {
+            return leadingSpace + '生产力与项目管理' + trailingSpace;
+        }
+        if (/^Cloud Hosting & Deployment$/i.test(trimmed)) {
+            return leadingSpace + '云托管与部署' + trailingSpace;
+        }
+        if (/^Developer Tools$/i.test(trimmed)) {
+            return leadingSpace + '开发者工具' + trailingSpace;
+        }
+        if (/^Design, Creative & Media$/i.test(trimmed)) {
+            return leadingSpace + '设计、创意与媒体' + trailingSpace;
+        }
+        if (/^Business$/i.test(trimmed)) {
+            return leadingSpace + '商业与业务管理' + trailingSpace;
+        }
+        if (/^More Plugins$/i.test(trimmed)) {
+            return leadingSpace + '更多插件' + trailingSpace;
+        }
+
+        // Shelves descriptions (prefix match)
+        if (/^Plan work,\s*track issues,\s*sign documents/i.test(trimmed)) {
+            return leadingSpace + '规划工作、跟踪事务、签署文档并管理笔记与文件。' + trailingSpace;
+        }
+        if (/^Deploy and host your apps,\s*sites,\s*and their backends/i.test(trimmed)) {
+            return leadingSpace + '部署并托管应用、网站及其后端。' + trailingSpace;
+        }
+        if (/^APIs,\s*services,\s*and tools to build,\s*test,\s*secure/i.test(trimmed)) {
+            return leadingSpace + '用于构建、测试、保障安全和运行应用的 API、服务与工具。' + trailingSpace;
+        }
+        if (/^Design,\s*creative,\s*and media tools/i.test(trimmed)) {
+            return leadingSpace + '设计、创意与媒体工具。' + trailingSpace;
+        }
+        if (/^Payments,\s*CRM,\s*accounting,\s*data,\s*identity/i.test(trimmed)) {
+            return leadingSpace + '支付、客户关系管理（CRM）、财务会计、数据、身份认证、客户支持、营销及工作流自动化。' + trailingSpace;
+        }
+        if (/^Connect to Google Workspace,\s*including Docs/i.test(trimmed)) {
+            return leadingSpace + '连接到 Google Workspace，包括 Docs、Sheets、Slides、Drive、Calendar 和 Gmail。' + trailingSpace;
+        }
+        if (/^Explore other marketplace customizations/i.test(trimmed)) {
+            return leadingSpace + '探索其他插件市场自定义项。' + trailingSpace;
+        }
+
+        // Detail Tabs & Headings
+        if (/^UI Extensions$/i.test(trimmed)) {
+            return leadingSpace + 'UI 扩展' + trailingSpace;
+        }
+        if (/^MCP Servers?$/i.test(trimmed)) {
+            return leadingSpace + 'MCP 服务' + trailingSpace;
+        }
+        if (/^MCP Tools?$/i.test(trimmed)) {
+            return leadingSpace + 'MCP 工具' + trailingSpace;
+        }
+
+        // Plugin Card Descriptions (Robust Prefix Matching)
+        if (/^The product development system for teams/i.test(trimmed)) {
+            return leadingSpace + '面向团队与智能体的产品研发管理系统。' + trailingSpace;
+        }
+        if (/^Plan and track work in monday\.com/i.test(trimmed)) {
+            return leadingSpace + '在 Antigravity 中规划并跟踪 monday.com 的工作。' + trailingSpace;
+        }
+        if (/^Connect Antigravity to your Notion workspace/i.test(trimmed)) {
+            return leadingSpace + '将 Antigravity 连接到您的 Notion 工作区以读写和检索文档与数据库。' + trailingSpace;
+        }
+        if (/^Create and send proposals,\s*quotes/i.test(trimmed)) {
+            return leadingSpace + '直接在 Antigravity 中创建并发送商业提案、报价单与合同。' + trailingSpace;
+        }
+        if (/^Build and deploy on Netlify/i.test(trimmed)) {
+            return leadingSpace + '在 Netlify 上构建与部署：云函数、边缘函数、Blobs、数据库、身份认证、表单、图像 CDN、缓存及 AI 网关。' + trailingSpace;
+        }
+        if (/^Deploy,\s*configure,\s*monitor,\s*and troubleshoot apps/i.test(trimmed)) {
+            return leadingSpace + '在 Railway 上部署、配置、监控并排查应用、数据库与基础设施。' + trailingSpace;
+        }
+        if (/^Build and deploy web apps and AI agents on Vercel/i.test(trimmed)) {
+            return leadingSpace + '在 Vercel 上构建与部署 Web 应用和 AI 智能体，包含 Next.js、AI SDK 和云服务技能。' + trailingSpace;
+        }
+        if (/^Build Wix apps and headless sites/i.test(trimmed)) {
+            return leadingSpace + '借助 Wix CLI 技能和官方 Wix MCP 服务，构建 Wix 应用与无头网站，管理 Wix 商店、预订、CMS 等。' + trailingSpace;
+        }
+        if (/^Build,\s*publish,\s*and manage WordPress/i.test(trimmed)) {
+            return leadingSpace + '构建、发布和管理 WordPress.com 与 Jetpack 关联网站。起草文章、编辑区块、查看流量统计并管理插件。' + trailingSpace;
+        }
+        if (/^Add Auth0 authentication to any app/i.test(trimmed)) {
+            return leadingSpace + '为任何应用添加 Auth0 身份认证：登录认证、MFA、SSO、组织架构、RBAC 与自定义域名。' + trailingSpace;
+        }
+        if (/^Build and deploy Base44 full-stack apps/i.test(trimmed)) {
+            return leadingSpace + '构建并部署 Base44 全栈应用：CLI 项目管理、JavaScript/TypeScript SDK 开发与生产环境故障排查技能。' + trailingSpace;
+        }
+        if (/^Give your agent a real browser/i.test(trimmed)) {
+            return leadingSpace + '为您的智能体赋予真实浏览器：在本地或 Browserbase 云端浏览器上导航、点击、输入、截屏并从任意网站提取数据。' + trailingSpace;
+        }
+        if (/^Databricks skills for the CLI,\s*Apps,\s*Lakebase/i.test(trimmed)) {
+            return leadingSpace + '用于 CLI、应用、Lakebase、模型服务、Lakeflow 任务、Spark 声明式管道、DABs 与持续运维的 Databricks 技能。' + trailingSpace;
+        }
+        if (/^Manage your Bigin CRM from Antigravity/i.test(trimmed)) {
+            return leadingSpace + '在 Antigravity 中管理 Bigin CRM：查看业务商机管道、查找联系人与交易、记录通话、规划跟进并向客户发送邮件。' + trailingSpace;
+        }
+        if (/^Accept payments and grow your business/i.test(trimmed)) {
+            return leadingSpace + '接入支付并拓展业务。Stripe 官方 MCP 服务使 AI 智能体能够管理客户、产品、价格、支付链接、发票、订阅和退款。' + trailingSpace;
+        }
+        if (/^Create,\s*edit,\s*review,\s*resize,\s*and brand-check Canva/i.test(trimmed)) {
+            return leadingSpace + '借助 Canva MCP 服务创建、编辑、审查、调整尺寸并进行品牌规范检查。' + trailingSpace;
+        }
+        if (/^Turn Figma designs into production code/i.test(trimmed)) {
+            return leadingSpace + '将 Figma 设计转化为生产级代码，通过 Code Connect 映射组件，并在 Antigravity 中创建或编辑 Figma 文件。' + trailingSpace;
+        }
+        if (/^Give your AI agent 600,000\+ real app screens/i.test(trimmed)) {
+            return leadingSpace + '为您的 AI 智能体提供 600,000+ 真实应用屏幕及配套检索技能，赋能 UI 设计与产品研发。' + trailingSpace;
+        }
+        if (/^Teamwork Graph CLI is Atlassian's agent-first interface/i.test(trimmed)) {
+            return leadingSpace + 'Teamwork Graph CLI 是 Atlassian 面向智能体的上下文接口：覆盖 Jira 任务、Confluence 页面、Bitbucket PR 等全方位协作。' + trailingSpace;
+        }
+        if (/^Connect Antigravity to Dropbox/i.test(trimmed)) {
+            return leadingSpace + '将 Antigravity 连接到 Dropbox，用于搜索、检查、总结、共享文件、收集上传内容并整理文件夹。' + trailingSpace;
+        }
+        if (/^Discover and choose Cloudflare products/i.test(trimmed)) {
+            return leadingSpace + '发现并选择适用于应用、API、存储、AI 智能体及安全防护的 Cloudflare 全套产品与云服务。' + trailingSpace;
+        }
+        if (/^Query Arize AX projects,\s*traces/i.test(trimmed)) {
+            return leadingSpace + '在 Antigravity 中查询 Arize AX 项目、跟踪链路、数据集与实验，涵盖链路追踪、评估与提示词优化技能。' + trailingSpace;
+        }
+        if (/^Connect 9,000\+ apps to your AI workflow/i.test(trimmed)) {
+            return leadingSpace + '将 9,000+ 应用程序连接到您的 AI 工作流。直接发现、启用并执行 Zapier 自动化操作。' + trailingSpace;
+        }
+        if (/^Unity's official plugin for Antigravity/i.test(trimmed)) {
+            return leadingSpace + 'Unity 官方插件，提供针对游戏开发、商业化变现与性能优化的专业技能。' + trailingSpace;
+        }
+        if (/^Investigate files,\s*URLs,\s*domains and IP addresses with VirusTotal/i.test(trimmed)) {
+            return leadingSpace + '利用 VirusTotal 威胁情报、文件/URL/IP 分析与安全报告，在执行前评估可疑文件和风险链接。' + trailingSpace;
+        }
+        if (/^Search and read your Wispr Flow meeting notes/i.test(trimmed)) {
+            return leadingSpace + '搜索并查阅您的 Wispr Flow 会议笔记、录音转录、临时便签与日程活动。' + trailingSpace;
+        }
+        if (/^Build on Zoho CRM v8/i.test(trimmed)) {
+            return leadingSpace + '基于 Zoho CRM v8 构建应用：REST API、Deluge 函数、ClientScript、小部件及实时 CRM 数据交互。' + trailingSpace;
+        }
+        if (/^Zoho Desk plugin for Antigravity/i.test(trimmed)) {
+            return leadingSpace + '直接在 Antigravity 中审核、划分优先级并更新 Zoho Desk 客户支持服务工单。' + trailingSpace;
+        }
+        if (/^Connect Zoho Projects to Antigravity/i.test(trimmed)) {
+            return leadingSpace + '将 Zoho Projects 任务和缺陷与代码仓库关联，在开发过程中访问项目上下文并更新工时与进度。' + trailingSpace;
+        }
+        if (/^Run Zoho Books from Antigravity/i.test(trimmed)) {
+            return leadingSpace + '在 Antigravity 中运行 Zoho Books：发票管理、账单、银行对账、会计凭证、税务及自动化财务流。' + trailingSpace;
+        }
+        if (/^This plugin provides a specialized suite of skills for data engineers/i.test(trimmed)) {
+            return leadingSpace + '数据工程与数据库专家的技能套件。使用自然语言构建复杂数据管道，通过 dbt 转换数据，并在 GCP 中编排端到端工作流。' + trailingSpace;
+        }
+        if (/^Robotics skills for any robot:\s*3D perception/i.test(trimmed)) {
+            return leadingSpace + '适用于机器人的综合技能套件：3D 感知、无碰撞运动规划、视觉伺服、机器人快速联调、Sim2Real、仿真与实时 MuJoCo Studio 3D 协作。' + trailingSpace;
+        }
+        if (/^Advancing accessible robotics/i.test(trimmed)) {
+            return leadingSpace + '推动普惠可及的机器人技术' + trailingSpace;
+        }
+        if (/^The Robotics plugin brings frontier spatial reasoning/i.test(trimmed)) {
+            return leadingSpace + 'Robotics 机器人插件将前沿的空间推理、多模态感知和代码生成直接引入实时机器人控制闭环中。智能体负责编写控制器，在 MuJoCo 仿真环境中进行测试，并将相同的代码部署到真实机械臂上运行。您也可以仅在仿真中工作，无需任何真实硬件。这使得闭环控制、硬件快速部署以及持续机器人应用变得简单高效且成本亲民。' + trailingSpace;
+        }
+        if (/^Robotics plugin for Antigravity/i.test(trimmed)) {
+            return leadingSpace + 'Antigravity 机器人插件' + trailingSpace;
+        }
+        if (/^From one prompt to a working robot/i.test(trimmed)) {
+            return leadingSpace + '从一句提示词到真正运转的机器人：感知、规划、执行、验证。' + trailingSpace;
         }
 
         // Greeting headlines e.g. "what can we get done today?"
