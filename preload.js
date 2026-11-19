@@ -1,5 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WCV_HUB_PROBE_POINT_RESPONSE_CHANNEL = exports.WCV_HUB_PROBE_POINT_CHANNEL = exports.WCV_HUB_CURSOR_HOLE_STATE_CHANNEL = exports.WCV_THREE_LAYER_STACK_ARG = void 0;
+exports.isBareBrowserHoleAtDip = isBareBrowserHoleAtDip;
+exports.installWcvThreeLayerHoleReporter = installWcvThreeLayerHoleReporter;
 /**
  * Preload script — runs in every BrowserWindow before the page loads.
  * Exposes a minimal, secure API via contextBridge so the renderer can
@@ -93,6 +96,10 @@ const deepLinkAPI = {
 const agentAPI = {
     updateActiveAgentCount: (count) => electron_1.ipcRenderer.invoke('agent:update-active-count', count),
 };
+// Native API
+// Mirrors utils.ts's WCV_THREE_LAYER_STACK_ARG: a sandboxed preload can't
+// import it. Declared before `wcvBrowserAPI`, which reads it at load time.
+exports.WCV_THREE_LAYER_STACK_ARG = '--agy-wcv-three-layer-stack=1';
 function subscribeIpcChannel(channel, callback) {
     const handler = (_event, payload) => {
         callback(payload);
@@ -103,11 +110,20 @@ function subscribeIpcChannel(channel, callback) {
     };
 }
 const wcvBrowserAPI = {
+    isThreeLayerStack: Array.isArray(process.argv) &&
+        process.argv.includes(exports.WCV_THREE_LAYER_STACK_ARG),
     acquire: (req) => electron_1.ipcRenderer.invoke('wcv:acquire', req),
-    show: (tabKey, boundsCss) => electron_1.ipcRenderer.invoke('wcv:show', tabKey, boundsCss),
+    show: (tabKey, boundsCss, options) => options !== undefined
+        ? electron_1.ipcRenderer.invoke('wcv:show', tabKey, boundsCss, options)
+        : electron_1.ipcRenderer.invoke('wcv:show', tabKey, boundsCss),
     hide: (tabKey) => electron_1.ipcRenderer.invoke('wcv:hide', tabKey),
-    setBounds: (tabKey, boundsCss) => {
-        electron_1.ipcRenderer.send('wcv:set-bounds-sync', tabKey, boundsCss);
+    setBounds: (tabKey, boundsCss, options) => {
+        if (options !== undefined) {
+            electron_1.ipcRenderer.send('wcv:set-bounds-sync', tabKey, boundsCss, options);
+        }
+        else {
+            electron_1.ipcRenderer.send('wcv:set-bounds-sync', tabKey, boundsCss);
+        }
         return Promise.resolve();
     },
     setThemeColor: (color) => electron_1.ipcRenderer.invoke('wcv:set-theme-color', color),
@@ -118,6 +134,9 @@ const wcvBrowserAPI = {
     elevate: (tabKey, reason, focusBrowser) => electron_1.ipcRenderer.invoke('wcv:elevate', tabKey, reason, focusBrowser),
     setDragOver: (tabKey, active) => electron_1.ipcRenderer.invoke('wcv:set-drag-over', tabKey, active),
     demote: (tabKey, reason) => electron_1.ipcRenderer.invoke('wcv:demote', tabKey, reason),
+    find: (tabKey, text, options, token) => electron_1.ipcRenderer.invoke('wcv:find', tabKey, text, options, token),
+    stopFind: (tabKey, action) => electron_1.ipcRenderer.invoke('wcv:stop-find', tabKey, action),
+    focusHub: (tabKey) => electron_1.ipcRenderer.invoke('wcv:focus-hub', tabKey),
     navigate: (tabKey, url) => electron_1.ipcRenderer.invoke('wcv:navigate', tabKey, url),
     control: (tabKey, action) => electron_1.ipcRenderer.invoke('wcv:control', tabKey, action),
     sendMouse: (tabKey, params, coordSpace) => coordSpace !== undefined
@@ -179,8 +198,8 @@ const electronNativeAPI = {
     closeContextMenu: () => electron_1.ipcRenderer.invoke('window:close-context-menu'),
     executeJavaScriptInIsolatedWorld: (wcId, worldId, code) => electron_1.ipcRenderer.invoke('webview:execute-js-isolated-world', wcId, worldId, code),
     scriptJailProtocol: 2,
-    listWebviewFrames: (wcId) => electron_1.ipcRenderer.invoke('webview:list-frames', wcId),
-    executeJavaScriptInFrameIsolatedWorld: (wcId, frameId, code, expectedOrigin) => electron_1.ipcRenderer.invoke('webview:execute-js-frame-isolated-world', wcId, frameId, code, expectedOrigin),
+    listWebviewFrames: (wcId, options) => electron_1.ipcRenderer.invoke('webview:list-frames', wcId, options),
+    executeJavaScriptInFrameIsolatedWorld: (wcId, frameId, code, expectedOrigin, options) => electron_1.ipcRenderer.invoke('webview:execute-js-frame-isolated-world', wcId, frameId, code, expectedOrigin, options),
     runScriptInJail: (req) => electron_1.ipcRenderer.invoke('script-jail:run', req),
     abortScriptJail: (jailId) => electron_1.ipcRenderer.invoke('script-jail:abort', jailId),
     warmScriptJail: () => electron_1.ipcRenderer.invoke('script-jail:warm'),
@@ -332,6 +351,11 @@ function createLocalSshRemoteAPI() {
         getState: () => electron_1.ipcRenderer.invoke('ssh:get-state'),
         listHosts: (options) => electron_1.ipcRenderer.invoke('ssh:list-hosts', { configFile: options?.configFile }),
         chooseConfigFile: () => electron_1.ipcRenderer.invoke('ssh:choose-config-file'),
+        // Only these fields cross, as plain values.
+        forgetRecentHost: (entry) => electron_1.ipcRenderer.invoke('ssh:forget-recent-host', {
+            host: entry?.host,
+            configFile: entry?.configFile,
+        }),
         connect: async (host, options) => {
             const requestId = ++lastRequestId;
             const onProgress = options?.onProgress;
@@ -411,6 +435,55 @@ function createRemoteSshRemoteAPI() {
         },
     };
 }
+function actorIdsOf(v) {
+    return Array.isArray(v)
+        ? v.filter((x) => typeof x === 'string').slice(0, 32)
+        : [];
+}
+function permissionsOf(v) {
+    const o = (v && typeof v === 'object' ? v : {});
+    return {
+        accessibility: o['accessibility'] === true,
+        screenRecording: o['screenRecording'] === true,
+        screenRecordingNeedsRelaunch: o['screenRecordingNeedsRelaunch'] === true,
+    };
+}
+const computerPreviewAPI = {
+    open: () => electron_1.ipcRenderer.invoke('computer-preview:open'),
+    answer: (sessionId, sdp) => electron_1.ipcRenderer.invoke('computer-preview:answer', sessionId, sdp),
+    renew: (sessionId) => electron_1.ipcRenderer.invoke('computer-preview:renew', sessionId),
+    close: (sessionId) => electron_1.ipcRenderer.invoke('computer-preview:close', sessionId),
+    getActive: () => electron_1.ipcRenderer.invoke('computer-preview:get-active'),
+    onActive: (callback) => {
+        const handler = (_event, active) => {
+            callback(active === true);
+        };
+        electron_1.ipcRenderer.on('computer-preview:active', handler);
+        return () => {
+            electron_1.ipcRenderer.removeListener('computer-preview:active', handler);
+        };
+    },
+    getActiveAgents: async () => actorIdsOf(await electron_1.ipcRenderer.invoke('computer-preview:get-active-agents')),
+    onActiveAgents: (callback) => {
+        const handler = (_event, ids) => {
+            callback(actorIdsOf(ids));
+        };
+        electron_1.ipcRenderer.on('computer-preview:active-agents', handler);
+        return () => {
+            electron_1.ipcRenderer.removeListener('computer-preview:active-agents', handler);
+        };
+    },
+    getPermissions: async () => permissionsOf(await electron_1.ipcRenderer.invoke('computer-permissions:get')),
+    openPermissionSettings: async (pane) => {
+        if (pane !== 'accessibility' && pane !== 'screenRecording') {
+            throw new Error('openPermissionSettings: unknown pane');
+        }
+        await electron_1.ipcRenderer.invoke('computer-permissions:open-settings', pane);
+    },
+    relaunchApp: async () => {
+        await electron_1.ipcRenderer.invoke('computer-permissions:relaunch');
+    },
+};
 electron_1.contextBridge.exposeInMainWorld('nativeNotifications', notificationAPI);
 electron_1.contextBridge.exposeInMainWorld('nativeStorage', storageAPI);
 electron_1.contextBridge.exposeInMainWorld('agent', agentAPI);
@@ -444,6 +517,25 @@ if (isRemoteWindow) {
     };
     electron_1.contextBridge.exposeInMainWorld('electronNative', remoteNative);
     electron_1.contextBridge.exposeInMainWorld('sshRemote', createRemoteSshRemoteAPI());
+    // Read-only, so a mic blocked in the OS settings says so here too: the
+    // toolkit takes the bridge only with all three methods. requestAccess reads
+    // the status (main refuses mic:request-access): getUserMedia shows the OS
+    // prompt once the user allows this host the mic.
+    // The toolkit's contract (useVoiceBridge.ts's hostMayAsk): in an SSH window
+    // desktopMic means the Hub asks once per host before the mic opens, so
+    // voice waits on getUserMedia with no timeout until it first opens. The
+    // mic permission reads granted until the user says Don't Allow, and denied
+    // after; a refusal that still reads granted is "no answer" (an unfocused
+    // window, an answer within the arming time, a closed window or dropped
+    // host), which voice offers to try again. The question may also wait for
+    // another sheet on the window. Change these and voice in SSH windows breaks.
+    // TODO(nathanjuan): An explicit sshRemote.getMicAnswer?() instead.
+    const remoteDesktopMic = {
+        getAccessStatus: desktopMicAPI.getAccessStatus,
+        requestAccess: desktopMicAPI.getAccessStatus,
+        openSystemPreferences: desktopMicAPI.openSystemPreferences,
+    };
+    electron_1.contextBridge.exposeInMainWorld('desktopMic', remoteDesktopMic);
 }
 else {
     electron_1.contextBridge.exposeInMainWorld('electronUpdater', updaterAPI);
@@ -455,6 +547,8 @@ else {
     electron_1.contextBridge.exposeInMainWorld('wsl', wslAPI);
     electron_1.contextBridge.exposeInMainWorld('desktopMic', desktopMicAPI);
     electron_1.contextBridge.exposeInMainWorld('sshRemote', createLocalSshRemoteAPI());
+    // Computer pane live preview: this computer's desktop host, local only.
+    electron_1.contextBridge.exposeInMainWorld('agyComputerPreview', computerPreviewAPI);
 }
 const HEX6_RE = /^#[0-9a-fA-F]{6}$/;
 const HEX3_RE = /^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/;
@@ -658,10 +752,148 @@ function installCustomFlagOverridesSync() {
         }
     });
 }
+// wcvZOrderController.ts's WCV_HUB_*: a sandboxed preload can't import them.
+exports.WCV_HUB_CURSOR_HOLE_STATE_CHANNEL = 'wcv:hub-cursor-hole-state';
+exports.WCV_HUB_PROBE_POINT_CHANNEL = 'wcv:hub-probe-point';
+exports.WCV_HUB_PROBE_POINT_RESPONSE_CHANNEL = 'wcv:hub-probe-point-response';
+const ACTIVE_HOLE_SEL = '[data-browser-hole]:not([data-browser-hole="false"])';
+const CAP_PASSIVE = { capture: true, passive: true };
+const OBS_OPTS = { childList: true, subtree: true, attributes: true };
+const isFin = (v) => typeof v === 'number' && isFinite(v);
+const isPosInt = (v) => isFin(v) && v > 0 && v % 1 === 0;
+const normZoom = (z) => (isFin(z) && z > 0 ? z : 1);
+/** Returns `true` iff window DIP `(dipX, dipY)` hits a leaf `[data-browser-hole]` placeholder. */
+function isBareBrowserHoleAtDip(dipX, dipY, doc, rawZoom) {
+    const [efp, qs] = [doc?.elementFromPoint, doc?.querySelector];
+    const okArgs = isFin(dipX) && isFin(dipY) && typeof efp === 'function';
+    if (!okArgs || (typeof qs === 'function' && !qs.call(doc, ACTIVE_HOLE_SEL))) {
+        return false;
+    }
+    const z = normZoom(rawZoom);
+    const [cx, cy] = [dipX / z, dipY / z];
+    const el = isFin(cx) && isFin(cy) ? efp.call(doc, cx, cy) : null;
+    const attr = el?.hasAttribute?.('data-browser-hole')
+        ? (el.getAttribute?.('data-browser-hole') ?? 'false')
+        : 'false';
+    return attr !== 'false' && attr !== '';
+}
+/** Installs top-frame bare-hole cursor reporting and point-probe responses in flag-on Hub windows. */
+function installWcvThreeLayerHoleReporter(deps) {
+    const glob = globalThis;
+    const isMain = deps?.isMainFrame ?? process.isMainFrame;
+    const argv = deps?.argv ?? process.argv;
+    const g = deps && 'win' in deps ? deps.win : (glob.window ?? glob);
+    const topOk = g && (g.top === undefined || g.top === (g.self ?? g));
+    const hasArg = Array.isArray(argv) && argv.includes(exports.WCV_THREE_LAYER_STACK_ARG);
+    const canListen = topOk && typeof g?.addEventListener === 'function';
+    if (isMain === false || !hasArg || !canListen) {
+        return () => { };
+    }
+    const ipc = deps?.ipc ?? electron_1.ipcRenderer;
+    const readZoom = deps?.getZoomFactor ?? (() => electron_1.webFrame.getZoomFactor?.());
+    const getZoom = () => normZoom(readZoom());
+    const getDoc = () => (deps && 'doc' in deps ? deps.doc : g.document);
+    const Obs = g.MutationObserver ?? glob.MutationObserver;
+    const hitAt = (x, y) => isBareBrowserHoleAtDip(x, y, getDoc(), getZoom());
+    let [disposed, lastSent, rafId] = [false, false, null];
+    let lastDip = null;
+    let pending = null;
+    let [obs, domTarget] = [null, null];
+    const flush = () => {
+        const [reason, cur] = [pending, lastDip];
+        rafId = pending = null;
+        if (!disposed && reason && cur) {
+            const isHole = hitAt(cur.dipX, cur.dipY);
+            const changed = isHole !== lastSent;
+            lastSent = isHole;
+            if (changed || (reason !== 'stationary-overlay' && isHole)) {
+                ipc.send(exports.WCV_HUB_CURSOR_HOLE_STATE_CHANNEL, { ...cur, isHole, reason });
+            }
+        }
+    };
+    const schedule = (reason) => {
+        if (!disposed && lastDip) {
+            pending = reason !== 'stationary-overlay' ? reason : (pending ?? reason);
+            const anim = g.requestAnimationFrame ? g : glob;
+            if (rafId === null) {
+                rafId = anim.requestAnimationFrame?.(flush) ?? null;
+            }
+        }
+    };
+    const updateCursor = (ev, reason) => {
+        if (!disposed && isFin(ev?.clientX) && isFin(ev?.clientY)) {
+            const z = getZoom();
+            const [dipX, dipY] = [ev.clientX * z, ev.clientY * z];
+            if (isFin(dipX) && isFin(dipY)) {
+                lastDip = { dipX, dipY };
+                schedule(reason);
+            }
+        }
+    };
+    const onMove = (ev) => updateCursor(ev, 'pointermove');
+    const onDrag = (ev) => {
+        if (ev?.isTrusted !== false) {
+            updateCursor(ev, 'dragover');
+        }
+    };
+    const onStationary = () => schedule('stationary-overlay');
+    const onProbe = (_ev, req) => {
+        const r = !Array.isArray(req) && typeof req === 'object' ? req : null;
+        const [id, x, y] = [r?.requestId, r?.dipX, r?.dipY];
+        if (!disposed && isPosInt(id) && isFin(x) && isFin(y)) {
+            const isHole = hitAt(x, y);
+            [lastDip, lastSent] = [{ dipX: x, dipY: y }, isHole];
+            ipc.send(exports.WCV_HUB_PROBE_POINT_RESPONSE_CHANNEL, { requestId: id, isHole });
+        }
+    };
+    const attachObs = () => {
+        const root = !disposed && !obs ? getDoc()?.documentElement : null;
+        if (root && typeof Obs === 'function') {
+            (obs = new Obs(onStationary)).observe(root, OBS_OPTS);
+        }
+        return Boolean(obs);
+    };
+    const onReady = () => {
+        domTarget?.removeEventListener?.('DOMContentLoaded', onReady);
+        domTarget = null;
+        attachObs();
+    };
+    const passive = { passive: true };
+    g.addEventListener?.('pointermove', onMove, CAP_PASSIVE);
+    g.addEventListener?.('dragenter', onDrag, CAP_PASSIVE);
+    g.addEventListener?.('dragover', onDrag, CAP_PASSIVE);
+    g.addEventListener?.('resize', onStationary, passive);
+    g.addEventListener?.('scroll', onStationary, CAP_PASSIVE);
+    ipc.on?.(exports.WCV_HUB_PROBE_POINT_CHANNEL, onProbe);
+    if (!attachObs() && typeof Obs === 'function') {
+        const curDoc = getDoc();
+        domTarget = typeof curDoc?.addEventListener === 'function' ? curDoc : g;
+        domTarget.addEventListener?.('DOMContentLoaded', onReady);
+    }
+    return () => {
+        if (!disposed) {
+            disposed = true;
+            domTarget?.removeEventListener?.('DOMContentLoaded', onReady);
+            obs?.disconnect();
+            if (rafId !== null) {
+                (g.cancelAnimationFrame ? g : glob).cancelAnimationFrame?.(rafId);
+            }
+            domTarget = obs = rafId = pending = null;
+            g.removeEventListener?.('pointermove', onMove, CAP_PASSIVE);
+            g.removeEventListener?.('dragenter', onDrag, CAP_PASSIVE);
+            g.removeEventListener?.('dragover', onDrag, CAP_PASSIVE);
+            g.removeEventListener?.('resize', onStationary, passive);
+            g.removeEventListener?.('scroll', onStationary, CAP_PASSIVE);
+            const off = ipc.removeListener ?? ipc.off;
+            off?.call(ipc, exports.WCV_HUB_PROBE_POINT_CHANNEL, onProbe);
+        }
+    };
+}
 // Not SSH windows: no built-in browser tabs; flag overrides are the laptop's.
 if (!isRemoteWindow) {
     installHubSurfaceThemeAutoSync();
     installCustomFlagOverridesSync();
+    installWcvThreeLayerHoleReporter();
 }
 
 // DOM Translation Injector to localize the embedded React frontend settings and labels to Chinese.

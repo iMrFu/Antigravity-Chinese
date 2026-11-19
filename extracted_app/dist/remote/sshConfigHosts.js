@@ -36,6 +36,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.systemSshConfigPath = systemSshConfigPath;
 exports.listSshConfigHosts = listSshConfigHosts;
 exports.canonicalSshConfigFile = canonicalSshConfigFile;
+exports.describeSshConfigProblem = describeSshConfigProblem;
+exports.sshConfigProblemOfText = sshConfigProblemOfText;
+exports.sshConfigProblemOfBytes = sshConfigProblemOfBytes;
+exports.sshConfigFileProblem = sshConfigFileProblem;
 exports.resolveSshConfigFile = resolveSshConfigFile;
 exports.readSshConfigFile = readSshConfigFile;
 // TODO(nathanjuan): Share with the IDE's SSH extension (Exafunction repo:
@@ -121,9 +125,20 @@ function parseConfigLine(line) {
     }
     return { keyword: m[1].toLowerCase(), args };
 }
+/**
+ * Stringified missing values, never hosts. For example, the IDE's "Add
+ * Cloudtop URL" command, run from the command palette, appends `Host
+ * undefined` (with `HostName undefined`) to ~/.ssh/config.
+ */
+const MISSING_VALUE_ALIASES = new Set([
+    'undefined',
+    'null',
+]);
 /** True for patterns usable as-is as a destination (no wildcards etc.). */
 function isConcreteAlias(pattern) {
-    if (/[*?!]/.test(pattern) || pattern.includes('@')) {
+    if (/[*?!]/.test(pattern) ||
+        pattern.includes('@') ||
+        MISSING_VALUE_ALIASES.has(pattern)) {
         return false;
     }
     try {
@@ -366,11 +381,160 @@ function checkConfigStat(stat, shown) {
         throw invalid(`${shown} can be changed by others: it must be yours or root's, and not group- or world-writable.`);
     }
 }
+const NOT_CONFIG = "isn't an SSH config file";
+const CHOOSE_CONFIG = 'Choose a file of ssh settings, such as ~/.ssh/config.';
+const UNREADABLE = "is saved in a way ssh can't read";
+const SAVE_AS_UTF8 = 'Save it as UTF-8 without a byte-order mark.';
+const notConfig = (why) => ({
+    what: NOT_CONFIG,
+    why,
+    fix: CHOOSE_CONFIG,
+});
+const BINARY = notConfig("it's a binary file");
+const KEY = notConfig('it holds a key or certificate');
+const PUBLIC_KEYS = notConfig('it holds SSH public keys, like a .pub or authorized_keys file');
+const HOST_KEYS = notConfig('it lists SSH host keys, like known_hosts');
+// OpenSSH reads a byte-order mark as part of the first keyword.
+const BOM = {
+    what: UNREADABLE,
+    why: 'it starts with a byte-order mark',
+    fix: SAVE_AS_UTF8,
+};
+const UTF16 = {
+    what: UNREADABLE,
+    why: "it's saved as UTF-16",
+    fix: SAVE_AS_UTF8,
+};
+/** "<file> <what>: <why>. <fix>" */
+function describeSshConfigProblem(file, { what, why, fix }) {
+    return `${file} ${what}: ${why}. ${fix}`;
+}
+/** How much of a file sshConfigFileProblem reads. */
+const SNIFF_BYTES = 64 * 1024;
+/**
+ * An SSH key type, as known_hosts, authorized_keys and .pub files name it. A
+ * certificate's adds -cert-v01, before a security key's @openssh.com.
+ */
+const KEY_TYPE = '(?:(?:ssh-(?:rsa|dss|ed25519|ed448)|ecdsa-sha2-nistp\\d+)(?:-cert-v01@openssh\\.com)?|sk-(?:ssh-ed25519|ecdsa-sha2-nistp256)(?:-cert-v01)?@openssh\\.com)';
+/** A key type and its key; the base64 starts AAAA (a length prefix). */
+const KEY_AND_BLOB = `${KEY_TYPE}[ \\t]+AAAA[0-9A-Za-z+/]`;
+const PUBLIC_KEY_LINE = new RegExp(`^${KEY_AND_BLOB}`);
+/** An authorized_keys option, as sshd(8) lists them, maybe with a value. */
+const AUTHORIZED_KEY_OPTION = '(?:agent-forwarding|cert-authority|command|environment|expiry-time|from|no-agent-forwarding|no-port-forwarding|no-pty|no-touch-required|no-user-rc|no-x11-forwarding|permitlisten|permitopen|port-forwarding|principals|pty|restrict|tunnel|user-rc|verify-required|x11-forwarding)(?:="(?:[^"\\\\]|\\\\.)*")?';
+/** A key after authorized_keys options, which are comma-separated. */
+const AUTHORIZED_KEY_LINE = new RegExp(`^${AUTHORIZED_KEY_OPTION}(?:,${AUTHORIZED_KEY_OPTION})*[ \\t]+${KEY_AND_BLOB}`, 'i');
+/** `[@marker] hosts key-type key`, or a hashed `|1|salt|hash` entry. */
+const KNOWN_HOSTS_LINE = new RegExp(`^(?:\\|1\\||(?:@(?:cert-authority|revoked)[ \\t]+)?[^ \\t]+[ \\t]+${KEY_AND_BLOB})`);
+/** PEM, OpenSSH and RFC 4716 armor, or a PuTTY key. */
+const KEY_ARMOR = /^(?:-{4,5} ?BEGIN [A-Z0-9 ]+-{4,5}$|PuTTY-User-Key-File-\d+: )/;
+/** C0 controls but whitespace, and DEL: no ssh setting has them. */
+// eslint-disable-next-line no-control-regex
+const CONTROL_CHAR = /[\x00-\x08\x0e-\x1f\x7f]/;
+/**
+ * Why ssh can't use `text` (a file's start) as its config, or undefined if
+ * it may. Judged by the first line that isn't blank or a comment, cut at a
+ * NUL as ssh cuts it: ssh would refuse key material or binary there as
+ * unknown options, as it did for a chosen known_hosts.
+ */
+function sshConfigProblemOfText(text) {
+    if (text.startsWith('\uFEFF')) {
+        return BOM;
+    }
+    for (const raw of text.split('\n')) {
+        const line = raw.split('\0', 1)[0].trim();
+        if (line === '' || line.startsWith('#')) {
+            continue;
+        }
+        if (CONTROL_CHAR.test(line)) {
+            return BINARY;
+        }
+        if (KEY_ARMOR.test(line)) {
+            return KEY;
+        }
+        if (PUBLIC_KEY_LINE.test(line) || AUTHORIZED_KEY_LINE.test(line)) {
+            return PUBLIC_KEYS;
+        }
+        if (KNOWN_HOSTS_LINE.test(line)) {
+            return HOST_KEYS;
+        }
+        return undefined;
+    }
+    return undefined;
+}
+/** Leading bytes of binary formats a file picker often lands on. */
+const BINARY_MAGIC = [
+    [0x4d, 0x5a], // MZ: a Windows executable, such as ssh.exe
+    [0x7f, 0x45, 0x4c, 0x46], // ELF
+    [0xfe, 0xed, 0xfa, 0xce], // Mach-O
+    [0xfe, 0xed, 0xfa, 0xcf],
+    [0xce, 0xfa, 0xed, 0xfe],
+    [0xcf, 0xfa, 0xed, 0xfe],
+    [0xca, 0xfe, 0xba, 0xbe], // a universal Mach-O
+    [0x89, 0x50, 0x4e, 0x47], // PNG
+    [0xff, 0xd8, 0xff], // JPEG
+    [0x47, 0x49, 0x46, 0x38], // GIF8
+    [0x25, 0x50, 0x44, 0x46, 0x2d], // %PDF-
+    [0x50, 0x4b, 0x03, 0x04], // zip
+    [0x1f, 0x8b], // gzip
+    [...Buffer.from('SQLite format 3\0')],
+].map((bytes) => Buffer.from(bytes));
+/**
+ * Whether `bytes` start as UTF-16 text (a BOM, or ASCII with every other byte
+ * NUL), as PowerShell 5's `>` writes it: ssh reads only UTF-8.
+ */
+function isUtf16(bytes) {
+    if (bytes.length >= 2 &&
+        ((bytes[0] === 0xff && bytes[1] === 0xfe) ||
+            (bytes[0] === 0xfe && bytes[1] === 0xff))) {
+        return true;
+    }
+    const pairs = Math.min(bytes.length, 64) >> 1;
+    if (pairs < 2) {
+        return false;
+    }
+    let le = true;
+    let be = true;
+    for (let i = 0; i < pairs * 2; i += 2) {
+        le && (le = bytes[i] !== 0 && bytes[i + 1] === 0);
+        be && (be = bytes[i] === 0 && bytes[i + 1] !== 0);
+    }
+    return le || be;
+}
+/** sshConfigProblemOfText of a file's first bytes, which may not be UTF-8. */
+function sshConfigProblemOfBytes(bytes) {
+    if (isUtf16(bytes)) {
+        return UTF16;
+    }
+    if (BINARY_MAGIC.some((magic) => bytes.subarray(0, magic.length).equals(magic))) {
+        return BINARY;
+    }
+    return sshConfigProblemOfText(bytes.toString('utf8'));
+}
+/**
+ * sshConfigProblemOfBytes of a file's first 64 KiB; undefined if it can't
+ * be read (other checks report that).
+ */
+async function sshConfigFileProblem(file) {
+    let handle;
+    try {
+        // A FIFO mustn't block.
+        handle = await fs.promises.open(file, fs.constants.O_RDONLY | fs.constants.O_NONBLOCK);
+        const { bytesRead, buffer } = await handle.read(Buffer.alloc(SNIFF_BYTES), 0, SNIFF_BYTES, 0);
+        return sshConfigProblemOfBytes(buffer.subarray(0, bytesRead));
+    }
+    catch {
+        return undefined;
+    }
+    finally {
+        await handle?.close().catch(() => { });
+    }
+}
 /**
  * Checks a config file for a host (`ssh -F`): an absolute path on one line
  * (on Windows, on a drive and not on a share), naming a file checkConfigStat
- * takes. Returns canonicalSshConfigFile's path. Rejects with
- * INVALID_DESTINATION, saying why.
+ * takes, that ssh can read as its config (see sshConfigFileProblem). Returns
+ * canonicalSshConfigFile's path. Rejects with INVALID_DESTINATION, or
+ * SSH_CONFIG_INVALID for the file's contents, saying why.
  */
 async function resolveSshConfigFile(file, homeDir = os.homedir()) {
     if (/[\0\r\n]/.test(file)) {
@@ -402,6 +566,10 @@ async function resolveSshConfigFile(file, homeDir = os.homedir()) {
         throw invalid(`${shown} doesn't exist or can't be read.`);
     }
     checkConfigStat(stat, shown);
+    const problem = await sshConfigFileProblem(configFile);
+    if (problem !== undefined) {
+        throw new types_1.RemoteError('SSH_CONFIG_INVALID', describeSshConfigProblem(shown, problem), { explainsItself: true });
+    }
     return configFile;
 }
 /**

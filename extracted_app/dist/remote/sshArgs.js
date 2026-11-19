@@ -33,10 +33,14 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.LINUX_HOST_NEEDED = void 0;
 exports.resolveSshBinary = resolveSshBinary;
 exports.buildControlSshArgs = buildControlSshArgs;
 exports.usesProxy = usesProxy;
+exports.sshConfigProblem = sshConfigProblem;
 exports.classifySshFailure = classifySshFailure;
+exports.windowsShellLine = windowsShellLine;
+exports.isWindowsShellLine = isWindowsShellLine;
 exports.otherForwardFailed = otherForwardFailed;
 exports.socksListenFailed = socksListenFailed;
 exports.describeRemoteError = describeRemoteError;
@@ -109,9 +113,61 @@ function buildControlSshArgs({ destination, socksPort, exitOnForwardFailure = tr
         '-s',
     ];
 }
+/**
+ * A Windows host's own shell (cmd.exe, PowerShell) saying it has no sh,
+ * lowercased: as ssh's stderr has it, or after "ssh exited (…): ".
+ */
+const WINDOWS_SHELL_HAS_NO_SH = [
+    /(?:^|: )'sh' is not recognized as an internal or external command/m,
+    /the term 'sh' is not recognized as (?:the|a) name of a cmdlet/,
+];
 /** Whether `ssh -G`'s output sets a ProxyJump or ProxyCommand. */
 function usesProxy(configDump) {
     return /^(?:proxyjump|proxycommand) (?!none\r?$)/m.test(configDump);
+}
+/**
+ * ssh's lines when it refuses its config files, lowercased. It then exits
+ * 255 before it connects anywhere. `-o` options' lines say "command-line":
+ * those are the Hub's own, not the user's config.
+ */
+const SSH_CONFIG_REFUSED = [
+    /^(?!command-line:).+: terminating, \d+ bad configuration options$/,
+    /^can't open user config file /,
+    /^bad owner or permissions on /,
+];
+/**
+ * ssh's lines naming the problem, best first. The first is "<file>: line N:
+ * Bad configuration option: <word>".
+ */
+const SSH_CONFIG_PROBLEM = [
+    // Any word: JS's \S misses a BOM (U+FEFF), as in "\ufeffhost".
+    /^(?!command-line:).+: line \d+: bad configuration option: ./,
+    /^(?!command-line[: ]).+ line \d+: \S/,
+    ...SSH_CONFIG_REFUSED,
+];
+/** Warnings in the same form, which don't stop ssh. */
+const SSH_CONFIG_WARNING = / line \d+: (?:deprecated|unsupported) option /;
+/**
+ * What ssh refused in its config files, from the stderr of an `ssh -G` that
+ * exited 255: the line naming the problem, or undefined if ssh didn't refuse
+ * them. Only for `ssh -G`, which connects nowhere, so no host wrote any of it.
+ */
+function sshConfigProblem(stderr) {
+    const lines = stderr
+        .split(/\r\n|\r|\n/)
+        .map((line) => ({ line, lower: line.toLowerCase() }))
+        .filter(({ lower }) => !SSH_CONFIG_WARNING.test(lower));
+    const refused = lines.some(({ lower }) => SSH_CONFIG_REFUSED.some((pattern) => pattern.test(lower)));
+    if (!refused) {
+        return undefined;
+    }
+    for (const pattern of SSH_CONFIG_PROBLEM) {
+        const found = lines.find(({ lower }) => pattern.test(lower));
+        if (found) {
+            return found.line;
+        }
+    }
+    return undefined;
 }
 /**
  * Patterns for the lowercased stderr; the first code with a match wins. Host
@@ -124,9 +180,6 @@ const FAILURE_RULES = [
         // ssh stops at once on these; its message, kept as the detail, says why.
         'UNKNOWN',
         [
-            /bad configuration option/,
-            /can't open user config file/,
-            /bad owner or permissions on/,
             /unable to negotiate with/,
             /could not request (?:local|tunnel) forwarding/,
             /remote port forwarding failed/,
@@ -159,6 +212,13 @@ const FAILURE_RULES = [
         [/administratively prohibited/, /forwarding disabled/],
     ],
     [
+        // A Windows host's own shell (cmd.exe, PowerShell) has no sh to run. It
+        // ran, so the login worked: before AUTH_FAILED, whose "please try
+        // again" a retried password leaves.
+        'UNSUPPORTED_HOST',
+        WINDOWS_SHELL_HAS_NO_SH,
+    ],
+    [
         'AUTH_FAILED',
         [
             // "user@host: Permission denied (publickey,password)."
@@ -180,6 +240,17 @@ const FAILURE_RULES = [
             /^timeout, server \S+ not responding/m,
             /(?:^|: )connection to (?!unknown port)\S+ port \d+: broken pipe$/m,
             /^client_loop: send disconnect: broken pipe$/m,
+        ],
+    ],
+    [
+        // Last: ssh -G reports real config errors before the run (checkConfig).
+        // Here they're words a banner or rc file may print, or a config file
+        // that changed since.
+        'UNKNOWN',
+        [
+            /bad configuration option/,
+            /can't open user config file/,
+            /bad owner or permissions on/,
         ],
     ],
 ];
@@ -214,6 +285,18 @@ function classifySshFailure(stderr, exitCode) {
         explained: false,
     };
 }
+/**
+ * The line of `stderr` where a Windows host's shell says it has no sh, which
+ * says more than the shell's last line ("operable program or batch file.").
+ */
+function windowsShellLine(stderr) {
+    return stderr.split(/\r\n|\r|\n/).find((line) => isWindowsShellLine(line));
+}
+/** Whether `text` has a Windows shell's words for having no sh. */
+function isWindowsShellLine(text) {
+    const lower = text.toLowerCase();
+    return WINDOWS_SHELL_HAS_NO_SH.some((pattern) => pattern.test(lower));
+}
 /** Whether a forward other than our SOCKS port failed (one in the config). */
 function otherForwardFailed(stderr, socksPort) {
     return (/remote port forwarding failed/i.test(stderr) ||
@@ -226,6 +309,8 @@ function otherForwardFailed(stderr, socksPort) {
 function socksListenFailed(stderr, socksPort) {
     return new RegExp(`cannot listen to port: ${socksPort}(?!\\d)|getaddrinfo\\(127\\.0\\.0\\.1\\)`).test(stderr);
 }
+/** What UNSUPPORTED_HOST's texts say a host needs. */
+exports.LINUX_HOST_NEEDED = 'Antigravity needs a Linux host on x64 or arm64 with glibc 2.26 or newer.';
 function unknownCodeMessage(code) {
     return `Couldn't connect to the SSH host (${String(code)}).`;
 }
@@ -250,12 +335,14 @@ function describeRemoteError(code, prompts) {
                 : "The host's SSH key has changed or isn't trusted. If it changed, ask the host's owner first: the connection may be intercepted.";
         case 'CONNECTION_FAILED':
             return `Couldn't connect to the SSH host. Check its name, your network and ssh config (e.g. a ProxyCommand), and that ssh to it works in a terminal${prompts === 'no' ? ' without a prompt' : ''}.`;
+        case 'SSH_CONFIG_INVALID':
+            return "SSH can't use your SSH config file. Fix the problem ssh reports, or choose another config file.";
         case 'FORWARDING_PROHIBITED':
             return 'SSH port forwarding failed. Make sure the server allows TCP forwarding (AllowTcpForwarding) for your account, then try again.';
         case 'UNSUPPORTED_HOST':
-            return "The SSH host isn't supported. Antigravity needs Linux on x64 or arm64 with glibc 2.26 or newer.";
+            return `The SSH host isn't supported. ${exports.LINUX_HOST_NEEDED} Windows and macOS hosts aren't supported yet.`;
         case 'SHARED_HOME_UNSUPPORTED':
-            return 'Another host that shares your home directory runs the Antigravity server. Connect to that host instead.';
+            return 'Another host that shares your home directory runs the Antigravity server. Connect to that host, or connect again and choose Take Over.';
         case 'INSTALL_FAILED':
             return "Couldn't install the Antigravity server on the SSH host. Make sure it has free disk space, and that it or this computer can download from the internet.";
         case 'LS_START_FAILED':

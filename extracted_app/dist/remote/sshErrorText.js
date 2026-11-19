@@ -9,8 +9,6 @@ exports.explanationOf = explanationOf;
 exports.userMessage = userMessage;
 /** The Hub's words for a failed connection: what went wrong, what to do. */
 const main_1 = __importDefault(require("electron-log/main"));
-const paths_1 = require("../paths");
-const bootstrapProtocol_1 = require("./bootstrapProtocol");
 const sshArgs_1 = require("./sshArgs");
 const sshAskpass_1 = require("./sshAskpass");
 const types_1 = require("./types");
@@ -24,6 +22,11 @@ function detailOf(err, label) {
     const text = (0, types_1.sanitizeRemoteText)(err.message);
     return err.reportedByRemote ? `${label} reported: ${text}` : text;
 }
+/**
+ * `uname -s` on Windows: its POSIX layers (Cygwin, MSYS2, Git Bash) and
+ * busybox-w32.
+ */
+const WINDOWS_UNAME = /\b(?:CYGWIN|MINGW|MSYS)\w*_NT\b|\bWindows_NT\b/;
 /** Automatic reconnects can't ask, but Reconnect can; Windows can't yet. */
 function promptSupportOf(err) {
     if (!(0, sshAskpass_1.canPrompt)()) {
@@ -42,13 +45,16 @@ function explanationOf(err, label) {
     if (err.explainsItself) {
         return detailOf(err, label);
     }
-    const what = (0, sshArgs_1.describeRemoteError)(err.code, promptSupportOf(err));
-    if (err.code !== 'SHARED_HOME_UNSUPPORTED') {
-        return what;
+    // The host is Windows: its uname says so (a POSIX layer), or its own shell
+    // (cmd.exe, PowerShell, as Windows' OpenSSH server runs) has no sh. Say
+    // just that: its words stay the detail.
+    const windows = err.reportedByRemote
+        ? WINDOWS_UNAME.test(err.message)
+        : (0, sshArgs_1.isWindowsShellLine)(err.message);
+    if (err.code === 'UNSUPPORTED_HOST' && windows) {
+        return `Windows SSH hosts aren't supported yet. ${sshArgs_1.LINUX_HOST_NEEDED}`;
     }
-    // Named here, not by the host: its text could name any file.
-    const note = `~/.gemini/${(0, paths_1.getAppDataDirName)()}/daemon/${(0, bootstrapProtocol_1.discoveryFileNameFor)(types_1.REMOTE_LS_WORKSPACE_ID)}.host`;
-    return `${what}\nFile: ${note} on ${label}`;
+    return (0, sshArgs_1.describeRemoteError)(err.code, promptSupportOf(err));
 }
 function userMessage(err, label) {
     const what = explanationOf(err, label);
@@ -57,5 +63,9 @@ function userMessage(err, label) {
     }
     const detail = detailOf(err, label);
     const text = detail && detail !== what ? `${what}\n${detail}` : what;
-    return err.code === 'UNKNOWN' ? `${text}\nLogs: ${logPath()}` : text;
+    // For ssh's own config errors, the log has all of ssh's lines; the
+    // detail only one.
+    const pointsToLog = err.code === 'UNKNOWN' ||
+        (err.code === 'SSH_CONFIG_INVALID' && !err.explainsItself);
+    return pointsToLog ? `${text}\nLogs: ${logPath()}` : text;
 }

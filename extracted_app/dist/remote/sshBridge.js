@@ -35,6 +35,20 @@ function configFileOption(options) {
         ? { configFile: value }
         : undefined;
 }
+/** The page's `{host, configFile?}`; throws if it isn't one. */
+function hostEntryOf(entry) {
+    const host = typeof entry === 'object' && entry !== null && 'host' in entry
+        ? entry.host
+        : undefined;
+    const file = configFileOption(entry);
+    if (typeof host !== 'string' ||
+        host === '' ||
+        host.length > MAX_HOST_INPUT ||
+        !file) {
+        throw new Error('Invalid SSH host entry');
+    }
+    return { host, ...file };
+}
 function parseConnectOptions(options) {
     if (typeof options !== 'object' || options === null) {
         return {};
@@ -78,6 +92,10 @@ function registerSshBridgeIpc(backend) {
             throw new types_1.RemoteError('INVALID_DESTINATION', BAD_CONFIG_FILE);
         }
         return backend.listHosts(file);
+    });
+    electron_1.ipcMain.handle('ssh:forget-recent-host', (event, entry) => {
+        localOnly('ssh:forget-recent-host', event);
+        return backend.forgetRecentHost(hostEntryOf(entry));
     });
     electron_1.ipcMain.handle('ssh:choose-config-file', (event) => {
         localOnly('ssh:choose-config-file', event);

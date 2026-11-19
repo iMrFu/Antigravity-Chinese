@@ -348,8 +348,27 @@ function registerIpcHandlers(storageManager, deps = {}) {
             return 'unknown';
         }
     };
-    localOnly('mic:get-access-status', (event) => {
-        if (!(0, wcvIpcHandlers_1.isAuthorizedHubMainFrameEvent)(event)) {
+    /**
+     * Whether `event` may use a mic channel SSH windows share: a local Hub
+     * window's main frame, or an SSH window's own top frame. Anything else on
+     * an SSH window's session is refused, as by localOnly().
+     */
+    const isMicCaller = (channel, event) => {
+        const sender = event?.sender;
+        if (!(0, remoteWindowSecurity_1.isRemoteContents)(sender)) {
+            return (0, wcvIpcHandlers_1.isAuthorizedHubMainFrameEvent)(event);
+        }
+        if (!(0, windowBackends_1.remoteBackendOf)(sender)) {
+            throw new Error(`${channel} is not available in SSH windows`);
+        }
+        // Its top frame (null once it navigated), while it lives.
+        return !sender.isDestroyed() && event.senderFrame === sender.mainFrame;
+    };
+    // SSH windows too, so a mic blocked in the OS settings says so there. They
+    // only read it: no OS prompt (mic:request-access), which getUserMedia shows
+    // anyway once the user allows their host the mic (remoteWindowSecurity.ts).
+    electron_1.ipcMain.handle('mic:get-access-status', (event) => {
+        if (!isMicCaller('mic:get-access-status', event)) {
             return 'unknown';
         }
         if (process.platform === 'darwin' || process.platform === 'win32') {
@@ -393,9 +412,15 @@ function registerIpcHandlers(storageManager, deps = {}) {
         }
         return 'unknown';
     });
-    localOnly('mic:open-system-preferences', async (event) => {
-        if (!(0, wcvIpcHandlers_1.isAuthorizedHubMainFrameEvent)(event)) {
+    // A fixed settings page, for SSH windows too.
+    electron_1.ipcMain.handle('mic:open-system-preferences', async (event) => {
+        if (!isMicCaller('mic:open-system-preferences', event)) {
             return;
+        }
+        // Remote content mustn't open System Settings while you're elsewhere.
+        if ((0, remoteWindowSecurity_1.isRemoteContents)(event.sender) &&
+            !windowForSender(event.sender)?.isFocused()) {
+            throw new Error('mic:open-system-preferences is only available while the window is focused');
         }
         if (process.platform === 'darwin') {
             await (0, externalUrl_1.openExternalSafely)('x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone', 'confirmed');
@@ -503,9 +528,13 @@ function registerIpcHandlers(storageManager, deps = {}) {
         if (!(0, debugConsole_1.isDebugConsoleEnabled)() || !allowed) {
             return;
         }
-        const win = getTargetHubWindow(event?.sender);
-        if (win) {
-            win.webContents.toggleDevTools();
+        const win = windowForSender(event?.sender);
+        if (!win) {
+            return;
+        }
+        const targetContents = (0, utils_1.getHubWebContents)(win) ?? win.webContents;
+        if (targetContents && !targetContents.isDestroyed?.()) {
+            targetContents.toggleDevTools();
         }
     });
     electron_1.ipcMain.removeListener?.(deviceChooser_1.WEBVIEW_DEVICE_CHOOSER_SUBSCRIBER_STATE_CHANNEL, onDeviceChooserSubscriberState);
@@ -542,6 +571,10 @@ function registerIpcHandlers(storageManager, deps = {}) {
     electron_1.ipcMain.handle('window:show-context-menu', async (event, items) => {
         const win = getTargetHubWindow(event?.sender);
         if (!win || !Array.isArray(items) || items.length === 0) {
+            return null;
+        }
+        // An SSH window's page, while one of the Hub's questions is up there.
+        if ((0, remoteWindowSecurity_1.isRemoteContents)(event?.sender) && deps.hostQuestionBusy?.(win)) {
             return null;
         }
         activeContextMenu?.closePopup?.(win);
@@ -604,7 +637,10 @@ function registerIpcHandlers(storageManager, deps = {}) {
     // Safe external shell launch
     electron_1.ipcMain.handle('shell:open-external', async (event, url) => {
         if ((0, remoteWindowSecurity_1.isRemoteContents)(event?.sender)) {
-            if ((0, remoteWindowSecurity_1.openRemoteUrl)(url) !== 'opened') {
+            const sender = event.sender;
+            const open = deps.openFromRemote &&
+                ((checked) => deps.openFromRemote?.(sender, checked));
+            if ((0, remoteWindowSecurity_1.openRemoteUrl)(url, open) !== 'opened') {
                 const label = (0, windowBackends_1.remoteBackendOf)(event?.sender)?.label ?? 'an SSH window';
                 main_1.default.warn(`[SSH] Not opening a link from ${label}: blocked.`);
             }
@@ -1056,11 +1092,11 @@ function registerIpcHandlers(storageManager, deps = {}) {
         });
     });
     const assertMainFrameGuestCaller = (event, webContentsId, channel) => resolveMainFrameOwnedGuest(event, webContentsId, channel).wc;
-    localOnly('webview:list-frames', async (event, wcId) => guestFrameBridge_1.guestFrameBridge.listFrames(assertMainFrameGuestCaller(event, wcId, 'webview:list-frames')));
-    localOnly('webview:execute-js-frame-isolated-world', async (event, wcId, frameId, code, expectedOrigin) => {
+    localOnly('webview:list-frames', async (event, wcId, options) => guestFrameBridge_1.guestFrameBridge.listFrames(assertMainFrameGuestCaller(event, wcId, 'webview:list-frames'), options));
+    localOnly('webview:execute-js-frame-isolated-world', async (event, wcId, frameId, code, expectedOrigin, options) => {
         const channel = 'webview:execute-js-frame-isolated-world';
         const wc = assertMainFrameGuestCaller(event, wcId, channel);
-        return guestFrameBridge_1.guestFrameBridge.executeInFrameIsolatedWorld(wc, frameId, code, expectedOrigin);
+        return guestFrameBridge_1.guestFrameBridge.executeInFrameIsolatedWorld(wc, frameId, code, expectedOrigin, options);
     });
     // Execute an untrusted agent script inside a single-use, zero-egress
     // Electron script jail and transfer the paired MessagePort to the caller.
@@ -1102,4 +1138,13 @@ function registerIpcHandlers(storageManager, deps = {}) {
             event.returnValue = {};
         }
     });
+    return {
+        closeContextMenu: (win) => {
+            if (activeContextMenuOwner === win) {
+                activeContextMenu?.closePopup?.(win);
+                activeContextMenu = null;
+                activeContextMenuOwner = undefined;
+            }
+        },
+    };
 }
