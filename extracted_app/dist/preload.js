@@ -2060,6 +2060,42 @@ if (!isRemoteWindow) {
         'pin/unpin conversation': '置顶 / 取消置顶对话',
         'Pin or Unpin Conversation': '置顶或取消置顶对话',
         'Pin or unpin conversation': '置顶或取消置顶对话',
+        'Cancel Generation': '取消生成',
+        'Cancel generation': '取消生成',
+        'cancel generation': '取消生成',
+        'Comment on Selection': '对选区进行批注',
+        'Comment on selection': '对选区进行批注',
+        'comment on selection': '对选区进行批注',
+        'Side Question: Selection': '对选区进行补充提问',
+        'Side question: selection': '对选区进行补充提问',
+        '补充提问: Selection': '对选区进行补充提问',
+        '补充提问: selection': '对选区进行补充提问',
+        '补充提问：Selection': '对选区进行补充提问',
+        'Selection': '选区',
+        'selection': '选区',
+        'Terminal: Add to Chat': '终端：添加到聊天',
+        'Terminal: add to chat': '终端：添加到聊天',
+        'terminal: add to chat': '终端：添加到聊天',
+        'Terminal: Select All': '终端：全选',
+        'Terminal: select all': '终端：全选',
+        'terminal: select all': '终端：全选',
+        'Connect to SSH Host...': '连接到 SSH 主机...',
+        'Connect to SSH Host…': '连接到 SSH 主机…',
+        'Connect to SSH Host': '连接到 SSH 主机',
+        'connect to ssh host...': '连接到 SSH 主机...',
+        'connect to ssh host…': '连接到 SSH 主机…',
+        'connect to ssh host': '连接到 SSH 主机',
+        'restore_page 重新打开已关闭的标签页': '重新打开已关闭的标签页',
+        'restore_page Reopen Closed Tab': '重新打开已关闭的标签页',
+        'Change…': '更改…',
+        'change…': '更改…',
+        'Change...': '更改...',
+        'change...': '更改...',
+        'Configure built-in browser, link opening, and browser subagent preferences.': '配置内置浏览器、链接打开方式以及浏览器子智能体偏好。',
+        'Configure built-in browser, link opening, and browser subagent preferences': '配置内置浏览器、链接打开方式以及浏览器子智能体偏好',
+        'configure built-in browser, link opening, and browser subagent preferences.': '配置内置浏览器、链接打开方式以及浏览器子智能体偏好。',
+        'configure built-in browser, link opening, and browser subagent preferences': '配置内置浏览器、链接打开方式以及浏览器子智能体偏好',
+
         'Go Back': '后退',
         'Go back': '后退',
         'Go Forward': '前进',
@@ -4442,6 +4478,48 @@ if (!isRemoteWindow) {
         }
 
 
+
+        // Connect to SSH Host
+        if (/^Connect to SSH Host(?:\.{3}|\u2026)?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('...') || trimmed.endsWith('\u2026') ? '连接到 SSH 主机...' : '连接到 SSH 主机') + trailingSpace;
+        }
+
+        // Cancel Generation
+        if (/^Cancel Generation$/i.test(trimmed)) {
+            return leadingSpace + '取消生成' + trailingSpace;
+        }
+
+        // Comment on Selection & Side Question on Selection
+        if (/^Comment on Selection$/i.test(trimmed)) {
+            return leadingSpace + '对选区进行批注' + trailingSpace;
+        }
+        if (/^(?:Side\s+Question[:：]|补充提问[:：])\s*Selection$/i.test(trimmed)) {
+            return leadingSpace + '对选区进行补充提问' + trailingSpace;
+        }
+
+        // Terminal shortcuts
+        if (/^Terminal:\s*Add to Chat$/i.test(trimmed)) {
+            return leadingSpace + '终端：添加到聊天' + trailingSpace;
+        }
+        if (/^Terminal:\s*Select All$/i.test(trimmed)) {
+            return leadingSpace + '终端：全选' + trailingSpace;
+        }
+
+        // Browser Settings description & Change button
+        if (/^Configure built-in browser,\s*link opening/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '配置内置浏览器、链接打开方式以及浏览器子智能体偏好。' : '配置内置浏览器、链接打开方式以及浏览器子智能体偏好') + trailingSpace;
+        }
+        if (/^Change(?:\.{3}|\u2026)?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('...') || trimmed.endsWith('\u2026') ? '更改...' : '更改') + trailingSpace;
+        }
+
+        // Leaked icon restore_page
+        if (/^restore_page\s+(.+)$/i.test(trimmed)) {
+            const rest = trimmed.replace(/^restore_page\s+/i, '');
+            const tr = translateText(rest) || rest;
+            return leadingSpace + tr + trailingSpace;
+        }
+
         // Greeting headlines e.g. "what can we get done today?"
         if (/^what can we get done today[?？]?$/i.test(trimmed)) {
             return leadingSpace + '今天我们来完成点什么？' + trailingSpace;
@@ -4642,8 +4720,9 @@ if (!isRemoteWindow) {
         if (/^Side\s+Questions?[:：]?/i.test(trimmed)) {
             const m = trimmed.match(/^Side\s+Questions?[:：]?\s*([\s\S]*)$/i);
             const rest = m && m[1] ? m[1].trim() : '';
-            const label = trimmed.includes(':') || trimmed.includes('：') ? '补充提问:' : '补充提问';
-            return leadingSpace + (rest ? `补充提问: ${rest}` : label) + trailingSpace;
+            const trRest = rest ? (translateText(rest) || rest) : '';
+            const label = trimmed.includes(':') || trimmed.includes('：') ? '补充提问：' : '补充提问';
+            return leadingSpace + (trRest ? `${label} ${trRest}` : label) + trailingSpace;
         }
 
         // "(Recommended) ..." or "Recommended: ..." option prefixes
