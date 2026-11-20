@@ -2147,6 +2147,42 @@ if (!isRemoteWindow) {
         'Enter url': '输入网址',
         'enter url': '输入网址',
 
+        'Local Checkout': '本地检出',
+        'Local checkout': '本地检出',
+        'local checkout': '本地检出',
+        'Local Checkouts': '本地检出',
+        'Local checkouts': '本地检出',
+        'Select Environment': '选择环境',
+        'Select environment': '选择环境',
+        'select environment': '选择环境',
+        'Select Environment (Ctrl+.)': '选择环境 (Ctrl+.)',
+        'Select environment (Ctrl+.)': '选择环境 (Ctrl+.)',
+        'Select Environment (Ctrl+·)': '选择环境 (Ctrl+.)',
+        'Select Environment (⌘+.)': '选择环境 (⌘+.)',
+        'Select environment (⌘+.)': '选择环境 (⌘+.)',
+        'Select Environment (Cmd+.)': '选择环境 (Cmd+.)',
+        'Select environment (Cmd+.)': '选择环境 (Cmd+.)',
+        'Select Environment...': '选择环境...',
+        'Select Environment…': '选择环境…',
+        'Select environment...': '选择环境...',
+        'Select environment…': '选择环境…',
+        'Switch Environment': '切换环境',
+        'Switch environment': '切换环境',
+        'Switch Environment (Ctrl+.)': '切换环境 (Ctrl+.)',
+        'Switch environment (Ctrl+.)': '切换环境 (Ctrl+.)',
+        'Change Environment': '更改环境',
+        'Change environment': '更改环境',
+        'New Environment': '新建环境',
+        'New environment': '新建环境',
+        'Manage Environments': '管理环境',
+        'Manage environments': '管理环境',
+        'Current Environment': '当前环境',
+        'Current environment': '当前环境',
+        'Active Environment': '当前活动环境',
+        'Active environment': '当前活动环境',
+        'Default Environment': '默认环境',
+        'Default environment': '默认环境',
+
         'Go Back': '后退',
         'Go back': '后退',
         'Go Forward': '前进',
@@ -4094,6 +4130,25 @@ if (!isRemoteWindow) {
             return leadingSpace + lowerTranslationMap[lowerTrimmed] + trailingSpace;
         }
 
+        // Multiline tooltip or text node handler
+        if (trimmed.includes('\n')) {
+            const lines = trimmed.split('\n');
+            let anyChanged = false;
+            const transLines = lines.map(line => {
+                const lTrim = line.trim();
+                if (!lTrim) return line;
+                const tr = translateText(lTrim);
+                if (tr !== null && tr.trim() !== lTrim) {
+                    anyChanged = true;
+                    return line.replace(lTrim, tr.trim());
+                }
+                return line;
+            });
+            if (anyChanged) {
+                return leadingSpace + transLines.join('\n') + trailingSpace;
+            }
+        }
+
         // Conversation shortcuts
         if (/^Submit Prompt\s*\(Alternate to Enter\)$/i.test(trimmed)) {
             return leadingSpace + '提交提示词（Enter 备用快捷键）' + trailingSpace;
@@ -5888,6 +5943,30 @@ if (!isRemoteWindow) {
         const tokensOnlyMatch = trimmed.match(/^\(([\d,]+)\s+tokens?\)$/i);
         if (tokensOnlyMatch) {
             return `(${tokensOnlyMatch[1]} 个 Token)`;
+        }
+
+        // "Local Checkout [chevrons]" (with optional leading icon/symbol)
+        const localCheckoutMatch = trimmed.match(/^([^\w\s\u4e00-\u9fa5]*\s*)Local\s+Checkout(?:\s*([▼▾⌄⌵ˇv∨˅\^∧>›\u02c5\u2304\u25bc\u25be\ufe40\u2228\u23f7\u25bd]))?$/i);
+        if (localCheckoutMatch) {
+            const icon = localCheckoutMatch[1] || '';
+            const chevron = localCheckoutMatch[2] ? ' ' + localCheckoutMatch[2] : '';
+            return leadingSpace + `${icon}本地检出${chevron}`.trim() + trailingSpace;
+        }
+
+        // Select / Switch / Change Environment with optional shortcut like (Ctrl+.)
+        if (/^(?:Select|Switch|Change|Choose)\s+Environment(?:\s*\(([^)]+)\)|\.{3}|\u2026)?$/i.test(trimmed)) {
+            const m = trimmed.match(/^(Select|Switch|Change|Choose)\s+Environment(?:\s*\(([^)]+)\)|\.{3}|\u2026)?$/i);
+            const actMap = {
+                'select': '选择环境',
+                'switch': '切换环境',
+                'change': '更改环境',
+                'choose': '选择环境'
+            };
+            const act = actMap[m[1].toLowerCase()] || '选择环境';
+            if (m && m[2]) {
+                return leadingSpace + `${act} (${m[2]})` + trailingSpace;
+            }
+            return leadingSpace + (trimmed.endsWith('...') || trimmed.endsWith('\u2026') ? `${act}...` : act) + trailingSpace;
         }
 
         // "Local [chevrons]"
