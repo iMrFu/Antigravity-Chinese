@@ -2096,6 +2096,57 @@ if (!isRemoteWindow) {
         'configure built-in browser, link opening, and browser subagent preferences.': '配置内置浏览器、链接打开方式以及浏览器子智能体偏好。',
         'configure built-in browser, link opening, and browser subagent preferences': '配置内置浏览器、链接打开方式以及浏览器子智能体偏好',
 
+        'At Mention Code Block': '@提及代码块',
+        'At mention code block': '@提及代码块',
+        'at mention code block': '@提及代码块',
+        'At-Mention Code Block': '@提及代码块',
+        'At-mention code block': '@提及代码块',
+        'Mention Code Block': '提及代码块',
+        'mention code block': '提及代码块',
+        'At Mention': '@提及',
+        'At mention': '@提及',
+        'at mention': '@提及',
+        'At-Mention': '@提及',
+        'At-mention': '@提及',
+        'New Side Question': '新建补充提问',
+        'New side question': '新建补充提问',
+        'new side question': '新建补充提问',
+        'New Side Questions': '新建补充提问',
+        'New side questions': '新建补充提问',
+        'Ask a side question without interrupting the main conversation.': '在不中断主对话的情况下提出补充问题。',
+        'Ask a side question without interrupting the main conversation': '在不中断主对话的情况下提出补充问题',
+        'ask a side question without interrupting the main conversation.': '在不中断主对话的情况下提出补充问题。',
+        'ask a side question without interrupting the main conversation': '在不中断主对话的情况下提出补充问题',
+        'Ask a side question': '提出补充问题',
+        'ask a side question': '提出补充问题',
+        'Ask a side question...': '提出补充问题...',
+        'Ask a side question…': '提出补充问题…',
+        'Close Side Question': '关闭补充提问',
+        'Close side question': '关闭补充提问',
+        'Open Side Question': '打开补充提问',
+        'Open side question': '打开补充提问',
+        'Search or enter a URL': '搜索或输入网址',
+        'Search or enter a url': '搜索或输入网址',
+        'search or enter a url': '搜索或输入网址',
+        'Search or enter URL': '搜索或输入网址',
+        'Search or enter url': '搜索或输入网址',
+        'search or enter url': '搜索或输入网址',
+        'Search or enter address': '搜索或输入地址',
+        'search or enter address': '搜索或输入地址',
+        'Search or enter web address': '搜索或输入网址',
+        'search or enter web address': '搜索或输入网址',
+        'Search or type a URL': '搜索或输入网址',
+        'Search or type URL': '搜索或输入网址',
+        'search or type a url': '搜索或输入网址',
+        'search or type url': '搜索或输入网址',
+        'Search or type web address': '搜索或输入网址',
+        'search or type web address': '搜索或输入网址',
+        'Enter a URL': '输入网址',
+        'Enter a url': '输入网址',
+        'Enter URL': '输入网址',
+        'Enter url': '输入网址',
+        'enter url': '输入网址',
+
         'Go Back': '后退',
         'Go back': '后退',
         'Go Forward': '前进',
@@ -4525,6 +4576,37 @@ if (!isRemoteWindow) {
             return leadingSpace + '今天我们来完成点什么？' + trailingSpace;
         }
 
+        
+        // At Mention Code Block / Mention
+        if (/^At[- ]Mention(?:s+Codes+Block)?$/i.test(trimmed)) {
+            return leadingSpace + (/codes+block/i.test(trimmed) ? '@提及代码块' : '@提及') + trailingSpace;
+        }
+        if (/^Mentions+Codes+Block$/i.test(trimmed)) {
+            return leadingSpace + '提及代码块' + trailingSpace;
+        }
+
+        // Side Question headers, tab buttons & empty state
+        if (/^(?:News+)?Sides+Questions?$/i.test(trimmed)) {
+            return leadingSpace + (/^New/i.test(trimmed) ? '新建补充提问' : '补充提问') + trailingSpace;
+        }
+        if (/^Ask a side question without interrupting the main conversation.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '在不中断主对话的情况下提出补充问题。' : '在不中断主对话的情况下提出补充问题') + trailingSpace;
+        }
+        if (/^Ask a side question(?:.{3}|…)?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('...') || trimmed.endsWith('…') ? '提出补充问题...' : '提出补充问题') + trailingSpace;
+        }
+        if (/^(?:Open|Close)s+Sides+Question$/i.test(trimmed)) {
+            return leadingSpace + (/^Open/i.test(trimmed) ? '打开补充提问' : '关闭补充提问') + trailingSpace;
+        }
+
+        // Browser address bar & URL search input
+        if (/^Search or (?:enter|type)(?:s+(?:a|an))?s+(?:URL|address|webs+address)$/i.test(trimmed)) {
+            return leadingSpace + (/address/i.test(trimmed) && !/web/i.test(trimmed) ? '搜索或输入地址' : '搜索或输入网址') + trailingSpace;
+        }
+        if (/^Enter(?:s+(?:a|an))?s+(?:URL|webs+address)$/i.test(trimmed)) {
+            return leadingSpace + '输入网址' + trailingSpace;
+        }
+
         // Worktree branch menu options
         if (/^work in a new worktree\.?$/i.test(trimmed)) {
             return leadingSpace + '在新的工作树中工作' + trailingSpace;
@@ -6108,6 +6190,37 @@ if (!isRemoteWindow) {
                 observeShadow(shadow);
                 return shadow;
             };
+        }
+    } catch (_) {}
+
+    try {
+        if (typeof HTMLInputElement !== 'undefined' && HTMLInputElement.prototype) {
+            const origInpPh = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'placeholder');
+            if (origInpPh && origInpPh.set) {
+                Object.defineProperty(HTMLInputElement.prototype, 'placeholder', {
+                    get: origInpPh.get,
+                    set: function(val) {
+                        const tr = (typeof val === 'string' && typeof translateText === 'function') ? (translateText(val) || val) : val;
+                        return origInpPh.set.call(this, tr);
+                    },
+                    configurable: true,
+                    enumerable: true
+                });
+            }
+        }
+        if (typeof HTMLTextAreaElement !== 'undefined' && HTMLTextAreaElement.prototype) {
+            const origTaPh = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'placeholder');
+            if (origTaPh && origTaPh.set) {
+                Object.defineProperty(HTMLTextAreaElement.prototype, 'placeholder', {
+                    get: origTaPh.get,
+                    set: function(val) {
+                        const tr = (typeof val === 'string' && typeof translateText === 'function') ? (translateText(val) || val) : val;
+                        return origTaPh.set.call(this, tr);
+                    },
+                    configurable: true,
+                    enumerable: true
+                });
+            }
         }
     } catch (_) {}
 
