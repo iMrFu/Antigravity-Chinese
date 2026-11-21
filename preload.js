@@ -2319,6 +2319,30 @@ if (!isRemoteWindow) {
         'It opens in that host\'s own window.': '它将在该主机独立的窗口中打开。',
         'It opens in that host\'s own window': '它将在该主机独立的窗口中打开',
 
+        'Custom Order': '自定义排序',
+        'Custom order': '自定义排序',
+        'custom order': '自定义排序',
+        'Custom Order >': '自定义排序 >',
+        'Custom order >': '自定义排序 >',
+        'Display': '显示',
+        'display': '显示',
+        'Display >': '显示 >',
+        'display >': '显示 >',
+        'Auto Pin': '自动置顶',
+        'Auto pin': '自动置顶',
+        'auto pin': '自动置顶',
+        'Auto-Pin': '自动置顶',
+        'Auto-pin': '自动置顶',
+        'Archived Only': '仅已归档',
+        'Archived only': '仅已归档',
+        'archived only': '仅已归档',
+        'Show Archived Only': '仅显示已归档',
+        'Show archived only': '仅显示已归档',
+        'View Options': '查看选项',
+        'View options': '查看选项',
+        'Filter and Sort': '筛选与排序',
+        'Sort and Filter': '排序与筛选',
+
         'Go Back': '后退',
         'Go back': '后退',
         'Go Forward': '前进',
@@ -4842,6 +4866,30 @@ if (!isRemoteWindow) {
         }
         if (/^Create a project on a machine you reach over SSH\.\s*It opens in that host\'s own window\.?$/i.test(trimmed)) {
             return leadingSpace + (trimmed.endsWith('.') ? '在通过 SSH 连接的机器上创建项目。它将在该主机独立的窗口中打开。' : '在通过 SSH 连接的机器上创建项目。它将在该主机独立的窗口中打开') + trailingSpace;
+        }
+
+        
+        // Display options menu items (Custom Order, Display, Auto Pin, Archived Only)
+        if (/^Custom\s+Order(?:s*([>›»]))?$/i.test(trimmed)) {
+            const m = trimmed.match(/^Custom\s+Order(?:s*([>›»]))?$/i);
+            const arrow = m && m[1] ? ' ' + m[1] : '';
+            return leadingSpace + '自定义排序' + arrow + trailingSpace;
+        }
+        if (/^Display(?:s*([>›»]))?$/i.test(trimmed)) {
+            const m = trimmed.match(/^Display(?:s*([>›»]))?$/i);
+            const arrow = m && m[1] ? ' ' + m[1] : '';
+            return leadingSpace + '显示' + arrow + trailingSpace;
+        }
+        if (/^Auto[- ]Pin$/i.test(trimmed)) {
+            return leadingSpace + '自动置顶' + trailingSpace;
+        }
+        if (/^(?:Show\s+)?Archived\s+Only$/i.test(trimmed)) {
+            return leadingSpace + (/^Show/i.test(trimmed) ? '仅显示已归档' : '仅已归档') + trailingSpace;
+        }
+        if (/^(?:项目排序|Sort\s+projects?)\s+Custom\s+Order(?:s*([>›»]))?$/i.test(trimmed)) {
+            const m = trimmed.match(/(?:项目排序|Sort\s+projects?)\s+Custom\s+Order(?:s*([>›»]))?/i);
+            const arrow = m && m[1] ? ' ' + m[1] : '';
+            return leadingSpace + '项目排序 自定义排序' + arrow + trailingSpace;
         }
 
         // Worktree branch menu options
