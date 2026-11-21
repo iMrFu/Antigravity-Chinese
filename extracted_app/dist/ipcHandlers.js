@@ -129,6 +129,81 @@ function truncate(text, max) {
     const s = typeof text === 'string' ? text : '';
     return s.length > max ? `${s.slice(0, max - 1)}…` : s;
 }
+const contextMenuLabelMap = {
+    'New Tab': '新建标签页',
+    'New tab': '新建标签页',
+    'New Tab to the Right': '在右侧新建标签页',
+    'Reload': '重新加载',
+    'Reload Tab': '重新加载标签页',
+    'Reload tab': '重新加载标签页',
+    'Duplicate': '复制标签页',
+    'Duplicate Tab': '复制标签页',
+    'Duplicate tab': '复制标签页',
+    'Pin': '固定',
+    'Pin Tab': '固定标签页',
+    'Pin tab': '固定标签页',
+    'Unpin': '取消固定',
+    'Unpin Tab': '取消固定标签页',
+    'Unpin tab': '取消固定标签页',
+    'Mute Tab': '静音标签页',
+    'Mute tab': '静音标签页',
+    'Unmute Tab': '取消静音标签页',
+    'Unmute tab': '取消静音标签页',
+    'Mute Site': '静音网站',
+    'Unmute Site': '取消静音网站',
+    'Close': '关闭',
+    'Close Tab': '关闭标签页',
+    'Close tab': '关闭标签页',
+    'Close Others': '关闭其他',
+    'Close other tabs': '关闭其他标签页',
+    'Close Other Tabs': '关闭其他标签页',
+    'Close Right': '关闭右侧',
+    'Close Tabs to the Right': '关闭右侧标签页',
+    'Close tabs to the right': '关闭右侧标签页',
+    'Close Left': '关闭左侧',
+    'Close Tabs to the Left': '关闭左侧标签页',
+    'Close tabs to the left': '关闭左侧标签页',
+    'Close Saved': '关闭已保存',
+    'Close Saved Tabs': '关闭已保存标签页',
+    'Close All': '全部关闭',
+    'Close All Tabs': '关闭全部标签页',
+    'Close all tabs': '关闭全部标签页',
+    'Reopen Closed Tab': '重新打开已关闭的标签页',
+    'Reopen closed tab': '重新打开已关闭的标签页',
+    'Move to New Window': '移动到新窗口',
+    'Move to new window': '移动到新窗口',
+    'Move Tab to New Window': '将标签页移动到新窗口',
+    'Add Tab to New Window': '将标签页添加到新窗口',
+    'Copy URL': '复制链接',
+    'Copy Link': '复制链接',
+    'Copy Link Address': '复制链接地址',
+    'Bookmark Tab': '添加标签页到书签',
+    'Bookmark Tab...': '添加标签页到书签...',
+    'Bookmark Tab…': '添加标签页到书签…',
+    'Bookmark All Tabs...': '将所有标签页加入书签...',
+    'Bookmark All Tabs…': '将所有标签页加入书签…',
+    'Split Tab': '拆分标签页',
+    'Split Right': '向右拆分',
+    'Split Down': '向下拆分',
+    'Decorations': '徽标',
+    'Cut': '剪切',
+    'Copy': '复制',
+    'Paste': '粘贴',
+    'Select All': '全选',
+    'Undo': '撤销',
+    'Redo': '重做'
+};
+
+function translateContextMenuLabel(rawLabel) {
+    if (!rawLabel || typeof rawLabel !== 'string') return rawLabel;
+    const parts = rawLabel.split('\t');
+    const label = parts[0].trim();
+    const shortcut = parts.length > 1 ? '\t' + parts.slice(1).join('\t') : '';
+    const tr = contextMenuLabelMap[label] || contextMenuLabelMap[label.toLowerCase()];
+    if (tr) return tr + shortcut;
+    return rawLabel;
+}
+
 function buildContextMenuTemplate(items, onSelect) {
     return items.map((item) => {
         if (item.type === 'separator') {
@@ -137,7 +212,7 @@ function buildContextMenuTemplate(items, onSelect) {
         if (item.type === 'submenu' || (item.submenu && item.submenu.length > 0)) {
             return {
                 id: item.id,
-                label: item.label ?? '',
+                label: translateContextMenuLabel(item.label ?? ''),
                 type: 'submenu',
                 enabled: !item.disabled,
                 submenu: buildContextMenuTemplate(item.submenu ?? [], onSelect),
@@ -145,7 +220,7 @@ function buildContextMenuTemplate(items, onSelect) {
         }
         return {
             id: item.id,
-            label: item.label ?? '',
+            label: translateContextMenuLabel(item.label ?? ''),
             type: item.type ?? 'normal',
             checked: item.checked,
             enabled: !item.disabled,

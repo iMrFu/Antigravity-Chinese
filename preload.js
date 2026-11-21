@@ -200,7 +200,24 @@ const electronNativeAPI = {
     respondWebviewDeviceChooser: (requestId, resolution) => electron_1.ipcRenderer.invoke('webview:device-chooser-response', requestId, resolution),
     getWebviewMemoryUsage: (webContentsIds) => electron_1.ipcRenderer.invoke('webview:get-memory-usage', webContentsIds),
     getDefaultDownloadDirectory: () => electron_1.ipcRenderer.invoke('dialog:get-default-download-dir'),
-    showContextMenu: (items) => electron_1.ipcRenderer.invoke('window:show-context-menu', items),
+    showContextMenu: (items) => {
+        function translateContextMenuItems(list) {
+            if (!Array.isArray(list)) return list;
+            return list.map(item => {
+                if (!item) return item;
+                const res = { ...item };
+                if (typeof res.label === 'string') {
+                    const tr = (typeof translateText === 'function') ? (translateText(res.label) || res.label) : res.label;
+                    res.label = tr;
+                }
+                if (Array.isArray(res.submenu)) {
+                    res.submenu = translateContextMenuItems(res.submenu);
+                }
+                return res;
+            });
+        }
+        return electron_1.ipcRenderer.invoke('window:show-context-menu', translateContextMenuItems(items));
+    },
     closeContextMenu: () => electron_1.ipcRenderer.invoke('window:close-context-menu'),
     executeJavaScriptInIsolatedWorld: (wcId, worldId, code) => electron_1.ipcRenderer.invoke('webview:execute-js-isolated-world', wcId, worldId, code),
     scriptJailProtocol: 2,
@@ -2342,6 +2359,73 @@ if (!isRemoteWindow) {
         'View options': '查看选项',
         'Filter and Sort': '筛选与排序',
         'Sort and Filter': '排序与筛选',
+
+        'Decorations': '徽标',
+        'decorations': '徽标',
+        'Decoration': '徽标',
+        'decoration': '徽标',
+        'Close Tab': '关闭标签页',
+        'Close tab': '关闭标签页',
+        'close tab': '关闭标签页',
+        'Close Other Tabs': '关闭其他标签页',
+        'Close other tabs': '关闭其他标签页',
+        'close other tabs': '关闭其他标签页',
+        'Close Tabs to the Right': '关闭右侧标签页',
+        'Close tabs to the right': '关闭右侧标签页',
+        'close tabs to the right': '关闭右侧标签页',
+        'Close Tabs to the Left': '关闭左侧标签页',
+        'Close tabs to the left': '关闭左侧标签页',
+        'close tabs to the left': '关闭左侧标签页',
+        'Close Saved Tabs': '关闭已保存标签页',
+        'Close saved tabs': '关闭已保存标签页',
+        'Close All Tabs': '关闭全部标签页',
+        'Close all tabs': '关闭全部标签页',
+        'close all tabs': '关闭全部标签页',
+        'Close Others': '关闭其他',
+        'Close others': '关闭其他',
+        'New Tab to the Right': '在右侧新建标签页',
+        'New tab to the right': '在右侧新建标签页',
+        'Duplicate Tab': '复制标签页',
+        'Duplicate tab': '复制标签页',
+        'duplicate tab': '复制标签页',
+        'Pin Tab': '固定标签页',
+        'Pin tab': '固定标签页',
+        'pin tab': '固定标签页',
+        'Unpin Tab': '取消固定标签页',
+        'Unpin tab': '取消固定标签页',
+        'unpin tab': '取消固定标签页',
+        'Mute Tab': '静音标签页',
+        'Mute tab': '静音标签页',
+        'mute tab': '静音标签页',
+        'Unmute Tab': '取消静音标签页',
+        'Unmute tab': '取消静音标签页',
+        'unmute tab': '取消静音标签页',
+        'Mute Site': '静音网站',
+        'Unmute Site': '取消静音网站',
+        'Reload Tab': '重新加载标签页',
+        'Reload tab': '重新加载标签页',
+        'reload tab': '重新加载标签页',
+        'Split Tab': '拆分标签页',
+        'Split tab': '拆分标签页',
+        'Split Tab Right': '向右拆分标签页',
+        'Split Tab Down': '向下拆分标签页',
+        'Move Tab to New Window': '将标签页移动到新窗口',
+        'Move tab to new window': '将标签页移动到新窗口',
+        'Move to New Window': '移动到新窗口',
+        'Move to new window': '移动到新窗口',
+        'move to new window': '移动到新窗口',
+        'Add Tab to New Window': '将标签页添加到新窗口',
+        'Add tab to new window': '将标签页添加到新窗口',
+        'Copy Link Address': '复制链接地址',
+        'Copy link address': '复制链接地址',
+        'Bookmark Tab': '添加标签页到书签',
+        'Bookmark tab': '添加标签页到书签',
+        'Bookmark Tab...': '添加标签页到书签...',
+        'Bookmark Tab…': '添加标签页到书签…',
+        'Bookmark All Tabs...': '将所有标签页加入书签...',
+        'Bookmark All Tabs…': '将所有标签页加入书签…',
+        'Send Tab to Your Devices': '将标签页发送到您的设备',
+        'Send tab to your devices': '将标签页发送到您的设备',
 
         'Go Back': '后退',
         'Go back': '后退',
@@ -4890,6 +4974,48 @@ if (!isRemoteWindow) {
             const m = trimmed.match(/(?:项目排序|Sort\s+projects?)\s+Custom\s+Order(?:s*([>›»]))?/i);
             const arrow = m && m[1] ? ' ' + m[1] : '';
             return leadingSpace + '项目排序 自定义排序' + arrow + trailingSpace;
+        }
+
+        
+        // Tab context menu and list decorations
+        if (/^Decorations?$/i.test(trimmed)) {
+            return leadingSpace + '徽标' + trailingSpace;
+        }
+        if (/^Close Tab$/i.test(trimmed)) {
+            return leadingSpace + '关闭标签页' + trailingSpace;
+        }
+        if (/^Close Other Tabs$/i.test(trimmed)) {
+            return leadingSpace + '关闭其他标签页' + trailingSpace;
+        }
+        if (/^Close Tabs to the Right$/i.test(trimmed)) {
+            return leadingSpace + '关闭右侧标签页' + trailingSpace;
+        }
+        if (/^Close Tabs to the Left$/i.test(trimmed)) {
+            return leadingSpace + '关闭左侧标签页' + trailingSpace;
+        }
+        if (/^Close All Tabs$/i.test(trimmed)) {
+            return leadingSpace + '关闭全部标签页' + trailingSpace;
+        }
+        if (/^Duplicate Tab$/i.test(trimmed)) {
+            return leadingSpace + '复制标签页' + trailingSpace;
+        }
+        if (/^Pin Tab$/i.test(trimmed)) {
+            return leadingSpace + '固定标签页' + trailingSpace;
+        }
+        if (/^Unpin Tab$/i.test(trimmed)) {
+            return leadingSpace + '取消固定标签页' + trailingSpace;
+        }
+        if (/^Mute Tab$/i.test(trimmed)) {
+            return leadingSpace + '静音标签页' + trailingSpace;
+        }
+        if (/^Unmute Tab$/i.test(trimmed)) {
+            return leadingSpace + '取消静音标签页' + trailingSpace;
+        }
+        if (/^Reload Tab$/i.test(trimmed)) {
+            return leadingSpace + '重新加载标签页' + trailingSpace;
+        }
+        if (/^(?:Move|Add) Tab to New Window$/i.test(trimmed)) {
+            return leadingSpace + '将标签页移动到新窗口' + trailingSpace;
         }
 
         // Worktree branch menu options
