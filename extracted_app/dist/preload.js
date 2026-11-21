@@ -2297,6 +2297,28 @@ if (!isRemoteWindow) {
         'Copy debug information': '复制调试信息',
         'Copy Debug Information': '复制调试信息',
 
+        'SSH Host...': 'SSH 主机...',
+        'SSH Host…': 'SSH 主机…',
+        'SSH Host': 'SSH 主机',
+        'ssh host...': 'SSH 主机...',
+        'ssh host…': 'SSH 主机…',
+        'ssh host': 'SSH 主机',
+        'SSH Hosts...': 'SSH 主机...',
+        'SSH Hosts': 'SSH 主机',
+        'Select a folder.': '选择文件夹。',
+        'Select a folder': '选择文件夹',
+        'select a folder.': '选择文件夹。',
+        'select a folder': '选择文件夹',
+        'Select a directory.': '选择目录。',
+        'Select a directory': '选择目录',
+        'Create a project on a machine you reach over SSH. It opens in that host\'s own window.': '在通过 SSH 连接的机器上创建项目。它将在该主机独立的窗口中打开。',
+        'Create a project on a machine you reach over SSH. It opens in that host\'s own window': '在通过 SSH 连接的机器上创建项目。它将在该主机独立的窗口中打开',
+        'create a project on a machine you reach over SSH. It opens in that host\'s own window.': '在通过 SSH 连接的机器上创建项目。它将在该主机独立的窗口中打开。',
+        'Create a project on a machine you reach over SSH.': '在通过 SSH 连接的机器上创建项目。',
+        'Create a project on a machine you reach over SSH': '在通过 SSH 连接的机器上创建项目',
+        'It opens in that host\'s own window.': '它将在该主机独立的窗口中打开。',
+        'It opens in that host\'s own window': '它将在该主机独立的窗口中打开',
+
         'Go Back': '后退',
         'Go back': '后退',
         'Go Forward': '前进',
@@ -4806,6 +4828,20 @@ if (!isRemoteWindow) {
         }
         if (/^Promote to (?:main )?conversation$/i.test(trimmed)) {
             return leadingSpace + '提升为主对话' + trailingSpace;
+        }
+
+        
+        // SSH Host menu item & command
+        if (/^SSH\s+Hosts?(?:\.{3}|\u2026)?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('...') || trimmed.endsWith('\u2026') ? 'SSH 主机...' : 'SSH 主机') + trailingSpace;
+        }
+
+        // Project creation tooltips
+        if (/^Select a (?:folder|directory)\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '选择文件夹。' : '选择文件夹') + trailingSpace;
+        }
+        if (/^Create a project on a machine you reach over SSH\.\s*It opens in that host\'s own window\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '在通过 SSH 连接的机器上创建项目。它将在该主机独立的窗口中打开。' : '在通过 SSH 连接的机器上创建项目。它将在该主机独立的窗口中打开') + trailingSpace;
         }
 
         // Worktree branch menu options
