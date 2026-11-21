@@ -9762,5 +9762,20 @@
   "Default Environment": "默认环境",
   "Default environment": "默认环境",
   "^(?:[^\\w\\s\\u4e00-\\u9fa5]*\\s*)Local\\s+Checkout(?:\\s*([▼▾⌄⌵ˇv∨˅\\^∧>›\\u02c5\\u2304\\u25bc\\u25be\\ufe40\\u2228\\u23f7\\u25bd]))?$": "本地检出",
-  "^(?:Select|Switch|Change|Choose)\\s+Environment(?:\\s*\\(([^)]+)\\)|\\.{3}|\\u2026)?$": "选择环境"
+  "^(?:Select|Switch|Change|Choose)\\s+Environment(?:\\s*\\(([^)]+)\\)|\\.{3}|\\u2026)?$": "选择环境",
+  "Input Box": "输入框",
+  "Input box": "输入框",
+  "input box": "输入框",
+  "Input Box Settings": "输入框设置",
+  "Input box settings": "输入框设置",
+  "Choose which key sends a message in the chat composer.": "选择在聊天输入框中发送消息的按键。",
+  "Choose which key sends a message in the chat composer": "选择在聊天输入框中发送消息的按键",
+  "choose which key sends a message in the chat composer.": "选择在聊天输入框中发送消息的按键。",
+  "choose which key sends a message in the chat composer": "选择在聊天输入框中发送消息的按键",
+  "Choose which key sends a message in the prompt composer.": "选择在提示词输入框中发送消息的按键。",
+  "Choose which key sends a message in the prompt composer": "选择在提示词输入框中发送消息的按键",
+  "Choose which key sends a message in the composer.": "选择在输入框中发送消息的按键。",
+  "Choose which key sends a message in the composer": "选择在输入框中发送消息的按键",
+  "^Input\\s+Box$": "输入框",
+  "^Choose which key sends a message in the (?:chat |prompt )?composer\\.?$": "选择在聊天输入框中发送消息的按键。"
 }

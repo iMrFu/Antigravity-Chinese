@@ -2217,6 +2217,20 @@ if (!isRemoteWindow) {
         'Default Environment': '默认环境',
         'Default environment': '默认环境',
 
+        'Input Box': '输入框',
+        'Input box': '输入框',
+        'input box': '输入框',
+        'Input Box Settings': '输入框设置',
+        'Input box settings': '输入框设置',
+        'Choose which key sends a message in the chat composer.': '选择在聊天输入框中发送消息的按键。',
+        'Choose which key sends a message in the chat composer': '选择在聊天输入框中发送消息的按键',
+        'choose which key sends a message in the chat composer.': '选择在聊天输入框中发送消息的按键。',
+        'choose which key sends a message in the chat composer': '选择在聊天输入框中发送消息的按键',
+        'Choose which key sends a message in the prompt composer.': '选择在提示词输入框中发送消息的按键。',
+        'Choose which key sends a message in the prompt composer': '选择在提示词输入框中发送消息的按键',
+        'Choose which key sends a message in the composer.': '选择在输入框中发送消息的按键。',
+        'Choose which key sends a message in the composer': '选择在输入框中发送消息的按键',
+
         'Go Back': '后退',
         'Go back': '后退',
         'Go Forward': '前进',
@@ -4694,6 +4708,15 @@ if (!isRemoteWindow) {
         }
         if (/^Enter(?:s+(?:a|an))?s+(?:URL|webs+address)$/i.test(trimmed)) {
             return leadingSpace + '输入网址' + trailingSpace;
+        }
+
+        
+        // Input Box settings & chat composer keys
+        if (/^Input\s+Box$/i.test(trimmed)) {
+            return leadingSpace + '输入框' + trailingSpace;
+        }
+        if (/^Choose which key sends a message in the (?:chat |prompt )?composer\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '选择在聊天输入框中发送消息的按键。' : '选择在聊天输入框中发送消息的按键') + trailingSpace;
         }
 
         // Worktree branch menu options
