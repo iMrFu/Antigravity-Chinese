@@ -2231,6 +2231,72 @@ if (!isRemoteWindow) {
         'Choose which key sends a message in the composer.': '选择在输入框中发送消息的按键。',
         'Choose which key sends a message in the composer': '选择在输入框中发送消息的按键',
 
+        'Insert into main conversation': '插入到主对话',
+        'Insert into main conversation.': '插入到主对话。',
+        'Insert into Main Conversation': '插入到主对话',
+        'insert into main conversation': '插入到主对话',
+        'Insert into main conversation...': '插入到主对话...',
+        'Insert into conversation': '插入到对话',
+        'Insert into Conversation': '插入到对话',
+        'Promote to Conversation': '提升为主对话',
+        'Promote to conversation': '提升为主对话',
+        'promote to conversation': '提升为主对话',
+        'Promote to Main Conversation': '提升为主对话',
+        'Promote to main conversation': '提升为主对话',
+        'Promote to Chat': '提升为主对话',
+        'Promote to chat': '提升为主对话',
+        'Pull Requests': '拉取请求',
+        'Pull requests': '拉取请求',
+        'pull requests': '拉取请求',
+        'Pull Request': '拉取请求',
+        'Pull request': '拉取请求',
+        'Goals': '目标',
+        'goals': '目标',
+        'Goal': '目标',
+        'goal': '目标',
+        'Documents': '文档',
+        'documents': '文档',
+        'Document': '文档',
+        'document': '文档',
+        'Links': '链接',
+        'links': '链接',
+        'Link': '链接',
+        'link': '链接',
+        'Modified Files': '修改的文件',
+        'Modified files': '修改的文件',
+        'modified files': '修改的文件',
+        'Modified File': '修改的文件',
+        'Modified file': '修改的文件',
+        'Skills Used': '已使用的技能',
+        'Skills used': '已使用的技能',
+        'skills used': '已使用的技能',
+        'Skill Used': '已使用的技能',
+        'Skill used': '已使用的技能',
+        'Agent terminated due to error': '智能体因错误终止',
+        'Agent terminated due to error.': '智能体因错误终止。',
+        'Agent Terminated Due to Error': '智能体因错误终止',
+        'agent terminated due to error': '智能体因错误终止',
+        'Agent terminated': '智能体已终止',
+        'Agent Terminated': '智能体已终止',
+        'You can prompt the model to try again or start a new conversation if the error persists.': '如果错误持续出现，您可以提示模型重试或开启新对话。',
+        'You can prompt the model to try again or start a new conversation if the error persists': '如果错误持续出现，您可以提示模型重试或开启新对话',
+        'you can prompt the model to try again or start a new conversation if the error persists.': '如果错误持续出现，您可以提示模型重试或开启新对话。',
+        'See our troubleshooting guide for more help.': '请参阅我们的排查指南以获取更多帮助。',
+        'See our troubleshooting guide for more help': '请参阅我们的排查指南以获取更多帮助',
+        'see our troubleshooting guide for more help.': '请参阅我们的排查指南以获取更多帮助。',
+        'troubleshooting guide': '排查指南',
+        'Troubleshooting guide': '排查指南',
+        'Troubleshooting Guide': '排查指南',
+        'See our': '请参阅我们的',
+        'see our': '请参阅我们的',
+        'for more help.': '以获取更多帮助。',
+        'for more help': '以获取更多帮助',
+        'Copy debug info': '复制调试信息',
+        'Copy Debug Info': '复制调试信息',
+        'copy debug info': '复制调试信息',
+        'Copy debug information': '复制调试信息',
+        'Copy Debug Information': '复制调试信息',
+
         'Go Back': '后退',
         'Go back': '后退',
         'Go Forward': '前进',
@@ -4719,6 +4785,29 @@ if (!isRemoteWindow) {
             return leadingSpace + (trimmed.endsWith('.') ? '选择在聊天输入框中发送消息的按键。' : '选择在聊天输入框中发送消息的按键') + trailingSpace;
         }
 
+        
+        // Agent termination alert
+        if (/^Agent terminated due to error$/i.test(trimmed)) {
+            return leadingSpace + '智能体因错误终止' + trailingSpace;
+        }
+        if (/^You can prompt the model to try again or start a new conversation if the error persists\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '如果错误持续出现，您可以提示模型重试或开启新对话。' : '如果错误持续出现，您可以提示模型重试或开启新对话') + trailingSpace;
+        }
+        if (/^See our\s+troubleshooting\s+guide\s+for\s+more\s+help\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '请参阅我们的排查指南以获取更多帮助。' : '请参阅我们的排查指南以获取更多帮助') + trailingSpace;
+        }
+        if (/^Copy\s+debug\s+info(?:rmation)?$/i.test(trimmed)) {
+            return leadingSpace + '复制调试信息' + trailingSpace;
+        }
+
+        // Insert into main conversation & Promote to conversation
+        if (/^Insert into (?:the )?main conversation\.?$/i.test(trimmed)) {
+            return leadingSpace + (trimmed.endsWith('.') ? '插入到主对话。' : '插入到主对话') + trailingSpace;
+        }
+        if (/^Promote to (?:main )?conversation$/i.test(trimmed)) {
+            return leadingSpace + '提升为主对话' + trailingSpace;
+        }
+
         // Worktree branch menu options
         if (/^work in a new worktree\.?$/i.test(trimmed)) {
             return leadingSpace + '在新的工作树中工作' + trailingSpace;
@@ -5136,6 +5225,42 @@ if (!isRemoteWindow) {
         const terminalsMatch = trimmed.match(/^Terminals\s*(\d*)\s*([>›v∨˅]?)$/i);
         if (terminalsMatch) {
             return `终端${terminalsMatch[1] ? ' ' + terminalsMatch[1] : ''}${terminalsMatch[2] ? ' ' + terminalsMatch[2] : ''}`;
+        }
+
+        // "Pull Requests [X] [>›v∨]"
+        const prSectionMatch = trimmed.match(/^Pull\s+Requests?\s*(\d*)\s*([>›v∨˅]?)$/i);
+        if (prSectionMatch) {
+            return `拉取请求${prSectionMatch[1] ? ' ' + prSectionMatch[1] : ''}${prSectionMatch[2] ? ' ' + prSectionMatch[2] : ''}`;
+        }
+
+        // "Goals [X] [>›v∨]"
+        const goalsSectionMatch = trimmed.match(/^Goals?\s*(\d*)\s*([>›v∨˅]?)$/i);
+        if (goalsSectionMatch) {
+            return `目标${goalsSectionMatch[1] ? ' ' + goalsSectionMatch[1] : ''}${goalsSectionMatch[2] ? ' ' + goalsSectionMatch[2] : ''}`;
+        }
+
+        // "Documents [X] [>›v∨]"
+        const docsSectionMatch = trimmed.match(/^Documents?\s*(\d*)\s*([>›v∨˅]?)$/i);
+        if (docsSectionMatch) {
+            return `文档${docsSectionMatch[1] ? ' ' + docsSectionMatch[1] : ''}${docsSectionMatch[2] ? ' ' + docsSectionMatch[2] : ''}`;
+        }
+
+        // "Links [X] [>›v∨]"
+        const linksSectionMatch = trimmed.match(/^Links?\s*(\d*)\s*([>›v∨˅]?)$/i);
+        if (linksSectionMatch) {
+            return `链接${linksSectionMatch[1] ? ' ' + linksSectionMatch[1] : ''}${linksSectionMatch[2] ? ' ' + linksSectionMatch[2] : ''}`;
+        }
+
+        // "Modified Files [X] [>›v∨]"
+        const modFilesSectionMatch = trimmed.match(/^Modified\s+Files?\s*(\d*)\s*([>›v∨˅]?)$/i);
+        if (modFilesSectionMatch) {
+            return `修改的文件${modFilesSectionMatch[1] ? ' ' + modFilesSectionMatch[1] : ''}${modFilesSectionMatch[2] ? ' ' + modFilesSectionMatch[2] : ''}`;
+        }
+
+        // "Skills Used [X] [>›v∨]"
+        const skillsUsedSectionMatch = trimmed.match(/^Skills?\s+Used\s*(\d*)\s*([>›v∨˅]?)$/i);
+        if (skillsUsedSectionMatch) {
+            return `已使用的技能${skillsUsedSectionMatch[1] ? ' ' + skillsUsedSectionMatch[1] : ''}${skillsUsedSectionMatch[2] ? ' ' + skillsUsedSectionMatch[2] : ''}`;
         }
 
         // Schedule time: "9:00 AM GMT+8" or "10:30 PM GMT+8" or "9:00 AM"
@@ -6389,6 +6514,23 @@ if (!isRemoteWindow) {
         return false;
     }
 
+    function checkAndTranslateAgentTerminated(el) {
+        if (!el || !el.textContent || !/troubleshooting\s+guide/i.test(el.textContent)) {
+            return false;
+        }
+        for (let i = 0; i < el.childNodes.length; i++) {
+            const c = el.childNodes[i];
+            if (c.nodeType === Node.TEXT_NODE && c.nodeValue) {
+                if (/^\s*See our\s*$/i.test(c.nodeValue)) {
+                    c.nodeValue = '请参阅我们的 ';
+                } else if (/^\s*for more help\.?\s*$/i.test(c.nodeValue)) {
+                    c.nodeValue = ' 以获取更多帮助。';
+                }
+            }
+        }
+        return true;
+    }
+
     function checkAndTranslateModifiedInElement(el) {
         if (!el || !el.textContent || !/Modified in\s+\d+\s+(?:projects?|workspaces?|conversations?)/i.test(el.textContent)) {
             return false;
@@ -6437,6 +6579,7 @@ if (!isRemoteWindow) {
             translateAttributes(node);
             checkAndTranslateAutomationBanner(node);
             checkAndTranslateModifiedInElement(node);
+            checkAndTranslateAgentTerminated(node);
             const tag = node.tagName ? node.tagName.toLowerCase() : '';
             if (tag === 'iframe' || tag === 'webview') {
                 try {
