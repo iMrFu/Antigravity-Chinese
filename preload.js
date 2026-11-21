@@ -151,6 +151,12 @@ const wcvBrowserAPI = {
     onZOrderChanged: (cb) => subscribeIpcChannel('wcv:z-order-changed', cb),
     onShortcutForwarded: (cb) => subscribeIpcChannel('wcv:shortcut-forwarded', cb),
     onCursorChanged: (cb) => subscribeIpcChannel('wcv:cursor-changed', cb),
+    pushCursorState: (k, s) => electron_1.ipcRenderer.invoke('wcv:push-cursor-state', k, s),
+    onRemoteControlCommand: (cb) => subscribeIpcChannel('wcv:remote-control-command', cb),
+    ackRemoteControlCommand: (a) => electron_1.ipcRenderer.invoke('wcv:remote-control-command-ack', a),
+    reclaimRemoteControl: (k, opts) => opts !== undefined
+        ? electron_1.ipcRenderer.invoke('wcv:reclaim-remote-control', k, opts)
+        : electron_1.ipcRenderer.invoke('wcv:reclaim-remote-control', k),
 };
 let promptRequestSubscriberCount = 0;
 const electronNativeAPI = {
@@ -448,8 +454,30 @@ function permissionsOf(v) {
         screenRecordingNeedsRelaunch: o['screenRecordingNeedsRelaunch'] === true,
     };
 }
+const PANE_REGISTRATIONS = [
+    'prompted',
+    'already-granted',
+    'skipped',
+    'failed',
+];
+function openSettingsResultOf(v) {
+    const o = (v && typeof v === 'object' ? v : {});
+    const r = PANE_REGISTRATIONS.find((x) => x === o['registered']);
+    return {
+        registered: r ?? 'failed',
+        promptedThisSession: o['promptedThisSession'] === true,
+    };
+}
 const computerPreviewAPI = {
-    open: () => electron_1.ipcRenderer.invoke('computer-preview:open'),
+    open: async () => {
+        const r = await electron_1.ipcRenderer.invoke('computer-preview:open');
+        // previewIpc.ts's PreviewOpenResult: a failure rejects as before, now
+        // with a stable code first ("SIDECAR_MISSING: ...") the pane can show.
+        if (r?.ok === false) {
+            throw new Error(`${r.error?.code}: ${r.error?.message}`);
+        }
+        return { sessionId: r.sessionId, type: r.type, sdp: r.sdp };
+    },
     answer: (sessionId, sdp) => electron_1.ipcRenderer.invoke('computer-preview:answer', sessionId, sdp),
     renew: (sessionId) => electron_1.ipcRenderer.invoke('computer-preview:renew', sessionId),
     close: (sessionId) => electron_1.ipcRenderer.invoke('computer-preview:close', sessionId),
@@ -478,10 +506,16 @@ const computerPreviewAPI = {
         if (pane !== 'accessibility' && pane !== 'screenRecording') {
             throw new Error('openPermissionSettings: unknown pane');
         }
-        await electron_1.ipcRenderer.invoke('computer-permissions:open-settings', pane);
+        return openSettingsResultOf(await electron_1.ipcRenderer.invoke('computer-permissions:open-settings', pane));
     },
     relaunchApp: async () => {
         await electron_1.ipcRenderer.invoke('computer-permissions:relaunch');
+    },
+    stopAll: async () => {
+        await electron_1.ipcRenderer.invoke('computer-preview:stop-all');
+    },
+    stopAgent: async (actorId) => {
+        await electron_1.ipcRenderer.invoke('computer-preview:stop-agent', actorId);
     },
 };
 electron_1.contextBridge.exposeInMainWorld('nativeNotifications', notificationAPI);
